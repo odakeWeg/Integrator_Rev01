@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<root>
+    <test>
+        <id>0</id>
+        <tagName>test</tagName>
+        <testResult>N/A</testResult>
+        <timeout>0</timeout>
+        <position>0</position>
+        <individualTestDurationMillis>0</individualTestDurationMillis>
+        <tagIdentifier>Test</tagIdentifier>
+    </test>
+    <test>
+        <id>0</id>
+        <tagName>test</tagName>
+        <testResult>N/A</testResult>
+        <timeout>0</timeout>
+        <position>0</position>
+        <individualTestDurationMillis>0</individualTestDurationMillis>
+        <tagIdentifier>Test</tagIdentifier>
+    </test>
+    <forTest>
+        <id>0</id>
+        <tagName>forTest</tagName>
+        <testResult>N/A</testResult>
+        <timeout>0</timeout>
+        <position>0</position>
+        <individualTestDurationMillis>0</individualTestDurationMillis>
+        <tagIdentifier>Test</tagIdentifier>
+    </forTest>
+</root>
