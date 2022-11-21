@@ -1,14 +1,13 @@
 package weg.net.tester.tag;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import weg.net.tester.models.TestMetaDataModel;
+import weg.net.tester.utils.TagNameUtil;
 
-@XmlRootElement(name = "userInput")
-@XmlAccessorType (XmlAccessType.FIELD)
 public class LeafUserInputTag extends NodeCompareTag {
+
+    public LeafUserInputTag() {
+        this.setTagName();
+    }
 
     @Override
     public void executeCommand() {
@@ -18,12 +17,7 @@ public class LeafUserInputTag extends NodeCompareTag {
     
     @Override
     public void setTagName() {
-        this.tagName = "userInput";
-    }
-
-    @Override
-    public TestMetaDataModel getTestMetaData() {
-        return this.testMetaData;
+        this.tagName = TagNameUtil.USER_INPUT;
     }
 
 }

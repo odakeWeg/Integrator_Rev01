@@ -6,6 +6,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import weg.net.tester.facade.datacenter.DataCenter;
 import weg.net.tester.models.CommandLog;
+import weg.net.tester.models.TestMetaDataModel;
 import weg.net.tester.models.TestingRoutine;
 import weg.net.tester.tag.BaseTag;
 import weg.net.tester.tag.ParentTag;
@@ -25,8 +26,7 @@ public class TestExecutor {
     }
 
     public void execute() {
-
-        this.dataCenter = new DataCenter(this.barCode);
+        
         if(initSetup()) {
             this.result = startTestingRoutine(getList());
             //Send ok (end of the test) back to the front test end or stuff***
@@ -39,6 +39,8 @@ public class TestExecutor {
 
     private boolean initSetup() {
         //@Todo: this return is only for testing porpuses
+        TestMetaDataModel refreshStaticVariable = new TestMetaDataModel();
+        this.dataCenter = new DataCenter(this.barCode);
         try {
             //this.dataCenter.getInlineConnector().saveInitialEvent();
             this.dataCenter.getMongoConnector().initialSetup();
@@ -54,16 +56,16 @@ public class TestExecutor {
         //routine (set log -> maybe changed to tags iself), save 
         //data and upload session and stuff
         // database and Session (increment from executed tests)
-        this.dataCenter.getMongoConnector().endingSetup(result, ParentTag.testMetaData.getTestStep(), ParentTag.testMetaData.getTagList());
+        this.dataCenter.getMongoConnector().endingSetup(result, TestMetaDataModel.testStep, TestMetaDataModel.tagList);
 
         //Last thing
-        ParentTag.testMetaData.setTagList(null);
+        //ParentTag.testMetaData.setTagList(null);  //Already gets null in the start
     }
 
     private String startTestingRoutine(TestingRoutine testingRoutine) {
         //@Todo
         List<BaseTag> baseTagList = testingRoutine.getRoutine();
-        ParentTag.testMetaData.setTagList(baseTagList);
+        TestMetaDataModel.tagList = baseTagList; 
         try {
             //Execution - Just a for loop and stuff -> create an exit 
 
@@ -72,7 +74,7 @@ public class TestExecutor {
                 this.template.convertAndSend("/feedback",  commandLog);
             }
             //@Todo: Another for loop will be needed to check every position
-            if (ParentTag.testMetaData.getIsPositionEnabled()[0]) {
+            if (TestMetaDataModel.isPositionEnabled[0]) {
                 return FrontEndFeedbackUtil.OK;
             } else {
                 return FrontEndFeedbackUtil.FALHA_NO_TESTE;

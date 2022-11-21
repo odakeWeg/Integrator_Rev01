@@ -1,16 +1,11 @@
 package weg.net.tester.tag;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import weg.net.tester.communication.BaseCommunication;
 import weg.net.tester.exception.CommunicationException;
 import weg.net.tester.models.TestMetaDataModel;
 import weg.net.tester.utils.FailureCodeUtil;
+import weg.net.tester.utils.TagNameUtil;
 
-@XmlRootElement(name = "registerCompare")
-@XmlAccessorType (XmlAccessType.FIELD)
 public class LeafRegisterCompareTag extends NodeCompareTag {
 
     private String communicationNameRef;
@@ -26,6 +21,9 @@ public class LeafRegisterCompareTag extends NodeCompareTag {
     private int waitBefore;
     private int waitAfter;
     
+    public LeafRegisterCompareTag() {
+        this.setTagName();
+    }
 
     @Override
     public void executeCommand() {
@@ -52,7 +50,7 @@ public class LeafRegisterCompareTag extends NodeCompareTag {
         } else {
             testResult = FailureCodeUtil.OUT_OF_TOLERANCY;
             log = "Valor lido fora da tolerancia: " +  (valueRef - valueRef*tolerancy/100) + " < Valor medido: " + valueOnTest + " < " + (valueRef + valueRef*tolerancy/100);
-            testMetaData.getIsPositionEnabled()[this.position-1] = false;
+            TestMetaDataModel.isPositionEnabled[this.position-1] = false;
         }
     }
 
@@ -65,7 +63,7 @@ public class LeafRegisterCompareTag extends NodeCompareTag {
         } else {
             testResult = FailureCodeUtil.OUT_OF_TOLERANCY;
             log = "Valor lido fora da tolerancia: " +  (valueRef - tolerancy) + " < Valor medido: " + valueOnTest + " < " + (valueRef + tolerancy);
-            testMetaData.getIsPositionEnabled()[this.position-1] = false;
+            TestMetaDataModel.isPositionEnabled[this.position-1] = false;
         }
     }
 
@@ -84,7 +82,7 @@ public class LeafRegisterCompareTag extends NodeCompareTag {
             } catch (CommunicationException e) {
                 testResult = FailureCodeUtil.FALHA_COMUNICACAO;
                 log = "Falha na comunicação com " + communicationNameRef;
-                testMetaData.getIsPositionEnabled()[this.position-1] = false;
+                TestMetaDataModel.isPositionEnabled[this.position-1] = false;
                 return false;
             }
         }
@@ -107,7 +105,7 @@ public class LeafRegisterCompareTag extends NodeCompareTag {
             } catch (CommunicationException e) {
                 testResult = FailureCodeUtil.FALHA_COMUNICACAO;
                 log = "Falha na comunicação com " + communicationNameOnTest;
-                testMetaData.getIsPositionEnabled()[this.position-1] = false;
+                TestMetaDataModel.isPositionEnabled[this.position-1] = false;
                 return false;
             }
         }
@@ -117,11 +115,6 @@ public class LeafRegisterCompareTag extends NodeCompareTag {
     
     @Override
     public void setTagName() {
-        this.tagName = "registerCompare";
-    }
-
-    @Override
-    public TestMetaDataModel getTestMetaData() {
-        return this.testMetaData;
+        this.tagName = TagNameUtil.REGISTER_COMPARE;
     }
 }

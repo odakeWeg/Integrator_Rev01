@@ -1,17 +1,17 @@
 package weg.net.tester.tag;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-
-import weg.net.tester.models.TestMetaDataModel;
+import lombok.Getter;
 import weg.net.tester.utils.ActionCommandUtil;
 import weg.net.tester.utils.FailureCodeUtil;
+import weg.net.tester.utils.TagNameUtil;
 
-@XmlRootElement(name = "test")
-@XmlAccessorType (XmlAccessType.FIELD)
+@Getter
 public class LeafTestTag extends NodeMetaTestTag {
     private String testName;
+
+    public LeafTestTag() {
+        this.setTagName();
+    }
 
     @Override
     public void executeCommand() {
@@ -22,11 +22,6 @@ public class LeafTestTag extends NodeMetaTestTag {
 
     @Override
     public void setTagName() {
-        this.tagName = "test";
-    }
-
-    @Override
-    public TestMetaDataModel getTestMetaData() {
-        return this.testMetaData;
+        this.tagName = TagNameUtil.TEST;
     }
 }

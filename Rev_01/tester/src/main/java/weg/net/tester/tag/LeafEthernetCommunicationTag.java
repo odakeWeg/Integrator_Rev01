@@ -1,22 +1,23 @@
 package weg.net.tester.tag;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-
+import lombok.Getter;
 import weg.net.tester.communication.BaseCommunication;
 import weg.net.tester.communication.EthernetCommunication;
 import weg.net.tester.exception.CommunicationException;
 import weg.net.tester.models.TestMetaDataModel;
 import weg.net.tester.utils.FailureCodeUtil;
+import weg.net.tester.utils.TagNameUtil;
 
-@XmlRootElement(name = "ethernetCommunication")
-@XmlAccessorType (XmlAccessType.FIELD)
+@Getter
 public class LeafEthernetCommunicationTag extends NodeCommunicationTag {
     protected String ip;
     protected int port;
     protected int address;
     protected int timeBetweenCommand;
+
+    public LeafEthernetCommunicationTag() {
+        this.setTagName();
+    }
 
     @Override
     public void executeCommand() {
@@ -28,18 +29,13 @@ public class LeafEthernetCommunicationTag extends NodeCommunicationTag {
         } catch (CommunicationException e) {
             testResult = FailureCodeUtil.FALHA_SETUP_COMUNICACAO;
             log = "Falha no setup de comunicação com " + communicationName;
-            testMetaData.getIsPositionEnabled()[this.position-1] = false;
+            TestMetaDataModel.isPositionEnabled[this.position-1] = false;
         }
         //commandLog = new CommandLog(testResult, errorMessage, descricao, log, action);
     }
 
     @Override
     public void setTagName() {
-        this.tagName = "ethernetCommunication";
-    }
-
-    @Override
-    public TestMetaDataModel getTestMetaData() {
-        return this.testMetaData;
+        this.tagName = TagNameUtil.ETHERNET_COMMUNICATION;
     }
 }

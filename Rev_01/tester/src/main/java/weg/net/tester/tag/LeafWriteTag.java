@@ -1,16 +1,11 @@
 package weg.net.tester.tag;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import weg.net.tester.communication.BaseCommunication;
 import weg.net.tester.exception.CommunicationException;
 import weg.net.tester.models.TestMetaDataModel;
 import weg.net.tester.utils.FailureCodeUtil;
+import weg.net.tester.utils.TagNameUtil;
 
-@XmlRootElement(name = "write")
-@XmlAccessorType (XmlAccessType.FIELD)
 public class LeafWriteTag extends NodeWriteTag {
 
     private String communicationName;
@@ -19,6 +14,10 @@ public class LeafWriteTag extends NodeWriteTag {
     private int value;
     private int waitBefore;
     private int waitAfter;
+
+    public LeafWriteTag() {
+        this.setTagName();
+    }
     
     @Override
     public void executeCommand() {
@@ -35,7 +34,7 @@ public class LeafWriteTag extends NodeWriteTag {
             } catch (CommunicationException e) {
                 testResult = FailureCodeUtil.FALHA_COMUNICACAO;
                 log = "Falha na comunicação com " + communicationName;
-                testMetaData.getIsPositionEnabled()[this.position-1] = false;
+                TestMetaDataModel.isPositionEnabled[this.position-1] = false;
             }
         }
         delayMilliseconds(waitAfter); 
@@ -43,11 +42,7 @@ public class LeafWriteTag extends NodeWriteTag {
     
     @Override
     public void setTagName() {
-        this.tagName = "write";
+        this.tagName = TagNameUtil.WRITE;
     }
 
-    @Override
-    public TestMetaDataModel getTestMetaData() {
-        return this.testMetaData;
-    }
 }

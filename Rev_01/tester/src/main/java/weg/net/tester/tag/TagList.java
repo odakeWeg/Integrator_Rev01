@@ -4,17 +4,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
-import weg.net.tester.utils.FilePathUtil;
-
-@XmlRootElement(name = "root")
-@XmlAccessorType (XmlAccessType.FIELD)
 public class TagList /*implements BaseTagList*/ {
 
+    private List<BaseTag> list = new ArrayList<>();
+
+    public List<BaseTag> getList() {
+        return this.list;
+    }
+
+    public void setList(List<BaseTag> list) {
+        this.list = list;
+    }
+
+
+
+    /* 
     @XmlElement(name = "modbusCommunication")
     private List<LeafModbusCommunicationTag> communicationTagList = new ArrayList<>();
     @XmlElement(name = "IOLinkCommunication")
@@ -104,4 +108,5 @@ public class TagList /*implements BaseTagList*/ {
         }
         this.list = listSorted;
     }
+    */
 }

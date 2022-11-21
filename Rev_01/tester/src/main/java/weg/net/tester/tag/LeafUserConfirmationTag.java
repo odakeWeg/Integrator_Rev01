@@ -1,24 +1,20 @@
 package weg.net.tester.tag;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import weg.net.tester.models.TestMetaDataModel;
 import weg.net.tester.utils.ActionCommandUtil;
 import weg.net.tester.utils.FailureCodeUtil;
+import weg.net.tester.utils.TagNameUtil;
 
-@XmlRootElement(name = "userConfirmation")
-@XmlAccessorType (XmlAccessType.FIELD)
 @Controller
 public class LeafUserConfirmationTag extends NodeCompareTag {
-    @XmlTransient
+    @JsonIgnore
     private SimpMessagingTemplate template;
     private static boolean confirmation;
     private static boolean responseFlag;
@@ -28,6 +24,10 @@ public class LeafUserConfirmationTag extends NodeCompareTag {
     @Autowired
     void WebSocketController(SimpMessagingTemplate template) {
         this.template = template;
+    }
+
+    public LeafUserConfirmationTag() {
+        this.setTagName();
     }
 
     @Override
@@ -50,7 +50,7 @@ public class LeafUserConfirmationTag extends NodeCompareTag {
             testResult = FailureCodeUtil.CONFIRMACAO_NEGADA;
             log = "Confirmação do usuário negada";
             action = ActionCommandUtil.EXIBIT_VALUES;
-            testMetaData.getIsPositionEnabled()[this.position-1] = false;
+            TestMetaDataModel.isPositionEnabled[this.position-1] = false;
         }
     }
 
@@ -68,30 +68,6 @@ public class LeafUserConfirmationTag extends NodeCompareTag {
 
     @Override
     public void setTagName() {
-        this.tagName = "userConfirmation";
-    }
-
-    @Override
-    public TestMetaDataModel getTestMetaData() {
-        return this.testMetaData;
+        this.tagName = TagNameUtil.USER_CONFIRMATION;
     }
 }
-
-
-
-        /* 
-        ExecutorService executor = Executors.newCachedThreadPool();
-        Callable<Boolean> task = new Callable<Boolean>() {
-            public Boolean call() {
-                LeafUserConfirmationTag.message = "asd";
-                return true;
-            }
-        };
-        Future<Boolean> future = executor.submit(task);
-        try {
-            future.get(timeout, TimeUnit.SECONDS); 
-        } catch (TimeoutException | InterruptedException | ExecutionException e) {
-        } finally {
-            future.cancel(true);
-        }
-        */

@@ -1,18 +1,12 @@
 package weg.net.tester.tag;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-
 import weg.net.tester.communication.BaseCommunication;
 import weg.net.tester.communication.ModbusCommunication;
 import weg.net.tester.exception.CommunicationException;
 import weg.net.tester.models.TestMetaDataModel;
 import weg.net.tester.utils.FailureCodeUtil;
+import weg.net.tester.utils.TagNameUtil;
 
-@XmlRootElement(name = "modbusCommunication")
-@XmlAccessorType (XmlAccessType.FIELD)
 public class LeafModbusCommunicationTag extends NodeCommunicationTag {
     protected String portName;
     protected int baudRate;
@@ -22,8 +16,11 @@ public class LeafModbusCommunicationTag extends NodeCommunicationTag {
     protected int timeout;
     protected int address;
 
-    @XmlTransient
     BaseCommunication connection;
+
+    public LeafModbusCommunicationTag() {
+        this.setTagName();
+    }
     
     @Override
     public void executeCommand() {
@@ -35,18 +32,13 @@ public class LeafModbusCommunicationTag extends NodeCommunicationTag {
         } catch (CommunicationException e) {
             testResult = FailureCodeUtil.FALHA_SETUP_COMUNICACAO;
             log = "Falha no setup de comunicação com " + communicationName;
-            testMetaData.getIsPositionEnabled()[this.position-1] = false;
+            TestMetaDataModel.isPositionEnabled[this.position-1] = false;
         }
         //commandLog = new CommandLog(testResult, errorMessage, descricao, log, action);
     }
 
     @Override
     public void setTagName() {
-        this.tagName = "modbusCommunication";
-    }
-
-    @Override
-    public TestMetaDataModel getTestMetaData() {
-        return this.testMetaData;
+        this.tagName = TagNameUtil.MODBUS_COMMUNICATION;
     }
 }

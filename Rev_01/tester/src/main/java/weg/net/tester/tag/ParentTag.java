@@ -8,15 +8,12 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlTransient;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import weg.net.tester.models.CommandLog;
 import weg.net.tester.models.TestMetaDataModel;
 import weg.net.tester.utils.FailureCodeUtil;
 
-@XmlAccessorType (XmlAccessType.FIELD)
 public abstract class ParentTag extends BaseTag {
     //@Transient
     //protected CommandLog commandLog = new CommandLog();    //
@@ -36,16 +33,16 @@ public abstract class ParentTag extends BaseTag {
     
     protected long individualTestDurationMillis;    //
 
-    @XmlTransient
+    @JsonIgnore
     protected long startTime;
     
     //public static List<BaseTag> tagList;  //Became part of an obj
-    @XmlTransient
-    public static TestMetaDataModel testMetaData;
+    //@JsonIgnore
+    //public TestMetaDataModel testMetaData;
     
     @Override
     public CommandLog command() {
-        if(testMetaData.getIsPositionEnabled()[position-1]) {
+        if(TestMetaDataModel.isPositionEnabled[position-1]) {
             commandInitialSetup();
             initiateThread();
             commandEndingSetup();
@@ -72,7 +69,7 @@ public abstract class ParentTag extends BaseTag {
         } catch (TimeoutException | InterruptedException | ExecutionException e) {
             testResult = FailureCodeUtil.TIMEOUT;
             log = "Etapa do teste passou do limite de tempo especificado de " + timeout + " segundos";
-            testMetaData.getIsPositionEnabled()[this.position-1] = false; 
+            TestMetaDataModel.isPositionEnabled[this.position-1] = false; 
         } finally {
             future.cancel(true);
         }

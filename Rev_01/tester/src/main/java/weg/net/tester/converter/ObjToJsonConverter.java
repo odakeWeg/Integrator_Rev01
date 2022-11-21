@@ -1,5 +1,5 @@
 package weg.net.tester.converter;
 
-public interface BaseJsonXmlConverter {
+public class ObjToJsonConverter {
     
 }
