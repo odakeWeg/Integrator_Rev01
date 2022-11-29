@@ -14,6 +14,7 @@ import lombok.Getter;
 import lombok.Setter;
 import weg.net.tester.models.CommandLog;
 import weg.net.tester.models.TestMetaDataModel;
+import weg.net.tester.utils.ActionCommandUtil;
 import weg.net.tester.utils.FailureCodeUtil;
 
 @Getter
@@ -28,7 +29,7 @@ public abstract class ParentTag extends BaseTag {
 
     protected String descricao; //Became part of an obj -> not
     protected String log;   //Became part of an obj -> not
-    protected String action; //Became part of an obj -> not
+    protected String action = ActionCommandUtil.EXIBIT_VALUES; //Became part of an obj -> not
     protected String errorMessage;  //Became part of an obj -> not
     protected String testResult = FailureCodeUtil.NOT_APPLICABLE;    //Became part of an obj
     protected int timeout;  //
@@ -58,7 +59,7 @@ public abstract class ParentTag extends BaseTag {
         }
 
         finished = true;
-        return new CommandLog(testResult, errorMessage, descricao, log, action, finished);
+        return new CommandLog(testResult, errorMessage, descricao, log, action, TestMetaDataModel.testName, finished);
     }
 
     private void initiateThread() {

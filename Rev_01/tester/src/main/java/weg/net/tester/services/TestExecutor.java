@@ -7,8 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-
 import lombok.Getter;
 import lombok.Setter;
 import weg.net.tester.facade.datacenter.DataCenter;
@@ -32,13 +30,6 @@ public class TestExecutor {
     private String[] result;
     TagList baseTagList;
 
-    /* 
-    public TestExecutor(String barCode, SimpMessagingTemplate template) {
-        this.barCode = barCode;
-        this.template = template;
-    }
-    */
-
     public void execute() {
         String initSetupStatus = initSetup();
         if(initSetupStatus.equals(FrontEndFeedbackUtil.OK)) {
@@ -52,7 +43,7 @@ public class TestExecutor {
 
     private void sendFeedbackToFrontEnd(String result, boolean finished) {
         CommandLog commandLog = new CommandLog(result, ActionCommandUtil.SHOW_FINAL_RESULT, finished);
-        this.template.convertAndSend("/feedback",  commandLog);
+        this.template.convertAndSend("/feedback2",  commandLog);
     }
 
     private String initSetup() {
@@ -97,7 +88,7 @@ public class TestExecutor {
                     return results;
                 } else {
                     CommandLog commandLog = baseTagList.getList().get(i).command();
-                    this.template.convertAndSend("/feedback",  commandLog);
+                    this.template.convertAndSend("/feedback2",  commandLog);
                 }
             }
             for (int c = 0; c < baseTagList.qntOfProductInTest(); c++) {

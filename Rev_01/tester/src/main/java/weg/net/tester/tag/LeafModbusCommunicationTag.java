@@ -37,7 +37,6 @@ public class LeafModbusCommunicationTag extends NodeCommunicationTag {
             TestMetaDataModel.isPositionEnabled[this.position-1] = false;
             TestMetaDataModel.testStep[this.position-1] = this.id;
         }
-        //commandLog = new CommandLog(testResult, errorMessage, descricao, log, action);
     }
 
     @Override

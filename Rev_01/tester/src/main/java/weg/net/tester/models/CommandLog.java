@@ -9,14 +9,17 @@ public class CommandLog {
     private String descricao;
     private String log;
     private String action;
+    //@Todo: settar testName aqui e em todo lugar
+    private String testName;
     private boolean finished;
 
-    public CommandLog(String testResult, String errorMessage, String descricao, String log, String action, boolean finished) {
+    public CommandLog(String testResult, String errorMessage, String descricao, String log, String action, String testName, boolean finished) {
         this.testResult = testResult;
         this.errorMessage = errorMessage;
         this.descricao = descricao;
         this.log = log;
         this.action = action;
+        this.testName = testName;
         this.finished = finished;
     }
 

@@ -26,7 +26,7 @@ public class SessionController {
     public void startSession(String cadastro){
         try {
             SessionUtil.initiateSession(cadastro);
-            this.template.convertAndSend("/feedback", "Ok");
+            this.template.convertAndSend("/feedback", "ok");
         } catch (Exception e) {
             // TODO Auto-generated catch block
             this.template.convertAndSend("/feedback", "Not ok");
@@ -38,7 +38,7 @@ public class SessionController {
         try {
             SessionUtil.endSession();
             sessionRepository.save(SessionUtil.sessionModel);
-            this.template.convertAndSend("/feedback", "Ok");
+            this.template.convertAndSend("/feedback", "ok");
         } catch (Exception e) {
             // TODO Auto-generated catch block
             this.template.convertAndSend("/feedback", "Not ok");
