@@ -1,8 +1,11 @@
 package weg.net.tester.tag;
 
-import weg.net.tester.models.TestMetaDataModel;
+import lombok.Getter;
+import lombok.Setter;
 import weg.net.tester.utils.TagNameUtil;
 
+@Getter
+@Setter
 public class LeafUserInputTag extends NodeCompareTag {
 
     public LeafUserInputTag() {

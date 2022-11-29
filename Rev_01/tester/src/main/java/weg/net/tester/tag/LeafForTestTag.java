@@ -1,7 +1,10 @@
 package weg.net.tester.tag;
 
-import weg.net.tester.models.TestMetaDataModel;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class LeafForTestTag extends NodeMetaTestTag {
 
     //@Todo: Somente utilizado para teste de carga (múltiplas leituras podem ser implementada nas próprias tags)

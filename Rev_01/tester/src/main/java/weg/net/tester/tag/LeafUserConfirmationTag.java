@@ -7,11 +7,15 @@ import org.springframework.stereotype.Controller;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.Getter;
+import lombok.Setter;
 import weg.net.tester.models.TestMetaDataModel;
 import weg.net.tester.utils.ActionCommandUtil;
 import weg.net.tester.utils.FailureCodeUtil;
 import weg.net.tester.utils.TagNameUtil;
 
+@Getter
+@Setter
 @Controller
 public class LeafUserConfirmationTag extends NodeCompareTag {
     @JsonIgnore
@@ -51,6 +55,7 @@ public class LeafUserConfirmationTag extends NodeCompareTag {
             log = "Confirmação do usuário negada";
             action = ActionCommandUtil.EXIBIT_VALUES;
             TestMetaDataModel.isPositionEnabled[this.position-1] = false;
+            TestMetaDataModel.testStep[this.position-1] = this.id;
         }
     }
 

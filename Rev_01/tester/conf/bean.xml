@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   					   http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+		
+	<bean id="configurator" class="net.weg.soa.serviceclient.JaxWsClientConfigurator">
+		<property name="system" value="GIGASTESTEWAU" />
+		<!--property name="user"	value="PIGIGAUSER"/-->
+		<!--property name="password" value="g!g@0t&amp;st&amp;9"/-->
+		
+		<property name="user"	value="PIWDCSYSUSER"/>
+		<property name="password" value="160845W"/>
+		<property name="environment" value="production" /> 
+	</bean>
+	
+	<bean id="workCenterConfigurator" class="net.weg.soa.serviceclient.wdc.serialnumberitinerary.WorkCenterConfiguration">
+		<property name="Number" value="04010430"/>
+		<property name="Plant"	value="1320"/>
+        <property name="TestStationNumber" value="269A" />
+		<property name="Type" value="3" /> 
+		<property name="TypeDescription" value="TESTE FUNCIONAL AUTOMÁTICO" /> 
+		<property name="ProductionStep" value="0040" /> 
+		<property name="ProductionPhase" value="2" /> 
+		<property name="UserId" value="0" /> 
+		
+	</bean>
+
+
+</beans>

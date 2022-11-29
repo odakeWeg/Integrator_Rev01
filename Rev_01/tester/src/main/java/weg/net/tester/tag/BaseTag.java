@@ -10,4 +10,5 @@ public abstract class BaseTag {
     abstract public String getTagIdentifier();
     abstract public String getTagName();
     abstract public void setTagName();
+    abstract public int getPosition();
 }

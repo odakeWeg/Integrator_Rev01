@@ -10,10 +10,14 @@ import java.util.concurrent.TimeoutException;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.Getter;
+import lombok.Setter;
 import weg.net.tester.models.CommandLog;
 import weg.net.tester.models.TestMetaDataModel;
 import weg.net.tester.utils.FailureCodeUtil;
 
+@Getter
+@Setter
 public abstract class ParentTag extends BaseTag {
     //@Transient
     //protected CommandLog commandLog = new CommandLog();    //
@@ -29,6 +33,7 @@ public abstract class ParentTag extends BaseTag {
     protected String testResult = FailureCodeUtil.NOT_APPLICABLE;    //Became part of an obj
     protected int timeout;  //
     protected int position; //
+    protected boolean finished; //
     //protected static boolean[] isPositionEnable;  //Became part of an obj
     
     protected long individualTestDurationMillis;    //
@@ -52,7 +57,8 @@ public abstract class ParentTag extends BaseTag {
             //Something on log
         }
 
-        return new CommandLog(testResult, errorMessage, descricao, log, action);
+        finished = true;
+        return new CommandLog(testResult, errorMessage, descricao, log, action, finished);
     }
 
     private void initiateThread() {
@@ -70,6 +76,7 @@ public abstract class ParentTag extends BaseTag {
             testResult = FailureCodeUtil.TIMEOUT;
             log = "Etapa do teste passou do limite de tempo especificado de " + timeout + " segundos";
             TestMetaDataModel.isPositionEnabled[this.position-1] = false; 
+            TestMetaDataModel.testStep[this.position-1] = this.id;
         } finally {
             future.cancel(true);
         }
@@ -87,6 +94,11 @@ public abstract class ParentTag extends BaseTag {
     @Override
     public int getId() {
         return this.id;
+    }
+
+    @Override
+    public int getPosition() {
+        return this.position;
     }
 
     @Override

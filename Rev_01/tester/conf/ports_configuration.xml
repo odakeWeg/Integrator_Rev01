@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PortsConfig>
+    <PortConfigList></PortConfigList>
+</PortsConfig>
+
+
+<!-- 
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PortsConfig>
+    <PortConfigList>
+        <ComPortConfig timeout="1000" stop_bits="1" data_bits="8" parity="2" baud_rate="19200" port_name="COM1">
+            <modbusRTUprotocol responseDelay="30" transmissionDelay="0" timeout="1000" />
+        </ComPortConfig>
+        <UsbPortConfig timeout="1000">
+            <modbusRTUprotocol responseDelay="0" transmissionDelay="0" timeout="1000" />
+        </UsbPortConfig>
+        <EthPortConfig port="502" host_name="192.168.0.10">
+            <modbusRTUprotocol responseDelay="0" transmissionDelay="0" timeout="5000" />
+        </EthPortConfig>
+    </PortConfigList>
+</PortsConfig>
+-->

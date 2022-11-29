@@ -5,4 +5,5 @@ public class ActionCommandUtil {
     public static final String USER_CONFIRM = "Confirmacao";
     public static final String USER_INPUT = "Input";
     public static final String INIT = "Iniciar";
+    public static final String SHOW_FINAL_RESULT = "Finalizacao";
 }

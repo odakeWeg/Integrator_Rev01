@@ -2,8 +2,10 @@ package weg.net.tester;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
+import org.json.simple.parser.ParseException;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -20,7 +22,7 @@ import weg.net.tester.tag.TagList;
 public class ConverterTests {
 
     @Test
-    public void jsonToObjConverterTest() throws TestUnmarshalingException, StreamWriteException, DatabindException, IOException {
+    public void jsonToObjConverterTest() throws TestUnmarshalingException, StreamWriteException, DatabindException, IOException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException, ParseException {
         TagList tagList = new TagList();
         tagList.setList(new ArrayList<>());
         tagList.getList().add(new LeafEthernetCommunicationTag());

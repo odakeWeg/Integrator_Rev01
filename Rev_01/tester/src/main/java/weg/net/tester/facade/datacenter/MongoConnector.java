@@ -1,24 +1,15 @@
 package weg.net.tester.facade.datacenter;
 
-import java.io.File;
-import java.io.StringWriter;
 import java.sql.Timestamp;
 import java.util.List;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.w3c.dom.Document;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import weg.net.tester.converter.JsonObjConverter;
 import weg.net.tester.models.TestingResultModel;
 import weg.net.tester.repositories.TestingResultRepository;
 import weg.net.tester.tag.BaseTag;
@@ -60,7 +51,7 @@ public class MongoConnector {
         this.sessionId = SessionUtil.sessionModel.getTimestamp();
     }
 
-    public void endingSetup(String result, int testStep, List<BaseTag> tagList) {
+    public void endingSetup(String result, int testStep, TagList tagList) throws JsonProcessingException {
         //@Todo: need to make multi threaded, testStep is an array
         //duration will be divided by testStep length
         //maybe sum to the timestamp the duration
@@ -71,64 +62,21 @@ public class MongoConnector {
 
         this.result = result;
         this.testStep = testStep;
-        this.tagList = this.saveTest(tagList);
+        this.tagList = this.saveTest(tagList.getList());
         
         TestingResultModel testingResultModel = new TestingResultModel(this.descricaoProduto, this.sessionId, this.cadastro, this.serial, this.result, this.duration, this.tagList, this.timestamp, this.testStep);
         testingResultRepository.save(testingResultModel);
     }
 
-    public String saveTest(List<BaseTag> tagList) {
-        TagList tags;
-        String stringfiedXML;
-        try {
-            tags = new TagList(tagList);
-            stringfiedXML = readXML(marshalingToXML(tags));
-        } catch (ClassNotFoundException | JAXBException e) {
-            stringfiedXML = "Falha ao converter documento para String";
-        } 
-        return stringfiedXML;     
-    }
-
-    private File marshalingToXML(TagList listToMarshall) throws JAXBException {
-        File file = new File("listMarshalFile.xml");
-
-        JAXBContext jaxbContext = JAXBContext.newInstance(TagList.class);
-        Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-        jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        jaxbMarshaller.marshal(listToMarshall, file);
-
-        return file;
-    }
-
-    private String readXML(File file) {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = null;
-        try {
-            builder = factory.newDocumentBuilder();
-            Document xmlDocument = builder.parse(file);
-            return writeXmlDocumentToXmlFile(xmlDocument);
-        }  catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    private String writeXmlDocumentToXmlFile(Document xmlDocument)
-    {
-        String xmlString;
-        TransformerFactory tf = TransformerFactory.newInstance();
-        Transformer transformer;
-        try {
-            transformer = tf.newTransformer();
-            StringWriter writer = new StringWriter();
-            transformer.transform(new DOMSource(xmlDocument), new StreamResult(writer));
-    
-            xmlString = writer.getBuffer().toString(); 
-        } 
-        catch (Exception e) {
-            xmlString = "Falha ao converter documento para String";
-        }
-        return xmlString;
+    public String saveTest(List<BaseTag> tagList) throws JsonProcessingException {
+        TagList tags = new TagList();
+        JsonObjConverter jsonObjConverter = new JsonObjConverter();
+        String stringfiedJson;
+        
+        tags.setList(tagList);
+        stringfiedJson = jsonObjConverter.ObjToJsonStringConverter(tags);
+        
+        return stringfiedJson;     
     }
 
     public String getSerial() {

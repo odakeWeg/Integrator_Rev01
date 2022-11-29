@@ -1,17 +1,16 @@
 package weg.net.tester.facade.datacenter;
 
+import org.springframework.context.annotation.Configuration;
+
 import net.weg.wdc.ens.DielectricTestCharacteristicList;
 import net.weg.wdc.ens.FunctionalTestCharacteristicList;
 import net.weg.wdc.ens.LoadTestCharacteristicList;
 import net.weg.wdc.ens.ProductDataEns;
 import net.weg.wdc.ens.ReneableEnergyCharacteristicList;
 
+@Configuration
 public class EnsConnector {
     private String serial;
-
-    public EnsConnector(String serial) {
-        this.serial = serial;
-    }
     
     public void saveEns() {
         ProductDataEns productDataEns = new ProductDataEns();
@@ -38,4 +37,13 @@ public class EnsConnector {
     public ReneableEnergyCharacteristicList setRenewableEnergyFromObject() {
         return null;
     }
+
+    public String getSerial() {
+        return this.serial;
+    }
+
+    public void setSerial(String serial) {
+        this.serial = serial;
+    }
+
 }

@@ -22,16 +22,16 @@ public class ModbusCommunication implements BaseCommunication{
     private int dataBits;
     private int stopBits;
     private String parity;
-    private int timeout;
+    private int timeoutComm;
     private  int address;
 
-	public ModbusCommunication(String portName, int baudRate, int dataBits, int stopBits, String parity, int timeout, int address) {
+	public ModbusCommunication(String portName, int baudRate, int dataBits, int stopBits, String parity, int timeoutComm, int address) {
 		this.portName = portName;
         this.baudRate = baudRate;
         this.dataBits = dataBits;
         this.stopBits = stopBits;
         this.parity = parity;
-        this.timeout = timeout;
+        this.timeoutComm = timeoutComm;
         this.address = address;
 	}
 
@@ -44,7 +44,7 @@ public class ModbusCommunication implements BaseCommunication{
 		try {
 			serialModbusCommunication = new ModbusTCPHelper(master);
 			serialModbusCommunication.connect();
-			serialModbusCommunication.subscribeClient("Serial/"+ portName + "/Modbus-RTU/@" + address+ "#" + baudRate + "#" + dataBits + "#" + stopBits + "#" + parity + "#0#50#" + timeout + "#40");
+			serialModbusCommunication.subscribeClient("Serial/"+ portName + "/Modbus-RTU/@" + address+ "#" + baudRate + "#" + dataBits + "#" + stopBits + "#" + parity + "#0#50#" + timeoutComm + "#40");
 		} catch (NegativeConfirmationException | ModbusExceptionResponseException | ModbusUnexpectedResponseException | IOException e) {
 			throw new CommunicationException("Falha na conexão serial!");
 		}

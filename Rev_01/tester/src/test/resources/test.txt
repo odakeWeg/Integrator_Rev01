@@ -1,1 +1,0 @@
-{"list":[{"id":0,"tagIdentifier":null,"tagName":"EthernetCommunication","ip":null,"port":0,"address":0,"timeBetweenCommand":0},{"id":0,"tagIdentifier":null,"tagName":"Test","testName":null}]}

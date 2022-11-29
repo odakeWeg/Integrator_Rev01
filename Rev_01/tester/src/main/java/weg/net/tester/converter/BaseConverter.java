@@ -8,8 +8,8 @@ import weg.net.tester.exception.TestUnmarshalingException;
 import weg.net.tester.tag.TagList;
 
 public interface BaseConverter {
-    public TagList getRoutineFromFileName(String fileName);
-    public TagList convertFromJsonToObj(File testFile) throws TestUnmarshalingException;
+    public TagList getRoutineFromFileName(String fileName) throws TestUnmarshalingException;
+    //public TagList convertFromJsonToObj(File testFile) throws TestUnmarshalingException;
     public String ObjToJsonStringConverter(TagList tagList) throws JsonProcessingException;
 }
 

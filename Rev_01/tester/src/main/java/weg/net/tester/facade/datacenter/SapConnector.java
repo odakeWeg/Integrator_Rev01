@@ -2,20 +2,22 @@ package weg.net.tester.facade.datacenter;
 
 import java.util.HashMap;
 
+import org.springframework.context.annotation.Configuration;
+
 import net.weg.searchsap.Caract;
 import net.weg.searchsap.ProdutoBrutoSAP;
 
 //@Todo remove or refactor unnecessary fields
+@Configuration
 public class SapConnector {
     private String barCode;
     private HashMap<String, String> sapDataMap = new HashMap<>();
 
-    public SapConnector(String barCode) {
-        getDataBy2DBarcodeString(barCode);
-    }
-
-    private void getDataBy2DBarcodeString(String barCode) {
-        ProdutoBrutoSAP produtoBrutoSAP = new ProdutoBrutoSAP(barCode);
+    public void getDataBy2DBarcodeString() {
+        if(this.barCode.equals("017909492093169 211062114337 10 911121714557 24014419092")) {
+            System.out.println(barCode);
+        }
+        ProdutoBrutoSAP produtoBrutoSAP = new ProdutoBrutoSAP(this.barCode);
         produtoBrutoSAP.importarCaracteristicas();
         setDataMap(produtoBrutoSAP);
         sapDataMap.put("serial", Long.toString(produtoBrutoSAP.getSerial()));
@@ -58,5 +60,13 @@ public class SapConnector {
 
     public HashMap<String,String> getSapDataMap() {
         return this.sapDataMap;
+    }
+
+    public String getBarCode() {
+        return this.barCode;
+    }
+
+    public void setBarCode(String barCode) {
+        this.barCode = barCode;
     }
 }

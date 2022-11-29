@@ -1,25 +1,38 @@
 package weg.net.tester.tag;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.Getter;
+import lombok.Setter;
 import weg.net.tester.communication.BaseCommunication;
 import weg.net.tester.exception.CommunicationException;
 import weg.net.tester.models.TestMetaDataModel;
 import weg.net.tester.utils.FailureCodeUtil;
 import weg.net.tester.utils.TagNameUtil;
 
+@Getter
+@Setter
 public class LeafRegisterCompareTag extends NodeCompareTag {
+    //Causes error
+    /* 
+    @JsonIgnore
+    protected String ABSOLUTE = "Absolute";
+    @JsonIgnore
+    protected String PERCENTAGE = "Percentage";
+    */
 
-    private String communicationNameRef;
-    private int registerRef;
-    private String registerNameRef;
-    private int valueRef;
-    private String communicationNameOnTest;
-    private int registerOnTest;
-    private String registerNameOnTest;
-    private int valueOnTest;
-    private String calculateBy;
-    private int tolerancy;
-    private int waitBefore;
-    private int waitAfter;
+    protected String communicationNameRef;
+    protected int registerRef;
+    protected String registerNameRef;
+    protected int valueRef;
+    protected String communicationNameOnTest;
+    protected int registerOnTest;
+    protected String registerNameOnTest;
+    protected int valueOnTest;
+    protected String calculateBy;
+    protected int tolerancy;
+    protected int waitBefore;
+    protected int waitAfter;
     
     public LeafRegisterCompareTag() {
         this.setTagName();
@@ -27,13 +40,13 @@ public class LeafRegisterCompareTag extends NodeCompareTag {
 
     @Override
     public void executeCommand() {
-        if (readRef() || readOnTest()) {
+        if (readRef() && readOnTest()) {
             switch(calculateBy) {
-                case "Percentage":
-                    percentualCompare();
-                break;
                 case "Absolute":
                     absoluteCompare();
+                break;
+                case "Percentage":
+                    percentualCompare();
                 break;
             }
         } else {
@@ -41,7 +54,7 @@ public class LeafRegisterCompareTag extends NodeCompareTag {
         }
     }
 
-    private void percentualCompare() {
+    protected void percentualCompare() {
         boolean upperLimit = valueOnTest <= valueRef + valueRef*tolerancy/100;
         boolean lowerLimit = valueOnTest >= valueRef - valueRef*tolerancy/100;
         if (upperLimit && lowerLimit) {
@@ -51,10 +64,11 @@ public class LeafRegisterCompareTag extends NodeCompareTag {
             testResult = FailureCodeUtil.OUT_OF_TOLERANCY;
             log = "Valor lido fora da tolerancia: " +  (valueRef - valueRef*tolerancy/100) + " < Valor medido: " + valueOnTest + " < " + (valueRef + valueRef*tolerancy/100);
             TestMetaDataModel.isPositionEnabled[this.position-1] = false;
+            TestMetaDataModel.testStep[this.position-1] = this.id;
         }
     }
 
-    private void absoluteCompare() {
+    protected void absoluteCompare() {
         boolean upperLimit = valueOnTest <= valueRef + tolerancy;
         boolean lowerLimit = valueOnTest >= valueRef - tolerancy;
         if (upperLimit && lowerLimit) {
@@ -64,6 +78,7 @@ public class LeafRegisterCompareTag extends NodeCompareTag {
             testResult = FailureCodeUtil.OUT_OF_TOLERANCY;
             log = "Valor lido fora da tolerancia: " +  (valueRef - tolerancy) + " < Valor medido: " + valueOnTest + " < " + (valueRef + tolerancy);
             TestMetaDataModel.isPositionEnabled[this.position-1] = false;
+            TestMetaDataModel.testStep[this.position-1] = this.id;
         }
     }
 
@@ -83,6 +98,7 @@ public class LeafRegisterCompareTag extends NodeCompareTag {
                 testResult = FailureCodeUtil.FALHA_COMUNICACAO;
                 log = "Falha na comunicação com " + communicationNameRef;
                 TestMetaDataModel.isPositionEnabled[this.position-1] = false;
+                TestMetaDataModel.testStep[this.position-1] = this.id;
                 return false;
             }
         }
@@ -106,6 +122,7 @@ public class LeafRegisterCompareTag extends NodeCompareTag {
                 testResult = FailureCodeUtil.FALHA_COMUNICACAO;
                 log = "Falha na comunicação com " + communicationNameOnTest;
                 TestMetaDataModel.isPositionEnabled[this.position-1] = false;
+                TestMetaDataModel.testStep[this.position-1] = this.id;
                 return false;
             }
         }

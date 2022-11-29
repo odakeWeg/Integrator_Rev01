@@ -16,9 +16,14 @@ public class TestRoutineHandlerController {
         this.template = template;
     }
 
+    @Autowired
+    private  TestExecutor testExecutor;
+
     @MessageMapping("/log")
-    public void onReceivedMesage(String barCode) {
-        TestExecutor testExecutor = new TestExecutor(barCode, template);
+    public void onReceivedMessage(String barCode) {
+        //TestExecutor testExecutor = new TestExecutor(barCode, template);
+        testExecutor.setBarCode(barCode);
+        testExecutor.setTemplate(template);
         testExecutor.execute();
     }
 }

@@ -1,11 +1,15 @@
 package weg.net.tester.tag;
 
+import lombok.Getter;
+import lombok.Setter;
 import weg.net.tester.communication.BaseCommunication;
 import weg.net.tester.exception.CommunicationException;
 import weg.net.tester.models.TestMetaDataModel;
 import weg.net.tester.utils.FailureCodeUtil;
 import weg.net.tester.utils.TagNameUtil;
 
+@Getter
+@Setter
 public class LeafWriteTag extends NodeWriteTag {
 
     private String communicationName;
@@ -35,6 +39,7 @@ public class LeafWriteTag extends NodeWriteTag {
                 testResult = FailureCodeUtil.FALHA_COMUNICACAO;
                 log = "Falha na comunicação com " + communicationName;
                 TestMetaDataModel.isPositionEnabled[this.position-1] = false;
+                TestMetaDataModel.testStep[this.position-1] = this.id;
             }
         }
         delayMilliseconds(waitAfter); 

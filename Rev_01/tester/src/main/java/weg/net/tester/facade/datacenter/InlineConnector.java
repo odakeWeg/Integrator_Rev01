@@ -1,17 +1,16 @@
 package weg.net.tester.facade.datacenter;
 
+import org.springframework.context.annotation.Configuration;
+
 import net.weg.soa.serviceclient.wdc.supervisoryevent.StatusRegister;
 import net.weg.soa.serviceclient.wdc.supervisoryevent.SupervisoryEvent;
 import net.weg.soa.serviceclient.wdc.supervisoryevent.TestResult;
 import net.weg.wdc.sic.SicLibraryHelper;
 import net.weg.wdc.sic.service.SicLibraryServices;
 
+@Configuration 
 public class InlineConnector {
     private String serial;
-
-    public InlineConnector(String serial) {
-        this.serial = serial;
-    }
 
     public void saveInitialEvent() throws Exception {
         SupervisoryEvent supervisoryEvent = new SupervisoryEvent();
@@ -63,4 +62,12 @@ public class InlineConnector {
     public boolean isTestAllowed() throws Exception {
         return SicLibraryServices.getInstance().isWorkcenterOperationAllowed(this.serial);
 	}
+
+    public String getSerial() {
+        return this.serial;
+    }
+
+    public void setSerial(String serial) {
+        this.serial = serial;
+    }
 }
