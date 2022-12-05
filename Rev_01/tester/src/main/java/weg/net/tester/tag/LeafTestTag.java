@@ -11,9 +11,9 @@ import weg.net.tester.utils.TagNameUtil;
 @Setter
 public class LeafTestTag extends NodeMetaTestTag {
     //@Todo: Acertar para modificar div de finalização de teste
-    private final String START = "Start";
-    private final String FINISH = "Finish";
-    private final String CANCEL = "Cancel";
+    //private final String START = "Start";
+    //private final String FINISH = "Finish";
+    //private final String CANCEL = "Cancel";
 
     private String testName;
 

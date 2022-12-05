@@ -9,4 +9,6 @@ public class TagNameUtil {
     public static final String USER_CONFIRMATION = "LeafUserConfirmationTag";
     public static final String USER_INPUT = "LeafUserInputTag";
     public static final String WRITE = "LeafWriteTag";
+    public static final String VARIABLE_WRITE = "LeafVariableWriteTag";
+    public static final String VARIABLE_COMPARE = "LeafVariableCompareTag";
 }

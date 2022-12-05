@@ -1,5 +1,8 @@
 package weg.net.tester.models;
 
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+
+import weg.net.tester.facade.datacenter.SapConnector;
 import weg.net.tester.tag.TagList;
 
 public class TestMetaDataModel {
@@ -7,6 +10,8 @@ public class TestMetaDataModel {
     public static String testName;
     public static boolean[] isPositionEnabled;
     public static boolean exitFlag;
+    public static SimpMessagingTemplate template;
+    public static SapConnector sapConnector; 
     //@Todo: must do it multi-threaded
 
     public static int[] testStep;
@@ -17,12 +22,15 @@ public class TestMetaDataModel {
 
     public TestMetaDataModel(int qnt) {
         this.exitFlag = false;
-        this.isPositionEnabled = new boolean[qnt];
+        this.isPositionEnabled = initiatePosition(qnt);
         this.testStep = new int[qnt];
+    }
 
-        //@Todo: Make it automatic
-        for (int i = 0; i < this.isPositionEnabled.length; i++) {
-            this.isPositionEnabled[i] = true;
-        }   
+    public boolean[] initiatePosition(int qnt) {
+        boolean[] array = new boolean[qnt];
+        for (int i = 0; i < array.length; i++) {
+            array[i] = true;
+        }
+        return array;
     }
 }

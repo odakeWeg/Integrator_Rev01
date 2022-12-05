@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 import lombok.Getter;
 import lombok.Setter;
 import weg.net.tester.communication.BaseCommunication;
+import weg.net.tester.exception.ObjectNotFoundException;
 import weg.net.tester.models.TestMetaDataModel;
 import weg.net.tester.utils.TagIdentifierUtil;
 
@@ -17,11 +18,10 @@ public abstract class NodeCompareTag extends ParentTag {
         try {
             TimeUnit.MILLISECONDS.sleep(wait);
         } catch (InterruptedException e) {
-            //@Todo
         }
     }
 
-    protected BaseCommunication getCommunicationByName(String name) {
+    protected BaseCommunication getCommunicationByName(String name) throws ObjectNotFoundException {
         NodeCommunicationTag communicationTag;
         for (int i = 0; i < TestMetaDataModel.tagList.getList().size(); i++) {
             if (TestMetaDataModel.tagList.getList().get(i).getTagIdentifier().equals(TagIdentifierUtil.COMMUNICATION)) {
@@ -31,6 +31,6 @@ public abstract class NodeCompareTag extends ParentTag {
                 }
             }
         }
-        return null;    //@Todo: null is not a good practice
+        throw new ObjectNotFoundException("Objeto de comunicação não encontrado!");
     }
 }

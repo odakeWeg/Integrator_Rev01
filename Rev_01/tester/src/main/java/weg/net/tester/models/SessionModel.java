@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-//TODO: Verificar o que adicionar aqui
 @NoArgsConstructor
 @Document
 @Getter

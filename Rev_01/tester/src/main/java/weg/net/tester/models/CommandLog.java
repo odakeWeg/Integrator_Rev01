@@ -9,7 +9,6 @@ public class CommandLog {
     private String descricao;
     private String log;
     private String action;
-    //@Todo: settar testName aqui e em todo lugar
     private String testName;
     private boolean finished;
 

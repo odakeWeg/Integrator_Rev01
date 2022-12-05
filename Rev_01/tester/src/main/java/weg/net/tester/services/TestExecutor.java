@@ -54,6 +54,8 @@ public class TestExecutor {
             this.baseTagList = testingRoutine.getRoutine();
             TestMetaDataModel refreshStaticVariable = new TestMetaDataModel(baseTagList.qntOfProductInTest());
             TestMetaDataModel.tagList = baseTagList; 
+            TestMetaDataModel.template = this.template;
+            TestMetaDataModel.sapConnector = this.dataCenter.getSapConnector();
 
             
             this.dataCenter.getMongoConnector().initialSetup();

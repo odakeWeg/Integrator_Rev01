@@ -3,8 +3,6 @@ package weg.net.tester.models;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-//import com.edson.tag.BaseTag; //@Todo: criar biblioteca
-
 import lombok.Getter;
 
 @Document
@@ -20,7 +18,6 @@ public class TestingResultModel {
     private String tagList;
     private String descricaoProduto;
     private int testStep;
-    //@Todo: maybe save log too - only if fails
 
     public TestingResultModel(String descricaoProduto, String sessionId, String cadastro, String serial, String result, long duration, String tagList, String timestamp, int testStep) {
         this.testStep = testStep;

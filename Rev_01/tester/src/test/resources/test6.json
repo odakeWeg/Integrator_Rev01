@@ -43,7 +43,7 @@
             "action": "exibir",
             "errorMessage": null,
             "testResult": "N/A",
-            "timeout": 10000,
+            "timeout": 10,
             "position": 1,
             "finished": false,
             "individualTestDurationMillis": 0,
@@ -54,7 +54,7 @@
             "registerRef": 8000,
             "valueRef": 0,
             "calculateBy": "Absolute",
-            "tolerancy": 5,
+            "tolerancy": 10,
             "waitBefore": 1,
             "waitAfter": 1
         }

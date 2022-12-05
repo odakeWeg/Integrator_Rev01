@@ -73,9 +73,14 @@ public abstract class ParentTag extends BaseTag {
         Future<Boolean> future = executor.submit(task);
         try {
             future.get(timeout, TimeUnit.SECONDS); 
-        } catch (TimeoutException | InterruptedException | ExecutionException e) {
+        } catch (TimeoutException | InterruptedException e) {
             testResult = FailureCodeUtil.TIMEOUT;
             log = "Etapa do teste passou do limite de tempo especificado de " + timeout + " segundos";
+            TestMetaDataModel.isPositionEnabled[this.position-1] = false; 
+            TestMetaDataModel.testStep[this.position-1] = this.id;
+        } catch (ExecutionException e) {
+            testResult = FailureCodeUtil.EXECUTION_FAILURE;
+            log = "Falha na execução da rotina";
             TestMetaDataModel.isPositionEnabled[this.position-1] = false; 
             TestMetaDataModel.testStep[this.position-1] = this.id;
         } finally {

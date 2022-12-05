@@ -1,11 +1,10 @@
 package weg.net.tester.tag;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.Getter;
 import lombok.Setter;
 import weg.net.tester.communication.BaseCommunication;
 import weg.net.tester.exception.CommunicationException;
+import weg.net.tester.exception.ObjectNotFoundException;
 import weg.net.tester.models.TestMetaDataModel;
 import weg.net.tester.utils.FailureCodeUtil;
 import weg.net.tester.utils.TagNameUtil;
@@ -83,13 +82,10 @@ public class LeafRegisterCompareTag extends NodeCompareTag {
     }
 
     public boolean readRef() {
-        delayMilliseconds(waitBefore);
-        BaseCommunication communicationRef = getCommunicationByName(communicationNameRef);
-        if(communicationRef == null) {
-            testResult = FailureCodeUtil.OBJECT_NOT_FOUND;
-            log = "Comunicação com nome " + communicationNameRef + " não foi encontrado, verificar se a rotina de teste está correta";
-            return false;
-        } else {
+        try {
+            BaseCommunication communicationRef = getCommunicationByName(communicationNameRef);
+
+            delayMilliseconds(waitBefore);
             try {
                 valueRef = communicationRef.readSingleRegister(registerRef);
                 testResult = FailureCodeUtil.OK;
@@ -101,19 +97,20 @@ public class LeafRegisterCompareTag extends NodeCompareTag {
                 TestMetaDataModel.testStep[this.position-1] = this.id;
                 return false;
             }
+            delayMilliseconds(waitAfter);
+            return true;
+        } catch (ObjectNotFoundException e) {
+            testResult = FailureCodeUtil.OBJECT_NOT_FOUND;
+            log = "Comunicação com nome " + communicationNameRef + " não foi encontrado, verificar se a rotina de teste está correta";
+            return false;
         }
-        delayMilliseconds(waitAfter);
-        return true;
     }
 
     public boolean readOnTest() {
-        delayMilliseconds(waitBefore);
-        BaseCommunication communicationOnTest = getCommunicationByName(communicationNameOnTest);
-        if(communicationOnTest == null) {
-            testResult = FailureCodeUtil.OBJECT_NOT_FOUND;
-            log = "Comunicação com nome " + communicationNameOnTest + " não foi encontrado, verificar se a rotina de teste está correta";
-            return false;
-        } else {
+        try {
+            BaseCommunication communicationOnTest = getCommunicationByName(communicationNameOnTest);
+
+            delayMilliseconds(waitBefore);
             try {
                 valueOnTest = communicationOnTest.readSingleRegister(registerOnTest);
                 testResult = FailureCodeUtil.OK;
@@ -125,9 +122,13 @@ public class LeafRegisterCompareTag extends NodeCompareTag {
                 TestMetaDataModel.testStep[this.position-1] = this.id;
                 return false;
             }
+            delayMilliseconds(waitAfter);
+            return true;
+        } catch (ObjectNotFoundException e) {
+            testResult = FailureCodeUtil.OBJECT_NOT_FOUND;
+            log = "Comunicação com nome " + communicationNameOnTest + " não foi encontrado, verificar se a rotina de teste está correta";
+            return false;
         }
-        delayMilliseconds(waitAfter);
-        return true;
     }
     
     @Override

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import weg.net.tester.communication.BaseCommunication;
 import weg.net.tester.exception.CommunicationException;
+import weg.net.tester.exception.ObjectNotFoundException;
 import weg.net.tester.models.TestMetaDataModel;
 import weg.net.tester.utils.FailureCodeUtil;
 import weg.net.tester.utils.TagNameUtil;
@@ -25,12 +26,10 @@ public class LeafWriteTag extends NodeWriteTag {
     
     @Override
     public void executeCommand() {
-        BaseCommunication communication = getCommunicationByName(communicationName);
-        delayMilliseconds(waitBefore);                                 
-        if(communication == null) {
-            testResult = FailureCodeUtil.OBJECT_NOT_FOUND;
-            log = "Comunicação com nome " + communicationName + " não foi encontrado, verificar se a rotina de teste está correta";
-        } else {
+        try {
+            BaseCommunication communication = getCommunicationByName(communicationName);
+
+            delayMilliseconds(waitBefore);   
             try {
                 communication.writeSingleRegister(register, value);
                 testResult = FailureCodeUtil.OK;
@@ -40,9 +39,13 @@ public class LeafWriteTag extends NodeWriteTag {
                 log = "Falha na comunicação com " + communicationName;
                 TestMetaDataModel.isPositionEnabled[this.position-1] = false;
                 TestMetaDataModel.testStep[this.position-1] = this.id;
+                return;
             }
+            delayMilliseconds(waitAfter); 
+        } catch (ObjectNotFoundException e) {
+            testResult = FailureCodeUtil.OBJECT_NOT_FOUND;
+            log = "Comunicação com nome " + communicationName + " não foi encontrado, verificar se a rotina de teste está correta";
         }
-        delayMilliseconds(waitAfter); 
     }
     
     @Override

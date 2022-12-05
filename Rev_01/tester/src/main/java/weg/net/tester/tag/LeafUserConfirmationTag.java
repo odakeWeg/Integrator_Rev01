@@ -1,5 +1,7 @@
 package weg.net.tester.tag;
 
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -20,15 +22,21 @@ import weg.net.tester.utils.TagNameUtil;
 public class LeafUserConfirmationTag extends NodeCompareTag {
     @JsonIgnore
     private SimpMessagingTemplate template;
+    @JsonIgnore
     private static boolean confirmation;
+    @JsonIgnore
     private static boolean responseFlag;
 
     protected String messageToDisplay;
 
+    protected boolean confirmationValue;
+
+    /* 
     @Autowired
     void WebSocketController(SimpMessagingTemplate template) {
         this.template = template;
     }
+    */
 
     public LeafUserConfirmationTag() {
         this.setTagName();
@@ -36,6 +44,7 @@ public class LeafUserConfirmationTag extends NodeCompareTag {
 
     @Override
     public void executeCommand() {
+        this.template = TestMetaDataModel.template;
         confirmationRequest();
     }
 
@@ -46,14 +55,14 @@ public class LeafUserConfirmationTag extends NodeCompareTag {
         //@Todo: change feedback
         this.template.convertAndSend("/feedback",  messageToDisplay);
         waitConfirmation();
-        if(confirmation) {
+        if(confirmationValue) {
             testResult = FailureCodeUtil.OK;
             log = "Confirmação do usuário captada com sucesso";
-            action = ActionCommandUtil.EXIBIT_VALUES;
+            //action = ActionCommandUtil.EXIBIT_VALUES;
         } else {
             testResult = FailureCodeUtil.CONFIRMACAO_NEGADA;
             log = "Confirmação do usuário negada";
-            action = ActionCommandUtil.EXIBIT_VALUES;
+            //action = ActionCommandUtil.EXIBIT_VALUES;
             TestMetaDataModel.isPositionEnabled[this.position-1] = false;
             TestMetaDataModel.testStep[this.position-1] = this.id;
         }
@@ -61,8 +70,12 @@ public class LeafUserConfirmationTag extends NodeCompareTag {
 
     private void waitConfirmation() {
         while(!responseFlag) {
-            //Waiting to receive data back
+            try {
+                TimeUnit.MILLISECONDS.sleep(1);
+            } catch (InterruptedException e) {
+            }
         }
+        this.confirmationValue = confirmation;
     }
 
     @MessageMapping("/confirmation")
