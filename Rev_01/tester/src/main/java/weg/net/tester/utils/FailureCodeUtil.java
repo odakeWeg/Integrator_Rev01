@@ -11,4 +11,5 @@ public class FailureCodeUtil {
     public static final String CONFIRMACAO_NEGADA = "Erro na interação com usuário";
     public static final String INVALID_USER_INPUT = "Entrada do usuário invalida";
     public static final String EXECUTION_FAILURE = "Falha na execução";
+    public static final String VARIABLE_READING_FAILURE = "Falha na leitura de variável";
 }

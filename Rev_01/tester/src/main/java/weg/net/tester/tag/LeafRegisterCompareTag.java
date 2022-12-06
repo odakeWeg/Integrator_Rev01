@@ -6,19 +6,13 @@ import weg.net.tester.communication.BaseCommunication;
 import weg.net.tester.exception.CommunicationException;
 import weg.net.tester.exception.ObjectNotFoundException;
 import weg.net.tester.models.TestMetaDataModel;
+import weg.net.tester.utils.CompareUtil;
 import weg.net.tester.utils.FailureCodeUtil;
 import weg.net.tester.utils.TagNameUtil;
 
 @Getter
 @Setter
 public class LeafRegisterCompareTag extends NodeCompareTag {
-    //Causes error
-    /* 
-    @JsonIgnore
-    protected String ABSOLUTE = "Absolute";
-    @JsonIgnore
-    protected String PERCENTAGE = "Percentage";
-    */
 
     protected String communicationNameRef;
     protected int registerRef;
@@ -33,23 +27,24 @@ public class LeafRegisterCompareTag extends NodeCompareTag {
     protected int waitBefore;
     protected int waitAfter;
     
+    /* 
+    Check if works
     public LeafRegisterCompareTag() {
         this.setTagName();
     }
+    */
 
     @Override
     public void executeCommand() {
         if (readRef() && readOnTest()) {
             switch(calculateBy) {
-                case "Absolute":
+                case CompareUtil.ABSOLUTE:
                     absoluteCompare();
                 break;
-                case "Percentage":
+                case CompareUtil.PERCENTAGE:
                     percentualCompare();
                 break;
             }
-        } else {
-            return;
         }
     }
 

@@ -12,6 +12,7 @@ import weg.net.tester.utils.TagIdentifierUtil;
 @Getter
 @Setter
 public abstract class NodeCompareTag extends ParentTag {
+    
     protected String tagIdentifier = TagIdentifierUtil.COMPARE;
 
     protected void delayMilliseconds(int wait) {

@@ -45,6 +45,10 @@ public abstract class ParentTag extends BaseTag {
     //public static List<BaseTag> tagList;  //Became part of an obj
     //@JsonIgnore
     //public TestMetaDataModel testMetaData;
+
+    public ParentTag() {
+        this.setTagName();
+    }
     
     @Override
     public CommandLog command() {
@@ -95,6 +99,13 @@ public abstract class ParentTag extends BaseTag {
     private void commandEndingSetup() {
         long endTime = System.currentTimeMillis();
         individualTestDurationMillis = endTime - startTime;
+    }
+
+    public void setFailureCommandLog(String testResult, String log) {
+        this.testResult = testResult;
+        this.log = log;
+        TestMetaDataModel.isPositionEnabled[this.position-1] = false;
+        TestMetaDataModel.testStep[this.position-1] = this.id;
     }
 
     @Override

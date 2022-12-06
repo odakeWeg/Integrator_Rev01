@@ -38,9 +38,12 @@ public class LeafUserConfirmationTag extends NodeCompareTag {
     }
     */
 
+    /* 
+    Check if works
     public LeafUserConfirmationTag() {
         this.setTagName();
     }
+    */
 
     @Override
     public void executeCommand() {

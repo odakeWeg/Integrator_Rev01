@@ -14,6 +14,7 @@ import weg.net.tester.communication.BaseCommunication;
 import weg.net.tester.exception.CommunicationException;
 import weg.net.tester.exception.ObjectNotFoundException;
 import weg.net.tester.models.TestMetaDataModel;
+import weg.net.tester.utils.CompareUtil;
 import weg.net.tester.utils.FailureCodeUtil;
 import weg.net.tester.utils.TagNameUtil;
 
@@ -44,9 +45,12 @@ public class LeafUserInputTag extends NodeCompareTag {
     protected int waitBefore;
     protected int waitAfter;
 
+    /* 
+    Check if works
     public LeafUserInputTag() {
         this.setTagName();
     }
+    */
 
     @Override
     public void executeCommand() {
@@ -73,15 +77,13 @@ public class LeafUserInputTag extends NodeCompareTag {
     private void checkInputValue() {
         if (readRef()) {
             switch(calculateBy) {
-                case "Absolute":
+                case CompareUtil.ABSOLUTE:
                     absoluteCompare();
                 break;
-                case "Percentage":
+                case CompareUtil.PERCENTAGE:
                     percentualCompare();
                 break;
             }
-        } else {
-            return;
         }
     }
 
