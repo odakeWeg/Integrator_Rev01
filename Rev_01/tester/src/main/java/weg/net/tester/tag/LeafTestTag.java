@@ -17,13 +17,6 @@ public class LeafTestTag extends NodeMetaTestTag {
 
     private String testName;
 
-    /* 
-    Check if works
-    public LeafTestTag() {
-        this.setTagName();
-    }
-    */
-
     @Override
     public void executeCommand() {
         testResult = FailureCodeUtil.OK;

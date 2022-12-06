@@ -21,9 +21,13 @@ public class TestRoutineHandlerController {
 
     @MessageMapping("/log")
     public void onReceivedMessage(String barCode) {
-        //TestExecutor testExecutor = new TestExecutor(barCode, template);
-        testExecutor.setBarCode(barCode);
-        testExecutor.setTemplate(template);
-        testExecutor.execute();
+        try {
+            testExecutor.setBarCode(barCode);
+            testExecutor.setTemplate(template);
+            testExecutor.execute();
+        } catch (Exception e) {
+            //@Todo: send trace to dataBase
+            //Maybe make a Exception class only for unexpected things -> not probably
+        }
     }
 }

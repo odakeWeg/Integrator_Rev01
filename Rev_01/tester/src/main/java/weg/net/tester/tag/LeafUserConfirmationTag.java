@@ -31,20 +31,6 @@ public class LeafUserConfirmationTag extends NodeCompareTag {
 
     protected boolean confirmationValue;
 
-    /* 
-    @Autowired
-    void WebSocketController(SimpMessagingTemplate template) {
-        this.template = template;
-    }
-    */
-
-    /* 
-    Check if works
-    public LeafUserConfirmationTag() {
-        this.setTagName();
-    }
-    */
-
     @Override
     public void executeCommand() {
         this.template = TestMetaDataModel.template;

@@ -20,14 +20,6 @@ public class LeafVariableWriteTag extends NodeWriteTag {
     protected int waitBefore;
     protected int waitAfter;
 
-    /* 
-    Check if works
-    public LeafVariableWriteTag() {
-        //@Todo: put it on parent class
-        this.setTagName();
-    }
-    */
-
     @Override
     protected void executeCommand() {
         if (getVariableValue()) {
@@ -37,7 +29,7 @@ public class LeafVariableWriteTag extends NodeWriteTag {
 
     private boolean getVariableValue() {
         try {
-            variableValue = Integer.parseInt(TestMetaDataModel.sapConnector.getSapDataMap().get(this.variableName));
+            variableValue = Integer.parseInt(TestMetaDataModel.sapConnector.get(this.variableName));
             return true;
         } catch (Exception e) {
             testResult = FailureCodeUtil.VARIABLE_READING_FAILURE;

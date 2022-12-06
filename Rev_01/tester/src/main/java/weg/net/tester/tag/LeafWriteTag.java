@@ -19,13 +19,6 @@ public class LeafWriteTag extends NodeWriteTag {
     private int value;
     private int waitBefore;
     private int waitAfter;
-
-    /* 
-    Check if works
-    public LeafWriteTag() {
-        this.setTagName();
-    }
-    */
     
     @Override
     public void executeCommand() {

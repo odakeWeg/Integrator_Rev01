@@ -7,4 +7,5 @@ public class ActionCommandUtil {
     public static final String INIT = "iniciar";
     public static final String SHOW_FINAL_RESULT = "finalizacao";
     public static final String TEST_STATUS_UPDATE = "status";
+    public static final String STARTING_INFO = "starting";
 }

@@ -1,5 +1,7 @@
 package weg.net.tester.models;
 
+import java.util.HashMap;
+
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import weg.net.tester.facade.datacenter.SapConnector;
@@ -11,7 +13,7 @@ public class TestMetaDataModel {
     public static boolean[] isPositionEnabled;
     public static boolean exitFlag;
     public static SimpMessagingTemplate template;
-    public static SapConnector sapConnector; 
+    public static HashMap<String, String> sapConnector; 
     //@Todo: must do it multi-threaded
 
     public static int[] testStep;

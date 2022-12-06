@@ -57,9 +57,10 @@ public abstract class ParentTag extends BaseTag {
             initiateThread();
             commandEndingSetup();
         } else {
+            //@Todo: probably just setting a flag for the PLC isolate the fail circuit
             //Pass value?? -> Run cancel test | let the PLC protect itself
             //testResult = FailureCodeUtil.PASS_OR_SOMETHING
-            //Something on log
+            //Something on log = new commandLog variable for test position fail?
         }
 
         finished = true;

@@ -4,12 +4,14 @@ import java.sql.Timestamp;
 
 import weg.net.tester.models.SessionModel;
 
+//@Todo: Maybe make it non static class
 public class SessionUtil {
     public static SessionModel sessionModel;
     private static long initialTime;
     private static long endingTime;
 
-    
+    private static long initialTestTime;
+    private static long endingTestTime;
 
     public static void initiateSession(String cadastro) {
         sessionModel = new SessionModel();
@@ -27,11 +29,55 @@ public class SessionUtil {
         endingTime = timestamp.getTime();
 
         sessionModel.setSessionTime(endingTime-initialTime);
-        //Set Other stuff
-        sessionModel.setExecutingTestTime(0);
-        sessionModel.setTotalTestApproved(0);
-        sessionModel.setTotalTestCanceled(0);
-        sessionModel.setTotalTestExecuted(0);
-        sessionModel.setTotalTestFailed(0);
+    }
+
+    public static void reset() {
+        sessionModel = new SessionModel();
+        initialTime = 0;
+        endingTime = 0;
+    }
+
+    public static void initiateTest() {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        initialTestTime = timestamp.getTime();
+    }
+
+    public static void endTest(String result) {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        endingTestTime = timestamp.getTime();
+
+        long updateTime = sessionModel.getExecutingTestTime() + endingTestTime - initialTestTime;
+        sessionModel.setExecutingTestTime(updateTime);
+
+        increment(result);
+    }
+
+    private static void increment(String result) {
+        incrementExecuted();
+        if (result.equals(FrontEndFeedbackUtil.OK)) {
+            incrementApproved();
+        } else {
+            if (result.equals(FrontEndFeedbackUtil.CANCELADO)) {
+                incrementCanceled();
+            } else {
+                incrementFailed();
+            }
+        }
+    }
+
+    private static void incrementApproved() {
+        sessionModel.setTotalTestApproved(sessionModel.getTotalTestApproved()+1);
+    }
+
+    private static void incrementFailed() {
+        sessionModel.setTotalTestFailed(sessionModel.getTotalTestFailed()+1);
+    }
+
+    private static void incrementCanceled() {
+        sessionModel.setTotalTestCanceled(sessionModel.getTotalTestCanceled()+1);
+    }
+
+    private static void incrementExecuted() {
+        sessionModel.setTotalTestExecuted(sessionModel.getTotalTestExecuted()+1);
     }
 }

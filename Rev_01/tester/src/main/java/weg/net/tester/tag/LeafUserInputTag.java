@@ -45,13 +45,6 @@ public class LeafUserInputTag extends NodeCompareTag {
     protected int waitBefore;
     protected int waitAfter;
 
-    /* 
-    Check if works
-    public LeafUserInputTag() {
-        this.setTagName();
-    }
-    */
-
     @Override
     public void executeCommand() {
         this.template = TestMetaDataModel.template;

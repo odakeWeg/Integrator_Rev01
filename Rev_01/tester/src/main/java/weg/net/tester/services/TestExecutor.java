@@ -9,6 +9,10 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import lombok.Getter;
 import lombok.Setter;
+import weg.net.tester.exception.DataBaseException;
+import weg.net.tester.exception.InlineException;
+import weg.net.tester.exception.SapException;
+import weg.net.tester.exception.TestUnmarshalingException;
 import weg.net.tester.facade.datacenter.DataCenter;
 import weg.net.tester.models.CommandLog;
 import weg.net.tester.models.TestMetaDataModel;
@@ -18,55 +22,101 @@ import weg.net.tester.utils.ActionCommandUtil;
 import weg.net.tester.utils.FilePathUtil;
 import weg.net.tester.utils.FrontEndFeedbackUtil;
 import weg.net.tester.utils.SapCaracUtil;
+import weg.net.tester.utils.SessionUtil;
 
 @Getter
 @Setter
 @Configuration
 public class TestExecutor {
-    private SimpMessagingTemplate template;
-    private String barCode;
     @Autowired
     private DataCenter dataCenter;
+    private SimpMessagingTemplate template;
+    private String barCode;
     private String[] result;
     TagList baseTagList;
 
+    //@Todo: Make it multithreaded transform in array (barcode, initialization, results, endSetup, etc)
     public void execute() {
         String initSetupStatus = initSetup();
         if(initSetupStatus.equals(FrontEndFeedbackUtil.OK)) {
             this.result = startTestingRoutine();
-            sendFeedbackToFrontEnd(this.result[0], true);   //@Todo: mandar todos os resultados
+            sendFeedbackAfter(this.result[0], true);   
         } else {
-            sendFeedbackToFrontEnd(initSetupStatus, false); //@Todo: log completo do que pode ter acontecido usando uma função para nao poluir essa parte -> esperar implementação inline ens sap
+            sendFeedbackAfter(initSetupStatus, false);
         }
         endSetup();
     }
 
-    private void sendFeedbackToFrontEnd(String result, boolean finished) {
+    private void sendFeedbackAfter(String result, boolean finished) {
         CommandLog commandLog = new CommandLog(result, ActionCommandUtil.SHOW_FINAL_RESULT, finished);
+        this.template.convertAndSend("/feedback2",  commandLog);
+    }   
+
+    //@Todo: Maybe create sendFeedbackMiddle method
+    private void sendFeedbackBefore(String descricao) {
+        CommandLog commandLog = new CommandLog(descricao, ActionCommandUtil.STARTING_INFO);
         this.template.convertAndSend("/feedback2",  commandLog);
     }
 
+    private void sendProductDescriptionFeedback() {
+        sendFeedbackBefore("Serial: " + TestMetaDataModel.sapConnector.get(SapCaracUtil.SERIAL));
+        sendFeedbackBefore("Material: " + TestMetaDataModel.sapConnector.get(SapCaracUtil.MATERIAL));
+        sendFeedbackBefore("Produto: " + TestMetaDataModel.sapConnector.get(SapCaracUtil.REF_PRODUTO_AUTOMACAO));
+        sendFeedbackBefore("Descricao: " + TestMetaDataModel.sapConnector.get(SapCaracUtil.SHORT_TEXT));
+    }
+
+    //@Todo: This method should be uncommented for production
     private String initSetup() {
-        //@Todo: this return is only for testing porpuses
+        //@Todo: refactor into different functions with catches, this one just calls every other
         try {
+            SessionUtil.initiateTest();
+            sendFeedbackBefore("Iniciando...");
             this.dataCenter.initiate(barCode);
             TestingRoutine testingRoutine = getList();
             this.baseTagList = testingRoutine.getRoutine();
-            TestMetaDataModel refreshStaticVariable = new TestMetaDataModel(baseTagList.qntOfProductInTest());
-            TestMetaDataModel.tagList = baseTagList; 
-            TestMetaDataModel.template = this.template;
-            TestMetaDataModel.sapConnector = this.dataCenter.getSapConnector();
-
-            
             this.dataCenter.getMongoConnector().initialSetup();
-            //this.dataCenter.getInlineConnector().saveInitialEvent();
-            //return this.dataCenter.getInlineConnector().isTestAllowed();
-            return FrontEndFeedbackUtil.OK;
-        } catch (Exception e) { //@Todo: separar em todos os erros possíveis
-            e.printStackTrace();
+            this.dataCenter.getInlineConnector().saveInitialEvent();
+            this.setTestMetaDataModel();
+            sendProductDescriptionFeedback();
+            if (this.dataCenter.getInlineConnector().isTestAllowed()) {
+                return FrontEndFeedbackUtil.OK;
+            } else {
+                return FrontEndFeedbackUtil.TESTE_NAO_AUTORIZADO;
+            }
+        } catch (SapException e) {
+            return FrontEndFeedbackUtil.SAP_ERROR;
+        } catch (InlineException e) {
+            return FrontEndFeedbackUtil.INLINE_ERROR;
+        } catch (DataBaseException e) {
+            return FrontEndFeedbackUtil.DATABASE_ERROR;
+        } catch (TestUnmarshalingException e) {
+            return FrontEndFeedbackUtil.ERRO_LOCALIZACAO_ROTINA;
+        } catch (Exception e) {
             return FrontEndFeedbackUtil.ERRO_INESPERADO;
-            //return FrontEndFeedbackUtil.ERRO_LOCALIZACAO_ROTINA;
         }
+    }
+    /* 
+    private String initSetup() {
+        try {
+            sendFeedbackBefore("Iniciando...");
+            this.dataCenter.initiate(barCode);
+            TestingRoutine testingRoutine = getList();
+            this.baseTagList = testingRoutine.getRoutine();
+            this.dataCenter.getMongoConnector().initialSetup();
+            this.setTestMetaDataModel();
+            sendProductDescriptionFeedback();
+            return FrontEndFeedbackUtil.OK;
+        } catch (Exception e) {
+            return FrontEndFeedbackUtil.ERRO_INESPERADO;
+        }
+    }
+    */
+
+    private void setTestMetaDataModel() {
+        TestMetaDataModel refreshStaticVariable = new TestMetaDataModel(baseTagList.qntOfProductInTest());
+        TestMetaDataModel.tagList = baseTagList; 
+        TestMetaDataModel.template = this.template;
+        TestMetaDataModel.sapConnector = this.dataCenter.getSapConnector().getSapDataMap();
     }
 
     private void endSetup() {
@@ -75,11 +125,40 @@ public class TestExecutor {
         //data and upload session and stuff
         //database and Session (increment from executed tests)
         try {
-            this.dataCenter.getMongoConnector().endingSetup(result[0], TestMetaDataModel.testStep[0], TestMetaDataModel.tagList);   //@Todo: mandar todos os resultados
+            SessionUtil.endTest(result[0]);
+            saveInlineEnd();
+            this.dataCenter.getMongoConnector().endingSetup(result[0], TestMetaDataModel.testStep[0], TestMetaDataModel.tagList);
         } catch (/*JsonProcessingException*/ Exception e) {
-            sendFeedbackToFrontEnd(FrontEndFeedbackUtil.FALHA_NA_FINALIZACAO, false);
+            sendFeedbackAfter(FrontEndFeedbackUtil.FALHA_NA_FINALIZACAO, false);
         }
     }
+
+    private void saveInlineEnd() throws InlineException {
+        if (result[0].equals(FrontEndFeedbackUtil.OK)) {
+            this.dataCenter.getInlineConnector().saveApprovalEvent();
+        } else {
+            if (result[0].equals(FrontEndFeedbackUtil.CANCELADO)) {
+                this.dataCenter.getInlineConnector().saveCancelEvent(result[0]);
+            } else {
+                this.dataCenter.getInlineConnector().saveRepprovalEvent(result[0]);
+            }
+        }
+    }
+
+    /* 
+    private void endSetup() {
+        //closingTestSetup get error step and run a cancelling test 
+        //routine (set log -> maybe changed to tags iself), save 
+        //data and upload session and stuff
+        //database and Session (increment from executed tests)
+        try {
+            SessionUtil.endTest(result[0]);
+            this.dataCenter.getMongoConnector().endingSetup(result[0], TestMetaDataModel.testStep[0], TestMetaDataModel.tagList);
+        } catch (Exception e) {
+            sendFeedbackAfter(FrontEndFeedbackUtil.FALHA_NA_FINALIZACAO, false);
+        }
+    }
+    */
 
     private String[] startTestingRoutine() { 
         String[] results = new String[baseTagList.qntOfProductInTest()];

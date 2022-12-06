@@ -19,13 +19,6 @@ public class LeafModbusCommunicationTag extends NodeCommunicationTag {
     protected String parity;
     protected int timeoutComm;
     protected int address;
-
-    /* 
-    Check if works
-    public LeafModbusCommunicationTag() {
-        this.setTagName();
-    }
-    */
     
     @Override
     public void executeCommand() {

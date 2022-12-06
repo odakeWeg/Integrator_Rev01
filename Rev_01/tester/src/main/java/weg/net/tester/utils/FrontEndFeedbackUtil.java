@@ -11,5 +11,6 @@ public class FrontEndFeedbackUtil {
     public static final String SAP_ERROR = "Erro na conexão com o SAP";
     public static final String ENS_ERROR = "Erro na conexão com o ENS";
     public static final String INLINE_ERROR = "Erro na conexão com o Inline";
+    public static final String DATABASE_ERROR = "Erro na conexão com a base de dados";
     public static final String TESTE_NAO_AUTORIZADO = "Teste nao autorizado";
 }

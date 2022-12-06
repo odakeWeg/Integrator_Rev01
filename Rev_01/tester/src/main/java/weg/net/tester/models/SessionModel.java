@@ -13,17 +13,17 @@ import lombok.Setter;
 @Setter
 public class SessionModel {
     @Id
-    private String timestamp;
-    private String cadastro;
-    private long sessionTime;
-    private int executingTestTime;
-    private int totalTestExecuted;
-    private int totalTestApproved;
-    private int totalTestFailed;
-    private int totalTestCanceled;
+    private String timestamp;   //
+    private String cadastro;    //
+    private long sessionTime;   //
+    private long executingTestTime;
+    private long totalTestExecuted;
+    private long totalTestApproved;
+    private long totalTestFailed;
+    private long totalTestCanceled;
 
 
-    public SessionModel(String cadastro, String timestamp, long sessionTime, int executingTestTime, int totalTestExecuted, int totalTestApproved, int totalTestFailed, int totalTestCanceled) {
+    public SessionModel(String cadastro, String timestamp, long sessionTime, long executingTestTime, long totalTestExecuted, long totalTestApproved, long totalTestFailed, long totalTestCanceled) {
         this.cadastro = cadastro;
         this.timestamp = timestamp;
         this.sessionTime = sessionTime;

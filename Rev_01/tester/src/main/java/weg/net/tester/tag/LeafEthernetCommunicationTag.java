@@ -17,13 +17,6 @@ public class LeafEthernetCommunicationTag extends NodeCommunicationTag {
     protected int address;
     protected int timeBetweenCommand;
 
-    /* 
-    Check if works
-    public LeafEthernetCommunicationTag() {
-        this.setTagName();
-    }
-    */
-
     @Override
     public void executeCommand() {
         connection = (BaseCommunication) new EthernetCommunication(ip, port, address, timeBetweenCommand);

@@ -12,6 +12,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import net.weg.searchsap.Caract;
 import net.weg.searchsap.ProdutoBrutoSAP;
+import weg.net.tester.exception.DataBaseException;
+import weg.net.tester.exception.InlineException;
+import weg.net.tester.exception.SapException;
 import weg.net.tester.facade.datacenter.InlineConnector;
 import weg.net.tester.facade.datacenter.MongoConnector;
 import weg.net.tester.facade.datacenter.SapConnector;
@@ -72,7 +75,7 @@ public class FacadeTests {
     }
 
     @Test
-    void sapGetingData() {
+    void sapGetingData() throws SapException {
         //Código de barras SSW900
         String barCode = "017909492093169 211062114337 10 911121714557 24014419092";
 
@@ -109,7 +112,7 @@ public class FacadeTests {
 	}
 
     @Test
-	void mongoIndividualConnection() throws JsonProcessingException {
+	void mongoIndividualConnection() throws JsonProcessingException, InlineException, DataBaseException {
         //MongoConnector mongoConnector = new MongoConnector("1062114337", "SSW900");
 
         this.mongoConnector.setDescricaoProduto("SSW900");

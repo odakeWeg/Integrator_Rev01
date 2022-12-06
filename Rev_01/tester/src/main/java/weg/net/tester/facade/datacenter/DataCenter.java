@@ -3,6 +3,9 @@ package weg.net.tester.facade.datacenter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
+import weg.net.tester.exception.SapException;
+import weg.net.tester.utils.SapCaracUtil;
+
 @Configuration
 public class DataCenter {
     @Autowired
@@ -16,12 +19,12 @@ public class DataCenter {
 
     //@Todo: implement ens
     //@Todo: implement mongo
-
-    public void initiate(String barCode) {
+    //@Todo: or make it multi-threaded or make an array
+    public void initiate(String barCode) throws SapException {
         this.sapConnector.setBarCode(barCode);
         this.sapConnector.getDataBy2DBarcodeString();
-        String serial = "serial"; //@Todo: get from sap;
-        String descricaoProduto = "produto"; //@Todo: get from sap
+        String serial = this.sapConnector.getSapDataMap().get(SapCaracUtil.SERIAL); //@Todo: get from sap;
+        String descricaoProduto = this.sapConnector.getSapDataMap().get(SapCaracUtil.SHORT_TEXT); //@Todo: get from sap
 
         this.inlineConnector.setSerial(serial);
         //@Todo initial inline stuff

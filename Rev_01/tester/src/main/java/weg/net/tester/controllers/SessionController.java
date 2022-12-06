@@ -1,13 +1,12 @@
 package weg.net.tester.controllers;
 
-import java.sql.Timestamp;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 import weg.net.tester.repositories.SessionRepository;
+import weg.net.tester.utils.FrontEndFeedbackUtil;
 import weg.net.tester.utils.SessionUtil;
 
 @Controller
@@ -26,10 +25,9 @@ public class SessionController {
     public void startSession(String cadastro){
         try {
             SessionUtil.initiateSession(cadastro);
-            this.template.convertAndSend("/feedback", "ok");
+            this.template.convertAndSend("/feedback", FrontEndFeedbackUtil.OK);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            this.template.convertAndSend("/feedback", "Not ok");
+            this.template.convertAndSend("/feedback", FrontEndFeedbackUtil.ERRO_INESPERADO);
         }
     }
 
@@ -38,10 +36,10 @@ public class SessionController {
         try {
             SessionUtil.endSession();
             sessionRepository.save(SessionUtil.sessionModel);
-            this.template.convertAndSend("/feedback", "ok");
+            SessionUtil.reset();
+            this.template.convertAndSend("/feedback", FrontEndFeedbackUtil.OK);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            this.template.convertAndSend("/feedback", "Not ok");
+            this.template.convertAndSend("/feedback", FrontEndFeedbackUtil.ERRO_INESPERADO);
         }
     }
 }

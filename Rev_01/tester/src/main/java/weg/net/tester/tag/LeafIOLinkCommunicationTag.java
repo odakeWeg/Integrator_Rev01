@@ -18,13 +18,6 @@ public class LeafIOLinkCommunicationTag extends NodeCommunicationTag {
     protected int address;
     protected int timeBetweenCommand;
 
-    /* 
-    Check if works
-    public LeafIOLinkCommunicationTag() {
-        this.setTagName();
-    }
-    */
-
     @Override
     public void executeCommand() {
         connection = (BaseCommunication) new IOLinkCommunication(ip, port, address, timeBetweenCommand);

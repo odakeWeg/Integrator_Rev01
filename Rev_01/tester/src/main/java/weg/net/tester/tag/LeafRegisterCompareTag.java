@@ -26,13 +26,6 @@ public class LeafRegisterCompareTag extends NodeCompareTag {
     protected int tolerancy;
     protected int waitBefore;
     protected int waitAfter;
-    
-    /* 
-    Check if works
-    public LeafRegisterCompareTag() {
-        this.setTagName();
-    }
-    */
 
     @Override
     public void executeCommand() {

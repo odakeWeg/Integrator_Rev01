@@ -28,6 +28,11 @@ public class CommandLog {
         this.finished = finished;
     }
 
+    public CommandLog(String descricao, String action) {
+        this.descricao = descricao;
+        this.action = action;
+    }
+
     public CommandLog() {
     }
 }
