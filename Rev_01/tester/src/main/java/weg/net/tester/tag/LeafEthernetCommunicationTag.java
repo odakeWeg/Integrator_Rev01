@@ -5,7 +5,6 @@ import lombok.Setter;
 import weg.net.tester.communication.BaseCommunication;
 import weg.net.tester.communication.EthernetCommunication;
 import weg.net.tester.exception.CommunicationException;
-import weg.net.tester.models.TestMetaDataModel;
 import weg.net.tester.utils.FailureCodeUtil;
 import weg.net.tester.utils.TagNameUtil;
 
@@ -25,10 +24,12 @@ public class LeafEthernetCommunicationTag extends NodeCommunicationTag {
             testResult = FailureCodeUtil.OK;
             log = "Setup de comunicação com " + communicationName + " realizado com sucesso.";
         } catch (CommunicationException e) {
-            testResult = FailureCodeUtil.FALHA_SETUP_COMUNICACAO;
+            //testResult = FailureCodeUtil.FALHA_SETUP_COMUNICACAO;
             log = "Falha no setup de comunicação com " + communicationName;
-            TestMetaDataModel.isPositionEnabled[this.position-1] = false;
-            TestMetaDataModel.testStep[this.position-1] = this.id;
+            //TestMetaDataModel.isPositionEnabled[this.position-1] = false;
+            //TestMetaDataModel.testStep[this.position-1] = this.id;
+            //@Todo: takeOut
+            setFailureCommandLog(FailureCodeUtil.FALHA_SETUP_COMUNICACAO, log);
         }
     }
 

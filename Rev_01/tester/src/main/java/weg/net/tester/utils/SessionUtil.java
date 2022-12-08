@@ -42,14 +42,16 @@ public class SessionUtil {
         initialTestTime = timestamp.getTime();
     }
 
-    public static void endTest(String result) {
+    public static void endTest(String[] result) {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         endingTestTime = timestamp.getTime();
 
         long updateTime = sessionModel.getExecutingTestTime() + endingTestTime - initialTestTime;
         sessionModel.setExecutingTestTime(updateTime);
 
-        increment(result);
+        for (int i = 0; i < result.length; i++) {
+            increment(result[i]);
+        }
     }
 
     private static void increment(String result) {

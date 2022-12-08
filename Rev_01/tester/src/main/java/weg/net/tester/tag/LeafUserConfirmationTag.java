@@ -49,11 +49,13 @@ public class LeafUserConfirmationTag extends NodeCompareTag {
             log = "Confirmação do usuário captada com sucesso";
             //action = ActionCommandUtil.EXIBIT_VALUES;
         } else {
-            testResult = FailureCodeUtil.CONFIRMACAO_NEGADA;
+            //testResult = FailureCodeUtil.CONFIRMACAO_NEGADA;
             log = "Confirmação do usuário negada";
             //action = ActionCommandUtil.EXIBIT_VALUES;
-            TestMetaDataModel.isPositionEnabled[this.position-1] = false;
-            TestMetaDataModel.testStep[this.position-1] = this.id;
+            //TestMetaDataModel.isPositionEnabled[this.position-1] = false;
+            //TestMetaDataModel.testStep[this.position-1] = this.id;
+            //@Todo: takeOut
+            setFailureCommandLog(FailureCodeUtil.CONFIRMACAO_NEGADA, log);
         }
     }
 

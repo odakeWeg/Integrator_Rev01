@@ -45,11 +45,11 @@ public class FacadeTests {
     @Test
 	void sapConnection() {
         //Código de barras SSW900
-        String cod = "017909492093169 211062114337 10 911121714557 24014419092";
+        String[] cod = {"017909492093169 211062114337 10 911121714557 24014419092"};
 
         SapConnector sapInstance = new SapConnector();
         sapInstance.setBarCode(cod);
-        Assert.assertEquals("SSW900", sapInstance.getSapDataMap().get(Caract.REF_PRODUTO_AUTOMACAO.name()));
+        Assert.assertEquals("SSW900", sapInstance.getSapDataMap().get(0).get(Caract.REF_PRODUTO_AUTOMACAO.name()));
 	}
 
     @Test
@@ -77,7 +77,7 @@ public class FacadeTests {
     @Test
     void sapGetingData() throws SapException {
         //Código de barras SSW900
-        String barCode = "017909492093169 211062114337 10 911121714557 24014419092";
+        String[] barCode = {"017909492093169 211062114337 10 911121714557 24014419092"};
 
         this.sapConnector.setBarCode(barCode);
         this.sapConnector.getDataBy2DBarcodeString();
@@ -115,8 +115,10 @@ public class FacadeTests {
 	void mongoIndividualConnection() throws JsonProcessingException, InlineException, DataBaseException {
         //MongoConnector mongoConnector = new MongoConnector("1062114337", "SSW900");
 
-        this.mongoConnector.setDescricaoProduto("SSW900");
-        this.mongoConnector.setSerial("1062114337");
+        String[] desc = {"SSW900"};
+        String[] serial = {"1062114337"};
+        this.mongoConnector.setDescricaoProduto(desc);
+        this.mongoConnector.setSerial(serial);
 
         List<BaseTag> list = new ArrayList();
         list.add((BaseTag) new LeafTestTag());
@@ -134,7 +136,10 @@ public class FacadeTests {
         SessionUtil.sessionModel.setCadastro("7881");
         SessionUtil.sessionModel.setTimestamp("1234567890");
         mongoConnector.initialSetup();
-        mongoConnector.endingSetup("result", 1, tagList);
+
+        int[] step = {1};
+        String[] result = {"result"};
+        mongoConnector.endingSetup(result, step, tagList);
 
         List<TestingResultModel> testingResultModel = testingResultRepository.findBySerial("1062114337");
 

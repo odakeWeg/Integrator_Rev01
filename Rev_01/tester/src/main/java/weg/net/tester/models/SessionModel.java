@@ -13,9 +13,9 @@ import lombok.Setter;
 @Setter
 public class SessionModel {
     @Id
-    private String timestamp;   //
-    private String cadastro;    //
-    private long sessionTime;   //
+    private String timestamp;
+    private String cadastro;
+    private long sessionTime;
     private long executingTestTime;
     private long totalTestExecuted;
     private long totalTestApproved;

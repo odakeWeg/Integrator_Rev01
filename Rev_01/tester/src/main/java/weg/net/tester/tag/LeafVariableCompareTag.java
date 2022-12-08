@@ -33,13 +33,15 @@ public class LeafVariableCompareTag extends NodeCompareTag {
 
     private boolean getVariableValue() {
         try {
-            variableValue = Integer.parseInt(TestMetaDataModel.sapConnector.get(this.variableName));
+            variableValue = Integer.parseInt(TestMetaDataModel.sapConnector.get(position).get(this.variableName));
             return true;
         } catch (Exception e) {
-            testResult = FailureCodeUtil.VARIABLE_READING_FAILURE;
+            //testResult = FailureCodeUtil.VARIABLE_READING_FAILURE;
             log = "Falha ao ler a variável: " + this.variableName;
-            TestMetaDataModel.isPositionEnabled[this.position-1] = false;
-            TestMetaDataModel.testStep[this.position-1] = this.id;
+            //TestMetaDataModel.isPositionEnabled[this.position-1] = false;
+            //TestMetaDataModel.testStep[this.position-1] = this.id;
+            //@Todo: takeOut
+            setFailureCommandLog(FailureCodeUtil.VARIABLE_READING_FAILURE, log);
             return false;
         }
     } 
@@ -64,10 +66,12 @@ public class LeafVariableCompareTag extends NodeCompareTag {
             testResult = FailureCodeUtil.OK;
             log = "Valor lido dentro da tolerancia: " +  (valueRef - valueRef*tolerancy/100) + " < Valor lido: " + variableValue + " < " + (valueRef + valueRef*tolerancy/100);
         } else {
-            testResult = FailureCodeUtil.OUT_OF_TOLERANCY;
+            //testResult = FailureCodeUtil.OUT_OF_TOLERANCY;
             log = "Valor lido fora da tolerancia: " +  (valueRef - valueRef*tolerancy/100) + " < Valor lido: " + variableValue + " < " + (valueRef + valueRef*tolerancy/100);
-            TestMetaDataModel.isPositionEnabled[this.position-1] = false;
-            TestMetaDataModel.testStep[this.position-1] = this.id;
+            //TestMetaDataModel.isPositionEnabled[this.position-1] = false;
+            //TestMetaDataModel.testStep[this.position-1] = this.id;
+            //@Todo: takeOut
+            setFailureCommandLog(FailureCodeUtil.OUT_OF_TOLERANCY, log);
         }
     }
 
@@ -78,10 +82,12 @@ public class LeafVariableCompareTag extends NodeCompareTag {
             testResult = FailureCodeUtil.OK;
             log = "Valor lido dentro da tolerancia: " +  (valueRef - tolerancy) + " < Valor lido: " + variableValue + " < " + (valueRef + tolerancy);
         } else {
-            testResult = FailureCodeUtil.OUT_OF_TOLERANCY;
+            //testResult = FailureCodeUtil.OUT_OF_TOLERANCY;
             log = "Valor lido fora da tolerancia: " +  (valueRef - tolerancy) + " < Valor lido: " + variableValue + " < " + (valueRef + tolerancy);
-            TestMetaDataModel.isPositionEnabled[this.position-1] = false;
-            TestMetaDataModel.testStep[this.position-1] = this.id;
+            //TestMetaDataModel.isPositionEnabled[this.position-1] = false;
+            //TestMetaDataModel.testStep[this.position-1] = this.id;
+            //@Todo: takeOut
+            setFailureCommandLog(FailureCodeUtil.OUT_OF_TOLERANCY, log);
         }
     }
 
@@ -95,17 +101,21 @@ public class LeafVariableCompareTag extends NodeCompareTag {
                 testResult = FailureCodeUtil.OK;
                 log = "Valor de leitura igual a " + valueRef + " no registrador " + registerRef;
             } catch (CommunicationException e) {
-                testResult = FailureCodeUtil.FALHA_COMUNICACAO;
+                //testResult = FailureCodeUtil.FALHA_COMUNICACAO;
                 log = "Falha na comunicação com " + communicationNameRef;
-                TestMetaDataModel.isPositionEnabled[this.position-1] = false;
-                TestMetaDataModel.testStep[this.position-1] = this.id;
+                //TestMetaDataModel.isPositionEnabled[this.position-1] = false;
+                //TestMetaDataModel.testStep[this.position-1] = this.id;
+                //@Todo: takeOut
+                setFailureCommandLog(FailureCodeUtil.FALHA_COMUNICACAO, log);
                 return false;
             }
             delayMilliseconds(waitAfter);
             return true;
         } catch (ObjectNotFoundException e) {
-            testResult = FailureCodeUtil.OBJECT_NOT_FOUND;
+            //testResult = FailureCodeUtil.OBJECT_NOT_FOUND;
             log = "Comunicação com nome " + communicationNameRef + " não foi encontrado, verificar se a rotina de teste está correta";
+            //@Todo: takeOut
+            setFailureCommandLog(FailureCodeUtil.OBJECT_NOT_FOUND, log);
             return false;
         }
     }

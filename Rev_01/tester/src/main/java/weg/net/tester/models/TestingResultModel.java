@@ -12,14 +12,14 @@ public class TestingResultModel {
     private String timestamp;
     private String sessionId;
     private String cadastro;
-    private String serial;
-    private String result;
+    private String[] serial;
+    private String[] result;
     private long duration;
     private String tagList;
-    private String descricaoProduto;
-    private int testStep;
+    private String[] descricaoProduto;
+    private int[] testStep;
 
-    public TestingResultModel(String descricaoProduto, String sessionId, String cadastro, String serial, String result, long duration, String tagList, String timestamp, int testStep) {
+    public TestingResultModel(String[] descricaoProduto, String sessionId, String cadastro, String[] serial, String[] result, long duration, String tagList, String timestamp, int[] testStep) {
         this.testStep = testStep;
         this.descricaoProduto = descricaoProduto;
         this.sessionId = sessionId;

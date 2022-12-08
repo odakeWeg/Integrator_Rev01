@@ -1,6 +1,8 @@
 package weg.net.tester.facade.datacenter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.context.annotation.Configuration;
 
@@ -11,60 +13,67 @@ import weg.net.tester.utils.SapCaracUtil;
 
 @Configuration
 public class SapConnector {
-    private String barCode;
-    private HashMap<String, String> sapDataMap = new HashMap<>();
+    private String[] barCode;
+    private List<HashMap<String, String>> sapDataMap = new ArrayList<HashMap<String, String>>();
 
     public void getDataBy2DBarcodeString() throws SapException {
+        ProdutoBrutoSAP produtoBrutoSAP;
         try {
-            ProdutoBrutoSAP produtoBrutoSAP = new ProdutoBrutoSAP(this.barCode);
-            produtoBrutoSAP.importarCaracteristicas();
-            setDataMap(produtoBrutoSAP);
-            sapDataMap.put(SapCaracUtil.SERIAL, Long.toString(produtoBrutoSAP.getSerial()));
-            sapDataMap.put(SapCaracUtil.MATERIAL, Long.toString(produtoBrutoSAP.getMaterial()));
-            sapDataMap.put(SapCaracUtil.ORDER, Long.toString(produtoBrutoSAP.getOrdemProducao()));
-            putSerial();
-            putMAC(produtoBrutoSAP);
+            for (int position = 0; position < barCode.length; position++) {
+                produtoBrutoSAP = new ProdutoBrutoSAP(this.barCode[position]);
+                produtoBrutoSAP.importarCaracteristicas();
+                setDataMap(produtoBrutoSAP, position);
+                sapDataMap.get(position).put(SapCaracUtil.SERIAL, Long.toString(produtoBrutoSAP.getSerial()));
+                sapDataMap.get(position).put(SapCaracUtil.MATERIAL, Long.toString(produtoBrutoSAP.getMaterial()));
+                sapDataMap.get(position).put(SapCaracUtil.ORDER, Long.toString(produtoBrutoSAP.getOrdemProducao()));
+                putSerial(position);
+                putMAC(produtoBrutoSAP, position);
+            }
         } catch (Exception e) {
             throw new SapException("Falha na consulta do SAP");
         }
 	}
 
-    private void putMAC(ProdutoBrutoSAP produtoBrutoSAP) {
+    private void putMAC(ProdutoBrutoSAP produtoBrutoSAP, int position) {
         try {
-            sapDataMap.put(SapCaracUtil.MAC, produtoBrutoSAP.getMacAddress());
-            sapDataMap.put(SapCaracUtil.MAC_1, sapDataMap.get(SapCaracUtil.MAC).substring(0, 16));
-            sapDataMap.put(SapCaracUtil.MAC_2, sapDataMap.get(SapCaracUtil.MAC).substring(16, 24));
-            sapDataMap.put(SapCaracUtil.MAC_3, sapDataMap.get(SapCaracUtil.MAC).substring(24));
+            sapDataMap.get(position).put(SapCaracUtil.MAC, produtoBrutoSAP.getMacAddress());
+            sapDataMap.get(position).put(SapCaracUtil.MAC_1, sapDataMap.get(position).get(SapCaracUtil.MAC).substring(0, 16));
+            sapDataMap.get(position).put(SapCaracUtil.MAC_2, sapDataMap.get(position).get(SapCaracUtil.MAC).substring(16, 24));
+            sapDataMap.get(position).put(SapCaracUtil.MAC_3, sapDataMap.get(position).get(SapCaracUtil.MAC).substring(24));
         } catch (NullPointerException e) {
         }
     }
 
-    private void putSerial() {
-        sapDataMap.put(SapCaracUtil.SERIAL_1, sapDataMap.get(SapCaracUtil.SERIAL).substring(0, 4));
-        sapDataMap.put(SapCaracUtil.SERIAL_2, sapDataMap.get(SapCaracUtil.SERIAL).substring(4, 8));
-        sapDataMap.put(SapCaracUtil.SERIAL_3, sapDataMap.get(SapCaracUtil.SERIAL).substring(8));
+    private void putSerial(int position) {
+        sapDataMap.get(position).put(SapCaracUtil.SERIAL_1, sapDataMap.get(position).get(SapCaracUtil.SERIAL).substring(0, 4));
+        sapDataMap.get(position).put(SapCaracUtil.SERIAL_2, sapDataMap.get(position).get(SapCaracUtil.SERIAL).substring(4, 8));
+        sapDataMap.get(position).put(SapCaracUtil.SERIAL_3, sapDataMap.get(position).get(SapCaracUtil.SERIAL).substring(8));
     }
 
-    private void setDataMap(ProdutoBrutoSAP produtoBrutoSAP) {
+    private void setDataMap(ProdutoBrutoSAP produtoBrutoSAP, int position) {
         for (Caract data: Caract.values()) {
             try {
                 if(produtoBrutoSAP.getCaract(data)!=null) {
-                    sapDataMap.put(data.name(), produtoBrutoSAP.getCaract(data));
+                    sapDataMap.get(position).put(data.name(), produtoBrutoSAP.getCaract(data));
                 }
             } catch (NullPointerException e) {
             }
         }
     }
 
-    public HashMap<String,String> getSapDataMap() {
+    public List<HashMap<String, String>> getSapDataMap() {
         return this.sapDataMap;
     }
 
-    public String getBarCode() {
+    public HashMap<String, String> getSapDataMapByPosition(int position) {
+        return this.sapDataMap.get(position);
+    }
+
+    public String[] getBarCode() {
         return this.barCode;
     }
 
-    public void setBarCode(String barCode) {
+    public void setBarCode(String[] barCode) {
         this.barCode = barCode;
     }
 }

@@ -11,8 +11,9 @@ public class CommandLog {
     private String action;
     private String testName;
     private boolean finished;
+    private int position;   //@Tood: Will every command log need the position?
 
-    public CommandLog(String testResult, String errorMessage, String descricao, String log, String action, String testName, boolean finished) {
+    public CommandLog(String testResult, String errorMessage, String descricao, String log, String action, String testName, boolean finished, int position) {
         this.testResult = testResult;
         this.errorMessage = errorMessage;
         this.descricao = descricao;
@@ -20,17 +21,20 @@ public class CommandLog {
         this.action = action;
         this.testName = testName;
         this.finished = finished;
+        this.position = position;
     }
 
-    public CommandLog(String testResult, String action, boolean finished) {
+    public CommandLog(String testResult, String action, boolean finished, int position) {
         this.testResult = testResult;
         this.action = action;
         this.finished = finished;
+        this.position = position;
     }
 
-    public CommandLog(String descricao, String action) {
+    public CommandLog(String descricao, String action, int position) {
         this.descricao = descricao;
         this.action = action;
+        this.position = position;
     }
 
     public CommandLog() {

@@ -25,17 +25,17 @@ public class MongoConnector {
     private String sessionId;
     private String cadastro;
     //@Todo: Make it an array (serial and result and description and step) 
-    private String serial;
-    private String result;
+    private String[] serial;
+    private String[] result;
     private long duration;
     private String tagList;
-    private String descricaoProduto;
-    private int testStep;
+    private String[] descricaoProduto;
+    private int[] testStep;
 
     private long startTime;
     private long endingTime;
 
-    public MongoConnector(String serial, String descricaoProduto) {
+    public MongoConnector(String[] serial, String[] descricaoProduto) {
         this.serial = serial;
         this.descricaoProduto = descricaoProduto;
     }
@@ -56,7 +56,7 @@ public class MongoConnector {
         }
     }
 
-    public void endingSetup(String result, int testStep, TagList tagList) throws JsonProcessingException, DataBaseException {
+    public void endingSetup(String[] result, int[] testStep, TagList tagList) throws DataBaseException {
         try{
             //@Todo: need to make multi threaded, testStep is an array
             //duration will be divided by testStep length
@@ -92,19 +92,19 @@ public class MongoConnector {
         }
     }
 
-    public String getSerial() {
+    public String[] getSerial() {
         return this.serial;
     }
 
-    public void setSerial(String serial) {
+    public void setSerial(String[] serial) {
         this.serial = serial;
     }
 
-    public String getDescricaoProduto() {
+    public String[] getDescricaoProduto() {
         return this.descricaoProduto;
     }
 
-    public void setDescricaoProduto(String descricaoProduto) {
+    public void setDescricaoProduto(String[] descricaoProduto) {
         this.descricaoProduto = descricaoProduto;
     }
 }
