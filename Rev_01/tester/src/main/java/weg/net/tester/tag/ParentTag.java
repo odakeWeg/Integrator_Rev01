@@ -17,6 +17,7 @@ import weg.net.tester.models.CommandLog;
 import weg.net.tester.models.TestMetaDataModel;
 import weg.net.tester.utils.ActionCommandUtil;
 import weg.net.tester.utils.FailureCodeUtil;
+import weg.net.tester.utils.TagIdentifierUtil;
 
 @Getter
 @Setter
@@ -46,9 +47,11 @@ public abstract class ParentTag extends BaseTag {
     
     @Override
     public CommandLog command() {
-        if(TestMetaDataModel.isPositionEnabled[position-1].get() && commandInitialSetup()) {
-            initiateThread();
-            commandEndingSetup();
+        if(TestMetaDataModel.isPositionEnabled[position-1].get()) {
+            if(commandInitialSetup()) {
+                initiateThread();
+                commandEndingSetup();
+            }
         } else {
             testResult = FailureCodeUtil.PASSED;
             log = "Produto em falha, teste desabilitado";
@@ -94,7 +97,7 @@ public abstract class ParentTag extends BaseTag {
     }
 
     private boolean initialFeedbackToSystem() {
-        if (TestMetaDataModel.isMainCommunicationSetted()) {
+        if (TestMetaDataModel.isMainCommunicationSetted() && nonTrivialOperation()) {
             try {
                 TestMetaDataModel.mainCommunication.systemInitialFeedback(this.timeout);
             } catch (CommunicationException e) {
@@ -106,6 +109,13 @@ public abstract class ParentTag extends BaseTag {
                 setFailureCommandLog(FailureCodeUtil.TIMEOUT, log);
                 return false;
             }
+        }
+        return true;
+    }
+
+    private boolean nonTrivialOperation() {
+        if(tagIdentifier.equals(TagIdentifierUtil.TEST)) {
+            return false;
         }
         return true;
     }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.stereotype.Controller;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -26,7 +27,9 @@ import weg.net.tester.utils.SessionUtil;
 @Getter
 @Setter
 @Configuration
+@Controller
 public class TestExecutor {
+    //@Todo: Exclude every hard coded value or String
     @Autowired
     private DataCenter dataCenter;
     private SimpMessagingTemplate template;
@@ -183,7 +186,7 @@ public class TestExecutor {
     */
 
     @MessageMapping("/stop")
-    public void onReceivedMesage(boolean confirmation) {
+    public void stopRoutine() {
         TestMetaDataModel.exitFlag = true;
     }
 }

@@ -32,12 +32,13 @@ public class TestMetaDataModel {
         this.exitFlag = false;
         this.isPositionEnabled = initiatePosition(qnt);
         this.testStep = new int[qnt];
+        this.mainCommunication = null;
     }
 
     public AtomicBoolean[] initiatePosition(int qnt) {
         AtomicBoolean[] array = new AtomicBoolean[qnt];
         for (int i = 0; i < array.length; i++) {
-            array[i].set(true);
+            array[i] = new AtomicBoolean(true);
         }
         return array;
     }
@@ -48,7 +49,7 @@ public class TestMetaDataModel {
             for (int i = 0; i < TestMetaDataModel.tagList.getList().size(); i++) {
                 if (TestMetaDataModel.tagList.getList().get(i).getTagIdentifier().equals(TagIdentifierUtil.COMMUNICATION)) {
                     communicationTag = (NodeCommunicationTag) tagList.getList().get(i);
-                    if(communicationTag.mainCommunication) {
+                    if(communicationTag.isEnableCommunication()) {
                         mainCommunication = communicationTag;
                         return true;
                     }

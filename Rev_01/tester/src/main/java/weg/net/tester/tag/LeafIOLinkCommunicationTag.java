@@ -33,6 +33,7 @@ public class LeafIOLinkCommunicationTag extends NodeCommunicationTag {
             //@Todo: takeOut
             setFailureCommandLog(FailureCodeUtil.FALHA_SETUP_COMUNICACAO, log);
         }
+        this.enableMain();
     }
 
     @Override

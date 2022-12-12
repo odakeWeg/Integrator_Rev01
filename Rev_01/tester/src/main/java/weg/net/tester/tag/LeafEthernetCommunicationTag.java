@@ -23,6 +23,7 @@ public class LeafEthernetCommunicationTag extends NodeCommunicationTag {
             connection.startConnection();
             testResult = FailureCodeUtil.OK;
             log = "Setup de comunicação com " + communicationName + " realizado com sucesso.";
+
         } catch (CommunicationException e) {
             //testResult = FailureCodeUtil.FALHA_SETUP_COMUNICACAO;
             log = "Falha no setup de comunicação com " + communicationName;
@@ -31,6 +32,7 @@ public class LeafEthernetCommunicationTag extends NodeCommunicationTag {
             //@Todo: takeOut
             setFailureCommandLog(FailureCodeUtil.FALHA_SETUP_COMUNICACAO, log);
         }
+        this.enableMain();
     }
 
     @Override

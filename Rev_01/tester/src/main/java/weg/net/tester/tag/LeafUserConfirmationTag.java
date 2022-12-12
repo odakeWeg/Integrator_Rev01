@@ -69,6 +69,7 @@ public class LeafUserConfirmationTag extends NodeCompareTag {
         this.confirmationValue = confirmation;
     }
 
+    //@Todo: Create class to implement every web socket stuff
     @MessageMapping("/confirmation")
     public void onReceivedMesage(boolean confirmation) {
         LeafUserConfirmationTag.confirmation = confirmation;

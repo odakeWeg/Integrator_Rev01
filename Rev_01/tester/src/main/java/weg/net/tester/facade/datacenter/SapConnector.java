@@ -51,6 +51,7 @@ public class SapConnector {
     }
 
     private void setDataMap(ProdutoBrutoSAP produtoBrutoSAP, int position) {
+        sapDataMap.add(new HashMap<>());
         for (Caract data: Caract.values()) {
             try {
                 if(produtoBrutoSAP.getCaract(data)!=null) {

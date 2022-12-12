@@ -35,6 +35,7 @@ public class LeafModbusCommunicationTag extends NodeCommunicationTag {
             //@Todo: takeOut
             setFailureCommandLog(FailureCodeUtil.FALHA_SETUP_COMUNICACAO, log);
         }
+        this.enableMain();
     }
 
     @Override

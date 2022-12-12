@@ -78,21 +78,6 @@
             "tolerancy": 10,
             "waitBefore": 1,
             "waitAfter": 1
-        },
-        {
-            "id": 4,
-            "tagIdentifier": "Test",
-            "tagName": "LeafTestTag",
-            "descricao": null,
-            "log": null,
-            "action": "exibir",
-            "errorMessage": null,
-            "testResult": "N/A",
-            "timeout": 10000,
-            "position": 2,
-            "finished": false,
-            "individualTestDurationMillis": 0,
-            "testName": "teste 2"
         }
     ]
 }

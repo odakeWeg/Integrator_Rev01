@@ -1,5 +1,6 @@
 package weg.net.tester.controllers;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -20,9 +21,9 @@ public class TestRoutineHandlerController {
     private  TestExecutor testExecutor;
 
     @MessageMapping("/log")
-    public void onReceivedMessage(String[] barCode) {
+    public void onReceivedMessage(String barCode) {
         try {
-            testExecutor.setBarCode(barCode);
+            testExecutor.setBarCode(barCode.split(","));
             testExecutor.setTemplate(template);
             testExecutor.execute();
         } catch (Exception e) {

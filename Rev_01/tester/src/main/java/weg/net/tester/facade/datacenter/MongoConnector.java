@@ -62,8 +62,8 @@ public class MongoConnector {
             //duration will be divided by testStep length
             //maybe sum to the timestamp the duration
 
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            this. endingTime = timestamp.getTime(); 
+            //Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            this. endingTime = System.currentTimeMillis() / 1000;   //timestamp.getTime(); 
             this.duration = endingTime - startTime;
 
             this.result = result;
