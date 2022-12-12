@@ -48,11 +48,7 @@ public class LeafRegisterCompareTag extends NodeCompareTag {
             testResult = FailureCodeUtil.OK;
             log = "Valor lido dentro da tolerancia: " +  (valueRef - valueRef*tolerancy/100) + " < Valor medido: " + valueOnTest + " < " + (valueRef + valueRef*tolerancy/100);
         } else {
-            //testResult = FailureCodeUtil.OUT_OF_TOLERANCY;
             log = "Valor lido fora da tolerancia: " +  (valueRef - valueRef*tolerancy/100) + " < Valor medido: " + valueOnTest + " < " + (valueRef + valueRef*tolerancy/100);
-            //TestMetaDataModel.isPositionEnabled[this.position-1] = false;
-            //TestMetaDataModel.testStep[this.position-1] = this.id;
-            //@Todo: takeOut
             setFailureCommandLog(FailureCodeUtil.OUT_OF_TOLERANCY, log);
         }
     }
@@ -64,11 +60,7 @@ public class LeafRegisterCompareTag extends NodeCompareTag {
             testResult = FailureCodeUtil.OK;
             log = "Valor lido dentro da tolerancia: " +  (valueRef - tolerancy) + " < Valor medido: " + valueOnTest + " < " + (valueRef + tolerancy);
         } else {
-            //testResult = FailureCodeUtil.OUT_OF_TOLERANCY;
             log = "Valor lido fora da tolerancia: " +  (valueRef - tolerancy) + " < Valor medido: " + valueOnTest + " < " + (valueRef + tolerancy);
-            //TestMetaDataModel.isPositionEnabled[this.position-1] = false;
-            //TestMetaDataModel.testStep[this.position-1] = this.id;
-            //@Todo: takeOut
             setFailureCommandLog(FailureCodeUtil.OUT_OF_TOLERANCY, log);
         }
     }
@@ -83,11 +75,7 @@ public class LeafRegisterCompareTag extends NodeCompareTag {
                 testResult = FailureCodeUtil.OK;
                 log = "Valor de leitura igual a " + valueRef + " no registrador " + registerRef;
             } catch (CommunicationException e) {
-                //testResult = FailureCodeUtil.FALHA_COMUNICACAO;
                 log = "Falha na comunicação com " + communicationNameRef;
-                //TestMetaDataModel.isPositionEnabled[this.position-1] = false;
-                //TestMetaDataModel.testStep[this.position-1] = this.id;
-                //@Todo: takeOut
                 setFailureCommandLog(FailureCodeUtil.FALHA_COMUNICACAO, log);
                 return false;
             }
@@ -110,11 +98,7 @@ public class LeafRegisterCompareTag extends NodeCompareTag {
                 testResult = FailureCodeUtil.OK;
                 log = "Valor de leitura igual a " + valueOnTest + " no registrador " + registerOnTest;
             } catch (CommunicationException e) {
-                //testResult = FailureCodeUtil.FALHA_COMUNICACAO;
                 log = "Falha na comunicação com " + communicationNameOnTest;
-                //TestMetaDataModel.isPositionEnabled[this.position-1] = false;
-                //TestMetaDataModel.testStep[this.position-1] = this.id;
-                //@Todo: takeOut
                 setFailureCommandLog(FailureCodeUtil.FALHA_COMUNICACAO, log);
                 return false;
             }

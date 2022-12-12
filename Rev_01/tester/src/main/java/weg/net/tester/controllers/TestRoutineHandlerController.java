@@ -28,7 +28,6 @@ public class TestRoutineHandlerController {
             testExecutor.execute();
         } catch (Exception e) {
             //@Todo: send trace to dataBase
-            //Maybe make a Exception class only for unexpected things -> not probably
         }
     }
 }

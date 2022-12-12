@@ -32,11 +32,8 @@ public class LeafVariableWriteTag extends NodeWriteTag {
             variableValue = Integer.parseInt(TestMetaDataModel.sapConnector.get(position).get(this.variableName));
             return true;
         } catch (Exception e) {
-            //testResult = FailureCodeUtil.VARIABLE_READING_FAILURE;
             log = "Falha ao ler a variável: " + this.variableName;
-            //TestMetaDataModel.isPositionEnabled[this.position-1].set(false);
-            //TestMetaDataModel.testStep[this.position-1] = this.id;
-            setFailureCommandLog(FailureCodeUtil.FALHA_COMUNICACAO, log);
+            setFailureCommandLog(FailureCodeUtil.VARIABLE_READING_FAILURE, log);
             return false;
         }
     } 
@@ -51,19 +48,13 @@ public class LeafVariableWriteTag extends NodeWriteTag {
                 testResult = FailureCodeUtil.OK;
                 log = "Escrita do valor " + variableValue + " no registrador " + registerRef + " realizada com sucesso.";
             } catch (CommunicationException e) {
-                //testResult = FailureCodeUtil.FALHA_COMUNICACAO;
                 log = "Falha na comunicação com " + communicationNameRef;
-                //TestMetaDataModel.isPositionEnabled[this.position-1] = false;
-                //TestMetaDataModel.testStep[this.position-1] = this.id;
-                //@Todo: takeOut
                 setFailureCommandLog(FailureCodeUtil.FALHA_COMUNICACAO, log);
                 return;
             }
             delayMilliseconds(waitAfter); 
         } catch (ObjectNotFoundException e) {
-            //testResult = FailureCodeUtil.OBJECT_NOT_FOUND;
             log = "Comunicação com nome " + communicationNameRef + " não foi encontrado, verificar se a rotina de teste está correta";
-            //@Todo: takeOut
             setFailureCommandLog(FailureCodeUtil.OBJECT_NOT_FOUND, log);
         }
     }

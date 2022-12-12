@@ -71,7 +71,6 @@ public class TestExecutor {
         }
     }
 
-    //@Todo: This method should be uncommented for production
     private String initSetup() {
         //@Todo: refactor into different functions with catches, this one just calls every other
         try {
@@ -99,22 +98,6 @@ public class TestExecutor {
             return FrontEndFeedbackUtil.ERRO_INESPERADO;
         }
     }
-    /* 
-    private String initSetup() {
-        try {
-            sendFeedbackBefore("Iniciando...");
-            this.dataCenter.initiate(barCode);
-            TestingRoutine testingRoutine = getList();
-            this.baseTagList = testingRoutine.getRoutine();
-            this.dataCenter.getMongoConnector().initialSetup();
-            this.setTestMetaDataModel();
-            sendProductDescriptionFeedback();
-            return FrontEndFeedbackUtil.OK;
-        } catch (Exception e) {
-            return FrontEndFeedbackUtil.ERRO_INESPERADO;
-        }
-    }
-    */
 
     private void setTestMetaDataModel() {
         TestMetaDataModel refreshStaticVariable = new TestMetaDataModel(baseTagList.qntOfProductInTest());
@@ -135,23 +118,6 @@ public class TestExecutor {
             sendFeedbackAfter(FrontEndFeedbackUtil.ERRO_INESPERADO, false, 1);
         }
     }
-
-    
-
-    /* 
-    private void endSetup() {
-        //closingTestSetup get error step and run a cancelling test 
-        //routine (set log -> maybe changed to tags iself), save 
-        //data and upload session and stuff
-        //database and Session (increment from executed tests)
-        try {
-            SessionUtil.endTest(result[0]);
-            this.dataCenter.getMongoConnector().endingSetup(result[0], TestMetaDataModel.testStep[0], TestMetaDataModel.tagList);
-        } catch (Exception e) {
-            sendFeedbackAfter(FrontEndFeedbackUtil.FALHA_NA_FINALIZACAO, false);
-        }
-    }
-    */
 
     private String[] startTestingRoutine() { 
         String[] results = new String[baseTagList.qntOfProductInTest()];
@@ -177,13 +143,6 @@ public class TestExecutor {
         }
         return results;
     }
-
-    /* 
-    private TestingRoutine getList() {
-        String fileReferenceName = this.dataCenter.getSapConnector().getSapDataMap().get(SapCaracUtil.SHORT_TEXT);
-        return new TestingRoutine(FilePathUtil.TEST_ROUTINE_PATH + fileReferenceName + ".json");
-    }
-    */
 
     @MessageMapping("/stop")
     public void stopRoutine() {

@@ -8,7 +8,6 @@ import weg.net.tester.tag.BaseTag;
 import weg.net.tester.tag.TagList;
 
 public class TestingRoutine {
-    //private List<BaseTag> baseTagList;    //Not needed by now
     private String fileName;
 
     public TestingRoutine(String fileName) {

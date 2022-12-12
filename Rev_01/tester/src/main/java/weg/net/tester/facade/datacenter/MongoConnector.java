@@ -24,7 +24,6 @@ public class MongoConnector {
     private String timestamp;
     private String sessionId;
     private String cadastro;
-    //@Todo: Make it an array (serial and result and description and step) 
     private String[] serial;
     private String[] result;
     private long duration;
@@ -58,12 +57,7 @@ public class MongoConnector {
 
     public void endingSetup(String[] result, int[] testStep, TagList tagList) throws DataBaseException {
         try{
-            //@Todo: need to make multi threaded, testStep is an array
-            //duration will be divided by testStep length
-            //maybe sum to the timestamp the duration
-
-            //Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            this. endingTime = System.currentTimeMillis() / 1000;   //timestamp.getTime(); 
+            this. endingTime = System.currentTimeMillis() / 1000;
             this.duration = endingTime - startTime;
 
             this.result = result;

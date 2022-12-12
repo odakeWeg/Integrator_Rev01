@@ -17,16 +17,11 @@ public class TestMetaDataModel {
     public static AtomicBoolean[] isPositionEnabled;
     public static boolean exitFlag;
     public static SimpMessagingTemplate template;
-    public static List<HashMap<String, String>> sapConnector;     //@Todo: make it a list of hashmaps
+    public static List<HashMap<String, String>> sapConnector;
 
     public static NodeCommunicationTag mainCommunication;
-    //@Todo: must do it multi-threaded
 
     public static int[] testStep;
-
-
-    //private String dataStore;   //Hashmap? how to check values that wrote? manually || automatically
-    //Tags wont be visible to each other
 
     public TestMetaDataModel(int qnt) {
         this.exitFlag = false;

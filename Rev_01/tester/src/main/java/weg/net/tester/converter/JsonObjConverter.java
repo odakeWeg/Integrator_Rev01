@@ -58,7 +58,7 @@ public class JsonObjConverter implements BaseConverter {
             json = (JSONObject) iterator.next();
             className = (String) json.get(JsonTagAttributesUtil.TAG_NAME);
             BaseTag baseTag = (BaseTag)  Class.forName(FilePathUtil.TAG_FILES_PATH + className).getDeclaredConstructor().newInstance();
-            BaseTag dtoObject = mapper.readValue(json.toString(), baseTag.getClass());  //Class is referent to the instantiated class
+            BaseTag dtoObject = mapper.readValue(json.toString(), baseTag.getClass());
             tagList.getList().add(dtoObject);
         }
 

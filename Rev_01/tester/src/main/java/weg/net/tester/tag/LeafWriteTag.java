@@ -31,19 +31,13 @@ public class LeafWriteTag extends NodeWriteTag {
                 testResult = FailureCodeUtil.OK;
                 log = "Escrita do valor " + value + " no registrador " + register + " realizada com sucesso.";
             } catch (CommunicationException e) {
-                //testResult = FailureCodeUtil.FALHA_COMUNICACAO;
                 log = "Falha na comunicação com " + communicationName;
-                //TestMetaDataModel.isPositionEnabled[this.position-1] = false;
-                //TestMetaDataModel.testStep[this.position-1] = this.id;
-                //@Todo: takeOut
                 setFailureCommandLog(FailureCodeUtil.FALHA_COMUNICACAO, log);
                 return;
             }
             delayMilliseconds(waitAfter); 
         } catch (ObjectNotFoundException e) {
-            //testResult = FailureCodeUtil.OBJECT_NOT_FOUND;
             log = "Comunicação com nome " + communicationName + " não foi encontrado, verificar se a rotina de teste está correta";
-            //@Todo: takeOut
             setFailureCommandLog(FailureCodeUtil.OBJECT_NOT_FOUND, log);
         }
     }

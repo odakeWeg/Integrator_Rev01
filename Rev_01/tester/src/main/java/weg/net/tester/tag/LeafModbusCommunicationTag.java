@@ -28,11 +28,7 @@ public class LeafModbusCommunicationTag extends NodeCommunicationTag {
             testResult = FailureCodeUtil.OK;
             log = "Setup de comunicação com " + communicationName + " realizado com sucesso.";
         } catch (CommunicationException e) {
-            //testResult = FailureCodeUtil.FALHA_SETUP_COMUNICACAO;
             log = "Falha no setup de comunicação com " + communicationName;
-            //TestMetaDataModel.isPositionEnabled[this.position-1] = false;
-            //TestMetaDataModel.testStep[this.position-1] = this.id;
-            //@Todo: takeOut
             setFailureCommandLog(FailureCodeUtil.FALHA_SETUP_COMUNICACAO, log);
         }
         this.enableMain();

@@ -11,7 +11,7 @@ public class CommandLog {
     private String action;
     private String testName;
     private boolean finished;
-    private int position;   //@Tood: Will every command log need the position?
+    private int position;
 
     public CommandLog(String testResult, String errorMessage, String descricao, String log, String action, String testName, boolean finished, int position) {
         this.testResult = testResult;
