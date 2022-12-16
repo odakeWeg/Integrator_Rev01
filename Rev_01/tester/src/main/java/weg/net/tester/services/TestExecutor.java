@@ -11,14 +11,15 @@ import org.springframework.stereotype.Controller;
 import lombok.Getter;
 import lombok.Setter;
 import weg.net.tester.exception.DataBaseException;
+import weg.net.tester.exception.EnsException;
 import weg.net.tester.exception.InlineException;
 import weg.net.tester.exception.SapException;
 import weg.net.tester.exception.TestSetupException;
 import weg.net.tester.exception.TestUnmarshalingException;
-import weg.net.tester.facade.datacenter.DataCenter;
-import weg.net.tester.models.CommandLog;
-import weg.net.tester.models.TestMetaDataModel;
+import weg.net.tester.facade.DataCenter;
+import weg.net.tester.models.web.CommandLog;
 import weg.net.tester.tag.TagList;
+import weg.net.tester.tag.TestMetaDataModel;
 import weg.net.tester.utils.ActionCommandUtil;
 import weg.net.tester.utils.FrontEndFeedbackUtil;
 import weg.net.tester.utils.SapCaracUtil;
@@ -62,6 +63,7 @@ public class TestExecutor {
         this.template.convertAndSend("/feedback2",  commandLog);
     }
 
+    //@Todo: This function should be in another class
     private void sendProductDescriptionFeedback() {
         for (int position = 0; position < TestMetaDataModel.tagList.qntOfProductInTest(); position++) {
             sendFeedbackBefore("Serial: " + TestMetaDataModel.sapConnector.get(position).get(SapCaracUtil.SERIAL), position);
@@ -114,6 +116,8 @@ public class TestExecutor {
             sendFeedbackAfter(FrontEndFeedbackUtil.INLINE_ERROR, false, 1);
         } catch (DataBaseException e) {
             sendFeedbackAfter(FrontEndFeedbackUtil.DATABASE_ERROR, false, 1);
+        } catch (EnsException e) {
+            sendFeedbackAfter(FrontEndFeedbackUtil.ENS_ERROR, false, 1);
         } catch (Exception e) {
             sendFeedbackAfter(FrontEndFeedbackUtil.ERRO_INESPERADO, false, 1);
         }

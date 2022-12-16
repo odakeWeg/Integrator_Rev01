@@ -1,4 +1,4 @@
-package weg.net.tester.models;
+package weg.net.tester.models.database;
 
 import org.json.simple.JSONObject;
 import org.springframework.data.annotation.Id;

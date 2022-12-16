@@ -13,8 +13,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import weg.net.tester.exception.CommunicationException;
-import weg.net.tester.models.CommandLog;
-import weg.net.tester.models.TestMetaDataModel;
+import weg.net.tester.models.ens.EnsTagConfiguration;
+import weg.net.tester.models.web.CommandLog;
 import weg.net.tester.utils.ActionCommandUtil;
 import weg.net.tester.utils.FailureCodeUtil;
 import weg.net.tester.utils.TagIdentifierUtil;
@@ -36,6 +36,8 @@ public abstract class ParentTag extends BaseTag {
     protected boolean finished;
 
     protected long individualTestDurationMillis;
+
+    protected EnsTagConfiguration ensTagConfiguration = new EnsTagConfiguration();
 
     @JsonIgnore
     protected long startTime;
@@ -130,25 +132,5 @@ public abstract class ParentTag extends BaseTag {
         for(int i = 0; i < TestMetaDataModel.isPositionEnabled.length; i++) {
             TestMetaDataModel.isPositionEnabled[i].set(false);
         }
-    }
-
-    @Override
-    public int getId() {
-        return this.id;
-    }
-
-    @Override
-    public int getPosition() {
-        return this.position;
-    }
-
-    @Override
-    public String getTagIdentifier() {
-        return this.tagIdentifier;
-    }
-
-    @Override
-    public String getTagName() {
-        return this.tagName;
     }
 }

@@ -27,6 +27,4 @@
 		<property name="UserId" value="0" /> 
 		
 	</bean>
-
-
 </beans>

@@ -1,4 +1,4 @@
-package weg.net.tester.models;
+package weg.net.tester.models.web;
 
 import lombok.Getter;
 
@@ -13,6 +13,7 @@ public class CommandLog {
     private boolean finished;
     private int position;
 
+    //@Todo: implemend send command here instead of in the TestExecutor script
     public CommandLog(String testResult, String errorMessage, String descricao, String log, String action, String testName, boolean finished, int position) {
         this.testResult = testResult;
         this.errorMessage = errorMessage;

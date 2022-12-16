@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 import weg.net.tester.communication.BaseCommunication;
 import weg.net.tester.exception.ObjectNotFoundException;
-import weg.net.tester.models.TestMetaDataModel;
 import weg.net.tester.utils.TagIdentifierUtil;
 
 @Getter

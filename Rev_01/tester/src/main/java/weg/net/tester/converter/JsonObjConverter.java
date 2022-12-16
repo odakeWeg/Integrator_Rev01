@@ -66,9 +66,24 @@ public class JsonObjConverter implements BaseConverter {
     }
 
     @Override
-    public String ObjToJsonStringConverter(TagList tagList) throws JsonProcessingException {
+    public String objToJsonStringConverter(TagList tagList) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(tagList);
+    }
+
+    @Override
+    public JSONObject objToJsonObjectConverter(TagList tagList) throws JsonProcessingException, ParseException {
+        ObjectMapper mapper = new ObjectMapper();
+        JSONParser parser = new JSONParser();  
+        return (JSONObject) parser.parse(mapper.writeValueAsString(tagList));
+    }
+
+    @Override
+    public JSONArray objToJsonArrayConverter(TagList tagList) throws JsonProcessingException, ParseException {
+        ObjectMapper mapper = new ObjectMapper();
+        JSONObject jsonObject = objToJsonObjectConverter(tagList);
+
+        return (JSONArray) jsonObject.get(JsonTagAttributesUtil.LIST);
     }
 
     private void downloadRoutineFromDataBase(String fileName) throws TestUnmarshalingException {

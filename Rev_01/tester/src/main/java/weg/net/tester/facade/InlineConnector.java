@@ -1,4 +1,4 @@
-package weg.net.tester.facade.datacenter;
+package weg.net.tester.facade;
 
 import org.springframework.context.annotation.Configuration;
 

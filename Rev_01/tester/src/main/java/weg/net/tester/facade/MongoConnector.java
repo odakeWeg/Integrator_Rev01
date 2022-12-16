@@ -1,4 +1,4 @@
-package weg.net.tester.facade.datacenter;
+package weg.net.tester.facade;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -10,7 +10,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import weg.net.tester.converter.JsonObjConverter;
 import weg.net.tester.exception.DataBaseException;
-import weg.net.tester.models.TestingResultModel;
+import weg.net.tester.models.database.TestingResultModel;
 import weg.net.tester.repositories.TestingResultRepository;
 import weg.net.tester.tag.BaseTag;
 import weg.net.tester.tag.TagList;
@@ -78,7 +78,7 @@ public class MongoConnector {
             String stringfiedJson;
             
             tags.setList(tagList);
-            stringfiedJson = jsonObjConverter.ObjToJsonStringConverter(tags);
+            stringfiedJson = jsonObjConverter.objToJsonStringConverter(tags);
             
             return stringfiedJson;     
         } catch (Exception e) {

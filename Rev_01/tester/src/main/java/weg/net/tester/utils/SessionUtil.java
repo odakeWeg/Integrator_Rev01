@@ -2,7 +2,7 @@ package weg.net.tester.utils;
 
 import java.sql.Timestamp;
 
-import weg.net.tester.models.SessionModel;
+import weg.net.tester.models.database.SessionModel;
 
 //@Todo: Maybe make it non static class
 public class SessionUtil {

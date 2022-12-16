@@ -13,7 +13,6 @@ import lombok.Setter;
 import weg.net.tester.communication.BaseCommunication;
 import weg.net.tester.exception.CommunicationException;
 import weg.net.tester.exception.ObjectNotFoundException;
-import weg.net.tester.models.TestMetaDataModel;
 import weg.net.tester.utils.CompareUtil;
 import weg.net.tester.utils.FailureCodeUtil;
 import weg.net.tester.utils.TagNameUtil;

@@ -1,16 +1,21 @@
-package weg.net.tester.facade.datacenter;
+package weg.net.tester.facade;
 
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import weg.net.tester.converter.BaseConverter;
+import weg.net.tester.converter.JsonObjConverter;
 import weg.net.tester.exception.DataBaseException;
+import weg.net.tester.exception.EnsException;
 import weg.net.tester.exception.InlineException;
 import weg.net.tester.exception.SapException;
 import weg.net.tester.exception.TestSetupException;
 import weg.net.tester.exception.TestUnmarshalingException;
-import weg.net.tester.models.TestMetaDataModel;
-import weg.net.tester.models.TestingRoutine;
 import weg.net.tester.tag.TagList;
+import weg.net.tester.tag.TestMetaDataModel;
 import weg.net.tester.utils.FilePathUtil;
 import weg.net.tester.utils.FrontEndFeedbackUtil;
 import weg.net.tester.utils.SapCaracUtil;
@@ -40,8 +45,7 @@ public class DataCenter {
             descricaoProduto[position] = this.sapConnector.getSapDataMap().get(position).get(SapCaracUtil.SHORT_TEXT);
         }
 
-        TestingRoutine testingRoutine = getList(barCode.length);
-        TagList baseTagList = testingRoutine.getRoutine();
+        TagList baseTagList = getList(barCode.length);
         mongoConnector.initialSetup();
         this.inlineConnector.saveInitialEvent();
         //Make it a loop or something
@@ -55,8 +59,9 @@ public class DataCenter {
         return baseTagList;
     }
 
-    public void end(String[] result) throws InlineException, DataBaseException {
+    public void end(String[] result) throws InlineException, DataBaseException, EnsException, JsonProcessingException, ParseException {
         saveInlineEnd(result);
+        ensConnector.saveEns(TestMetaDataModel.tagList);
         mongoConnector.endingSetup(result, TestMetaDataModel.testStep, TestMetaDataModel.tagList);
     }
 
@@ -74,14 +79,15 @@ public class DataCenter {
         }
     }
 
-    private TestingRoutine getList(int qnt) throws TestSetupException {
+    private TagList getList(int qnt) throws TestSetupException, TestUnmarshalingException {
         String fileReferenceName = sapConnector.getSapDataMap().get(0).get(SapCaracUtil.SHORT_TEXT);
         for (int position = 0; position < qnt; position++) {
             if (!fileReferenceName.equals(sapConnector.getSapDataMap().get(position).get(SapCaracUtil.SHORT_TEXT))) {
                 throw new TestSetupException("Falha no setup do produto na posição " + (position+1));
             }
         }
-        return new TestingRoutine(FilePathUtil.TEST_ROUTINE_PATH + fileReferenceName + ".json");
+        BaseConverter converter = new JsonObjConverter();
+        return converter.getRoutineFromFileName(FilePathUtil.TEST_ROUTINE_PATH + fileReferenceName + ".json");
     }
 
     public InlineConnector getInlineConnector() {

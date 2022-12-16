@@ -1,4 +1,4 @@
-package weg.net.tester.models;
+package weg.net.tester.tag;
 
 import java.util.HashMap;
 import java.util.List;
@@ -7,8 +7,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import weg.net.tester.exception.ObjectNotFoundException;
-import weg.net.tester.tag.NodeCommunicationTag;
-import weg.net.tester.tag.TagList;
 import weg.net.tester.utils.TagIdentifierUtil;
 
 public class TestMetaDataModel {

@@ -1,4 +1,4 @@
-package weg.net.tester.facade.datacenter;
+package weg.net.tester.facade;
 
 import java.util.ArrayList;
 import java.util.HashMap;
