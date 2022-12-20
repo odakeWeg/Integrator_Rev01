@@ -11,4 +11,5 @@ public class TagNameUtil {
     public static final String WRITE = "LeafWriteTag";
     public static final String VARIABLE_WRITE = "LeafVariableWriteTag";
     public static final String VARIABLE_COMPARE = "LeafVariableCompareTag";
+    public static final String ENS_SETUP = "LeafEnsSetupTag";
 }

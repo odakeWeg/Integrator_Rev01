@@ -1,12 +1,13 @@
 package weg.net.tester.tag;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
-import weg.net.tester.exception.ObjectNotFoundException;
+import net.weg.wdc.ens.ProductDataEns;
 import weg.net.tester.utils.TagIdentifierUtil;
 
 public class TestMetaDataModel {
@@ -17,6 +18,9 @@ public class TestMetaDataModel {
     public static SimpMessagingTemplate template;
     public static List<HashMap<String, String>> sapConnector;
 
+    public static List<ProductDataEns> productDataEnsList;
+    public static int initialEnsId; 
+
     public static NodeCommunicationTag mainCommunication;
 
     public static int[] testStep;
@@ -26,6 +30,14 @@ public class TestMetaDataModel {
         this.isPositionEnabled = initiatePosition(qnt);
         this.testStep = new int[qnt];
         this.mainCommunication = null;
+        initiateProductList(qnt);
+    }
+
+    public void initiateProductList(int qnt) {
+        productDataEnsList = new ArrayList<>();
+        for (int i = 0; i < qnt; i++) {
+            productDataEnsList.add(new ProductDataEns());
+        }
     }
 
     public AtomicBoolean[] initiatePosition(int qnt) {
