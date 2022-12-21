@@ -29,7 +29,7 @@ public class TestRoutineHandlerController {
             testExecutor.setTemplate(template);
             testExecutor.execute();
         } catch (Exception e) {
-            //@Todo: send trace to dataBase
+            //@Todo: send trace to dataBase -> instantiate reposito and stuff like that
             StackTraceLogModel stackTraceLogModel = new StackTraceLogModel(e.getMessage(), Long.toString(System.currentTimeMillis()), SessionUtil.sessionModel.getCadastro());
             
         }

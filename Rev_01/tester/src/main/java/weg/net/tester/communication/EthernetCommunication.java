@@ -13,6 +13,7 @@ import net.weg.wcomm.modbus.tcp.client.ModbusTCPHelper;
 import net.weg.wcomm.modbus.tcp.client.ModbusTCPMaster;
 
 public class EthernetCommunication implements BaseCommunication {
+    //@Todo: add timeout stuff
 
     private ModbusTCPHelper ethernetTCPCommunication;
 
@@ -36,7 +37,7 @@ public class EthernetCommunication implements BaseCommunication {
 			ethernetTCPCommunication.connect();
 			ethernetTCPCommunication.subscribeClient("Ethernet/Modbus-TCP/" + ip + ":" + port + "/@" + address);
 		} catch (NegativeConfirmationException | ModbusExceptionResponseException | ModbusUnexpectedResponseException | IOException ex) {
-			throw new CommunicationException("Falha na conexão IOLink!");
+			throw new CommunicationException("Falha na conexão Ethernet!");
 		}
     }
 
