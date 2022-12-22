@@ -48,4 +48,9 @@ public abstract class NodeCommunicationTag extends ParentTag {
             this.enableCommunication = true;
         }
     }
+
+    @Override
+    public boolean trivialTag() {
+        return false;
+    }
 }

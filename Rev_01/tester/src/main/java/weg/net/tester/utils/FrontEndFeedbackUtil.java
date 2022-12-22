@@ -14,4 +14,5 @@ public class FrontEndFeedbackUtil {
     public static final String DATABASE_ERROR = "Erro na conexão com a base de dados";
     public static final String TESTE_NAO_AUTORIZADO = "Teste nao autorizado";
     public static final String FALHA_SETUP_PRODUTO = "Falha no setup do produto";
+    public static final String SESSION_ERROR = "Tempo de login expirou";
 }

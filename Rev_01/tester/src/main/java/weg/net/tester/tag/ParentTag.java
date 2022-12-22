@@ -46,9 +46,13 @@ public abstract class ParentTag extends BaseTag {
         this.setTagName();
     }
     
+    //@Todo: Implement logic to keep doing test even when it fails
+    //1) Create variable in parentTag?
+    //2) Too many variables to add
+    //3) Class is overloaded, do another way / @JsonIgnore may easy things
     @Override
-    public CommandLog command() {
-        if(TestMetaDataModel.isPositionEnabled[position-1].get()) {
+    public CommandLog command() {   
+        if(TestMetaDataModel.isTestEnabled(position, id)) {
             if(commandInitialSetup()) {
                 initiateThread();
                 commandEndingSetup();
@@ -106,6 +110,7 @@ public abstract class ParentTag extends BaseTag {
         return true;
     }
 
+    //@Todo: maybe eliminate this function and use the other one declared in BaseTag
     private boolean nonTrivialOperation() {
         if(tagIdentifier.equals(TagIdentifierUtil.TEST)) {
             return false;

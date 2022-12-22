@@ -18,10 +18,11 @@ public class LeafModbusCommunicationTag extends NodeCommunicationTag {
     protected String parity;
     protected int timeoutComm;
     protected int address;
+    protected int trials;
     
     @Override
     public void executeCommand() {
-        connection = (BaseCommunication) new ModbusCommunication(portName, baudRate, dataBits, stopBits, parity, timeoutComm, address);
+        connection = (BaseCommunication) new ModbusCommunication(portName, baudRate, dataBits, stopBits, parity, timeoutComm, address, trials);
         try {
             connection.startConnection();
             testResult = FailureCodeUtil.OK;

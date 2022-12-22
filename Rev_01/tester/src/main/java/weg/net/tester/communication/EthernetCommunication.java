@@ -21,12 +21,14 @@ public class EthernetCommunication implements BaseCommunication {
     private int address;
     private int port;
     private int timeBetweenCommand;
+    private int trials;
 
-    public EthernetCommunication(String ip, int port, int address, int timeBetweenCommand) {
+    public EthernetCommunication(String ip, int port, int address, int timeBetweenCommand, int trials) {
         this.ip = ip;
         this.address = address;
         this.port = port;
         this.timeBetweenCommand = timeBetweenCommand;
+        this.trials = trials;
     }
 
     @Override
@@ -44,13 +46,18 @@ public class EthernetCommunication implements BaseCommunication {
     @Override
     public int readSingleRegister(int register) throws CommunicationException {
         Register[] registers;
-		int read;
-		try {
-			registers = ethernetTCPCommunication.readHoldingRegisters((short) register, (short) 1);
-			read = registers[0].intValue();
-		} catch (NegativeConfirmationException | ModbusExceptionResponseException | ModbusUnexpectedResponseException e) {
-			throw new CommunicationException("Falha na leitura dos registradores");
-		}
+		int read = -1;
+        for(int trial = 0; trial < trials; trial++) {
+            try {
+                registers = ethernetTCPCommunication.readHoldingRegisters((short) register, (short) 1);
+                read = registers[0].intValue();
+                break;
+            } catch (NegativeConfirmationException | ModbusExceptionResponseException | ModbusUnexpectedResponseException e) {
+                if (trial==(trials-1)) {
+                    throw new CommunicationException("Falha na leitura dos registradores");
+                }
+            }
+        }
 
 		return read;
     }
@@ -59,26 +66,35 @@ public class EthernetCommunication implements BaseCommunication {
     public int[] readMultipleRegisters(int startingAddress, int quantityOfRegisters) throws CommunicationException {
         Register[] registers;
 		int[] read = new int[quantityOfRegisters];
-		try {
-			registers = ethernetTCPCommunication.readHoldingRegisters((short) startingAddress, (short) quantityOfRegisters);
-			for (int i = 0; i < registers.length; i++) {
-                read[i] = registers[i].intValue();
+        for(int trial = 0; trial < trials; trial++) {
+            try {
+                registers = ethernetTCPCommunication.readHoldingRegisters((short) startingAddress, (short) quantityOfRegisters);
+                for (int i = 0; i < registers.length; i++) {
+                    read[i] = registers[i].intValue();
+                }
+                break;
+            } catch (NegativeConfirmationException | ModbusExceptionResponseException | ModbusUnexpectedResponseException e) {
+                if (trial==(trials-1)) {
+                    throw new CommunicationException("Falha na leitura dos registradores");
+                }
             }
-            
-		} catch (NegativeConfirmationException | ModbusExceptionResponseException | ModbusUnexpectedResponseException e) {
-			throw new CommunicationException("Falha na leitura dos registradores");
-		}
+        }
 
 		return read;
     }
 
     @Override
     public void writeSingleRegister(int registerAddress, int registerValue) throws CommunicationException {
-        try {
-			ethernetTCPCommunication.writeSingleRegister((short) registerAddress, (short) registerValue);
-		} catch (NegativeConfirmationException | ModbusExceptionResponseException | ModbusUnexpectedResponseException e) {
-			throw new CommunicationException("Falha na escrita dos registradores");
-		}
+        for(int trial = 0; trial < trials; trial++) {
+            try {
+                ethernetTCPCommunication.writeSingleRegister((short) registerAddress, (short) registerValue);
+                break;
+            } catch (NegativeConfirmationException | ModbusExceptionResponseException | ModbusUnexpectedResponseException e) {
+                if (trial==(trials-1)) {
+                    throw new CommunicationException("Falha na leitura dos registradores");
+                }
+            }
+        }
     }
 
     @Override
@@ -87,11 +103,16 @@ public class EthernetCommunication implements BaseCommunication {
         for (int i = 0; i < registersValue.length; i++) {
             values[i] = (short) registersValue[i];
         }
-        try {
-			ethernetTCPCommunication.writeMultipleRegisters((short) initialRegister, values);
-		} catch (NegativeConfirmationException | ModbusExceptionResponseException | ModbusUnexpectedResponseException e) {
-			throw new CommunicationException("Falha na escrita dos registradores");
-		}
+        for(int trial = 0; trial < trials; trial++) {
+            try {
+                ethernetTCPCommunication.writeMultipleRegisters((short) initialRegister, values);
+                break;
+            } catch (NegativeConfirmationException | ModbusExceptionResponseException | ModbusUnexpectedResponseException e) {
+                if (trial==(trials-1)) {
+                    throw new CommunicationException("Falha na leitura dos registradores");
+                }
+            }
+        }
     }
 
     @Override

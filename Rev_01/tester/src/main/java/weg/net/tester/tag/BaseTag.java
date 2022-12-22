@@ -12,4 +12,5 @@ public abstract class BaseTag {
     abstract public void setTagName();
     abstract public int getPosition();
     abstract public EnsTagConfiguration getEnsTagConfiguration();
+    abstract public boolean trivialTag();
 }

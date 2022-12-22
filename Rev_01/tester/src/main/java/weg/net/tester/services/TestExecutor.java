@@ -14,6 +14,7 @@ import weg.net.tester.exception.DataBaseException;
 import weg.net.tester.exception.EnsException;
 import weg.net.tester.exception.InlineException;
 import weg.net.tester.exception.SapException;
+import weg.net.tester.exception.SessionException;
 import weg.net.tester.exception.TestSetupException;
 import weg.net.tester.exception.TestUnmarshalingException;
 import weg.net.tester.facade.DataCenter;
@@ -30,6 +31,7 @@ import weg.net.tester.utils.SessionUtil;
 @Configuration
 @Controller
 public class TestExecutor {
+    //@Todo: Verificar se e pq aparece Erro inesperado no final dos testes (não parece atrapalhar nos logs)
     //@Todo: Exclude every hard coded value or String
     @Autowired
     private DataCenter dataCenter;
@@ -90,8 +92,8 @@ public class TestExecutor {
             return FrontEndFeedbackUtil.SAP_ERROR;
         } catch (InlineException e) {
             return FrontEndFeedbackUtil.INLINE_ERROR;
-        } catch (DataBaseException e) {
-            return FrontEndFeedbackUtil.DATABASE_ERROR;
+        } catch (SessionException e) {
+            return FrontEndFeedbackUtil.SESSION_ERROR;
         } catch (TestUnmarshalingException e) {
             return FrontEndFeedbackUtil.ERRO_LOCALIZACAO_ROTINA;
         } catch (TestSetupException e) {

@@ -32,7 +32,7 @@ public class SessionUtil {
     }
 
     public static void reset() {
-        sessionModel = new SessionModel();
+        sessionModel = null;    //new SessionModel();
         initialTime = 0;
         endingTime = 0;
     }

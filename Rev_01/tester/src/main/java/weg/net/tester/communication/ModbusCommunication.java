@@ -24,8 +24,9 @@ public class ModbusCommunication implements BaseCommunication{
     private String parity;
     private int timeoutComm;
     private  int address;
+	private int trials;
 
-	public ModbusCommunication(String portName, int baudRate, int dataBits, int stopBits, String parity, int timeoutComm, int address) {
+	public ModbusCommunication(String portName, int baudRate, int dataBits, int stopBits, String parity, int timeoutComm, int address, int trials) {
 		this.portName = portName;
         this.baudRate = baudRate;
         this.dataBits = dataBits;
@@ -33,6 +34,7 @@ public class ModbusCommunication implements BaseCommunication{
         this.parity = parity;
         this.timeoutComm = timeoutComm;
         this.address = address;
+		this.trials = trials;
 	}
 
     @Override
@@ -53,13 +55,17 @@ public class ModbusCommunication implements BaseCommunication{
     @Override
 	public int readSingleRegister(int register) throws CommunicationException {
 		Register[] registers;
-		int read;
-		try {
-			registers = serialModbusCommunication.readHoldingRegisters((short) register, (short) 1);
-			read = registers[0].intValue();
-			
-		} catch (NegativeConfirmationException | ModbusExceptionResponseException | ModbusUnexpectedResponseException e) {
-			throw new CommunicationException("Falha na leitura dos registradores");
+		int read = -1;
+		for(int trial = 0; trial < trials; trial++) {
+			try {
+				registers = serialModbusCommunication.readHoldingRegisters((short) register, (short) 1);
+				read = registers[0].intValue();
+				break;
+			} catch (NegativeConfirmationException | ModbusExceptionResponseException | ModbusUnexpectedResponseException e) {
+				if (trial==(trials-1)) {
+					throw new CommunicationException("Falha na leitura dos registradores");
+				}
+			}
 		}
 
 		return read;
@@ -69,13 +75,18 @@ public class ModbusCommunication implements BaseCommunication{
 	public int[] readMultipleRegisters(int startingAddress, int quantityOfRegisters) throws CommunicationException {
 		Register[] registers;
 		int[] reads = new int[quantityOfRegisters];
-		try {
-			registers = serialModbusCommunication.readHoldingRegisters((short) startingAddress, (short) quantityOfRegisters);
-			for (int i = 0; i < registers.length; i++) {
-				reads[i] = registers[i].intValue();
+		for(int trial = 0; trial < trials; trial++) {
+			try {
+				registers = serialModbusCommunication.readHoldingRegisters((short) startingAddress, (short) quantityOfRegisters);
+				for (int i = 0; i < registers.length; i++) {
+					reads[i] = registers[i].intValue();
+				}
+				break;
+			} catch (NegativeConfirmationException | ModbusExceptionResponseException | ModbusUnexpectedResponseException e) {
+				if (trial==(trials-1)) {
+					throw new CommunicationException("Falha na leitura dos registradores");
+				}
 			}
-		} catch (NegativeConfirmationException | ModbusExceptionResponseException | ModbusUnexpectedResponseException e) {
-			throw new CommunicationException("Falha na leitura dos registradores");
 		}
 
 		return reads;
@@ -83,10 +94,15 @@ public class ModbusCommunication implements BaseCommunication{
 
 	@Override
 	public void writeSingleRegister(int registerAddress, int registerValue) throws CommunicationException {
-		try {
-			serialModbusCommunication.writeSingleRegister((short) registerAddress, (short) registerValue);
-		} catch (NegativeConfirmationException | ModbusExceptionResponseException | ModbusUnexpectedResponseException e) {
-			throw new CommunicationException("Falha na escrita dos registradores");
+		for(int trial = 0; trial < trials; trial++) {
+			try {
+				serialModbusCommunication.writeSingleRegister((short) registerAddress, (short) registerValue);
+				break;
+			} catch (NegativeConfirmationException | ModbusExceptionResponseException | ModbusUnexpectedResponseException e) {
+				if (trial==(trials-1)) {
+					throw new CommunicationException("Falha na leitura dos registradores");
+				}
+			}
 		}
 	}
 
@@ -96,10 +112,15 @@ public class ModbusCommunication implements BaseCommunication{
 		for (int i = 0; i < registersValue.length; i++) {
 			shortRegisterValues[i] = (short) registersValue[i];
 		}
-		try {
-			serialModbusCommunication.writeMultipleRegisters((short) initialRegister,  shortRegisterValues);
-		} catch (NegativeConfirmationException | ModbusExceptionResponseException | ModbusUnexpectedResponseException e) {
-			throw new CommunicationException("Falha na escrita dos registradores");
+		for(int trial = 0; trial < trials; trial++) {
+			try {
+				serialModbusCommunication.writeMultipleRegisters((short) initialRegister,  shortRegisterValues);
+				break;
+			} catch (NegativeConfirmationException | ModbusExceptionResponseException | ModbusUnexpectedResponseException e) {
+				if (trial==(trials-1)) {
+					throw new CommunicationException("Falha na leitura dos registradores");
+				}
+			}
 		}
 	}
 

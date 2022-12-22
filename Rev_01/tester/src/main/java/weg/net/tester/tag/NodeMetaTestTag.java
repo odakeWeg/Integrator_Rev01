@@ -8,4 +8,9 @@ import weg.net.tester.utils.TagIdentifierUtil;
 @Setter
 public abstract class NodeMetaTestTag extends ParentTag {
     protected String tagIdentifier = TagIdentifierUtil.TEST;
+
+    @Override
+    public boolean trivialTag() {
+        return false;
+    }
 }

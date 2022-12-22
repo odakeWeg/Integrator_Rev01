@@ -10,7 +10,7 @@ import weg.net.tester.exception.CommunicationException;
 public class CommunicationStressTest {
     @Test
     public void ethernetCommunicationStress() throws CommunicationException, InterruptedException {
-        EthernetCommunication ethernet = new EthernetCommunication("192.168.0.10", 502, 255, 1);
+        EthernetCommunication ethernet = new EthernetCommunication("192.168.0.10", 502, 255, 1, 1);
         ethernet.startConnection();
         while (true) {
             try {

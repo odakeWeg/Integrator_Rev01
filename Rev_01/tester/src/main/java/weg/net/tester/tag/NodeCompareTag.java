@@ -33,4 +33,9 @@ public abstract class NodeCompareTag extends ParentTag {
         }
         throw new ObjectNotFoundException("Objeto de comunicação não encontrado!");
     }
+
+    @Override
+    public boolean trivialTag() {
+        return false;
+    }
 }

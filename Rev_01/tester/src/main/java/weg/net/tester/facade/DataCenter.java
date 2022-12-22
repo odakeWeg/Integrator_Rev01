@@ -12,6 +12,7 @@ import weg.net.tester.exception.DataBaseException;
 import weg.net.tester.exception.EnsException;
 import weg.net.tester.exception.InlineException;
 import weg.net.tester.exception.SapException;
+import weg.net.tester.exception.SessionException;
 import weg.net.tester.exception.TestSetupException;
 import weg.net.tester.exception.TestUnmarshalingException;
 import weg.net.tester.tag.TagList;
@@ -34,7 +35,8 @@ public class DataCenter {
     //@Todo: implement ens
     //@Todo: implement mongo
     //@Todo: or make it multi-threaded or make an array
-    public TagList initiate(String[] barCode) throws SapException, InlineException, DataBaseException, TestUnmarshalingException, TestSetupException {
+    //@Todo: Save test end HTML file (easy way for the people who fix the product)
+    public TagList initiate(String[] barCode) throws SapException, InlineException, SessionException, TestUnmarshalingException, TestSetupException {
         this.sapConnector.setBarCode(barCode);
         this.sapConnector.getDataBy2DBarcodeString();
 
@@ -61,8 +63,8 @@ public class DataCenter {
 
     public void end(String[] result) throws InlineException, DataBaseException, EnsException, JsonProcessingException, ParseException {
         saveInlineEnd(result);
-        ensConnector.saveEns(TestMetaDataModel.tagList);
         mongoConnector.endingSetup(result, TestMetaDataModel.testStep, TestMetaDataModel.tagList);
+        ensConnector.saveEns(TestMetaDataModel.tagList);
     }
 
     private void saveInlineEnd(String[] result) throws InlineException {

@@ -13,6 +13,7 @@ import weg.net.tester.utils.SapCaracUtil;
 
 @Configuration
 public class SapConnector {
+    //@Todo: SAP Buffer so it doesn't take to long to process, 
     private String[] barCode;
     private List<HashMap<String, String>> sapDataMap = new ArrayList<HashMap<String, String>>();
 

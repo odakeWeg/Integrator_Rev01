@@ -32,4 +32,9 @@ public abstract class NodeWriteTag extends ParentTag {
         }
         throw new ObjectNotFoundException("Objeto de comunicação não encontrado!");
     }
+
+    @Override
+    public boolean trivialTag() {
+        return false;
+    }
 }

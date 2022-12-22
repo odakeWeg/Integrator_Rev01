@@ -33,6 +33,10 @@ public class TestMetaDataModel {
         initiateProductList(qnt);
     }
 
+    public static boolean isTestEnabled(int position, int id) {
+        return (isPositionEnabled[position-1].get() || tagList.getList().get(id).trivialTag());
+    }
+
     public void initiateProductList(int qnt) {
         productDataEnsList = new ArrayList<>();
         for (int i = 0; i < qnt; i++) {

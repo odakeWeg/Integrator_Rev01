@@ -14,6 +14,7 @@ import net.weg.wcomm.modbus.tcp.client.ModbusTCPHelper;
 import net.weg.wcomm.modbus.tcp.client.ModbusTCPMaster;
 
 //TODO: Desacoplar função criar função nova ao invés de chamar outra
+//Refatorar tudo e botar para ele tentar comunicação n vezes
 public class IOLinkCommunication implements BaseCommunication {
 
     private ModbusTCPHelper ethernetIOLinkCommunication;

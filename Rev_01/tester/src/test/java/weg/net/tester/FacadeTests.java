@@ -15,6 +15,7 @@ import net.weg.searchsap.ProdutoBrutoSAP;
 import weg.net.tester.exception.DataBaseException;
 import weg.net.tester.exception.InlineException;
 import weg.net.tester.exception.SapException;
+import weg.net.tester.exception.SessionException;
 import weg.net.tester.facade.InlineConnector;
 import weg.net.tester.facade.MongoConnector;
 import weg.net.tester.facade.SapConnector;
@@ -112,7 +113,7 @@ public class FacadeTests {
 	}
 
     @Test
-	void mongoIndividualConnection() throws JsonProcessingException, InlineException, DataBaseException {
+	void mongoIndividualConnection() throws JsonProcessingException, InlineException, DataBaseException, SessionException {
         //MongoConnector mongoConnector = new MongoConnector("1062114337", "SSW900");
 
         String[] desc = {"SSW900"};

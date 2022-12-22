@@ -79,6 +79,9 @@ public class LeafUserInputTag extends NodeCompareTag {
     private void percentualCompare() {
         boolean upperLimit = inputValue <= valueRef + valueRef*tolerancy/100;
         boolean lowerLimit = inputValue >= valueRef - valueRef*tolerancy/100;
+
+        ensTagConfiguration.setAcceptanceRange(valueRef + valueRef*tolerancy/100, valueRef - valueRef*tolerancy/100);
+
         if (upperLimit && lowerLimit) {
             testResult = FailureCodeUtil.OK;
             log = "Valor lido dentro da tolerancia: " +  (valueRef - valueRef*tolerancy/100) + " < Valor lido: " + inputValue + " < " + (valueRef + valueRef*tolerancy/100);
@@ -91,6 +94,9 @@ public class LeafUserInputTag extends NodeCompareTag {
     private void absoluteCompare() {
         boolean upperLimit = inputValue <= valueRef + tolerancy;
         boolean lowerLimit = inputValue >= valueRef - tolerancy;
+
+        ensTagConfiguration.setAcceptanceRange(valueRef + tolerancy, valueRef - tolerancy);
+
         if (upperLimit && lowerLimit) {
             testResult = FailureCodeUtil.OK;
             log = "Valor lido dentro da tolerancia: " +  (valueRef - tolerancy) + " < Valor lido: " + inputValue + " < " + (valueRef + tolerancy);

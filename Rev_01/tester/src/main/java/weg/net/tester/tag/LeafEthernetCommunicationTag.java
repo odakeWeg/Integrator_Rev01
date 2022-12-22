@@ -15,10 +15,11 @@ public class LeafEthernetCommunicationTag extends NodeCommunicationTag {
     protected int port;
     protected int address;
     protected int timeBetweenCommand;
+    protected int trials;
 
     @Override
     public void executeCommand() {
-        connection = (BaseCommunication) new EthernetCommunication(ip, port, address, timeBetweenCommand);
+        connection = (BaseCommunication) new EthernetCommunication(ip, port, address, timeBetweenCommand, trials);
         try {
             connection.startConnection();
             testResult = FailureCodeUtil.OK;
