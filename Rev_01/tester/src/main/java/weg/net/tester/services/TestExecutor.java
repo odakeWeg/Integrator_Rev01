@@ -68,10 +68,10 @@ public class TestExecutor {
     //@Todo: This function should be in another class
     private void sendProductDescriptionFeedback() {
         for (int position = 0; position < TestMetaDataModel.tagList.qntOfProductInTest(); position++) {
-            sendFeedbackBefore("Serial: " + TestMetaDataModel.sapConnector.get(position).get(SapCaracUtil.SERIAL), position);
-            sendFeedbackBefore("Material: " + TestMetaDataModel.sapConnector.get(position).get(SapCaracUtil.MATERIAL), position);
-            sendFeedbackBefore("Produto: " + TestMetaDataModel.sapConnector.get(position).get(SapCaracUtil.REF_PRODUTO_AUTOMACAO), position);
-            sendFeedbackBefore("Descricao: " + TestMetaDataModel.sapConnector.get(position).get(SapCaracUtil.SHORT_TEXT), position);
+            sendFeedbackBefore("Serial: " + TestMetaDataModel.sapConnector.get(position).get(SapCaracUtil.SERIAL), position+1);
+            sendFeedbackBefore("Material: " + TestMetaDataModel.sapConnector.get(position).get(SapCaracUtil.MATERIAL), position+1);
+            sendFeedbackBefore("Produto: " + TestMetaDataModel.sapConnector.get(position).get(SapCaracUtil.REF_PRODUTO_AUTOMACAO), position+1);
+            sendFeedbackBefore("Descricao: " + TestMetaDataModel.sapConnector.get(position).get(SapCaracUtil.SHORT_TEXT), position+1);
         }
     }
 

@@ -112,13 +112,18 @@ public class LeafEnsSetupTag extends NodeEnsTag {
         mapValues();
 
         testResult = FailureCodeUtil.OK;
-        log = "Setup inicial do ENS realizado com sucesso.";
+        if(start) {
+            log = "Setup inicial do ENS realizado com sucesso.";
+        } else {
+            log = "Setup final do ENS realizado com sucesso.";
+        }
         action = ActionCommandUtil.EXIBIT_VALUES;
 
         //1) There is an instance of the product in the TestMetaDataModel? -> then this class would not be protected
         //2) 
     }
 
+    /*
     private void mapValues() {
         int lastId;
         for(int position = 0; position < TestMetaDataModel.productDataEnsList.size(); position++) {
@@ -126,48 +131,92 @@ public class LeafEnsSetupTag extends NodeEnsTag {
             if(start) {
                 TestMetaDataModel.initialEnsId = this.id; 
                 switch(selectedItem) {
-                    case EnsParametersUtil.PRODUCT_DATA_ENS_TYPE:
+                    case EnsParametersUtil.PRODUCT_DATA_ENS_TYPE.toString():
                         productInitialSetup(product, position);
                     break;
-                    case EnsParametersUtil.DIELECTRIC_TEST_CHARACTERISTIC_LIST_TYPE:
+                    case EnsParametersUtil.DIELECTRIC_TEST_CHARACTERISTIC_LIST_TYPE.toString():
                         dielectricInitialSetup(product);
                     break;
-                    case EnsParametersUtil.FUNCTIONAL_TEST_CHARACTERISTIC_LIST_TYPE:
+                    case EnsParametersUtil.FUNCTIONAL_TEST_CHARACTERISTIC_LIST_TYPE.toString():
                         functionalInitialSetup(product);
                     break;
-                    case EnsParametersUtil.LOAD_TEST_CHARACTERISTIC_LIST_TYPE:
+                    case EnsParametersUtil.LOAD_TEST_CHARACTERISTIC_LIST_TYPE.toString():
                         loadInitialSetup(product);
                     break;
-                    case EnsParametersUtil.RENEABLE_TEST_CHARACTERISTIC_LIST_TYPE:
+                    case EnsParametersUtil.RENEABLE_TEST_CHARACTERISTIC_LIST_TYPE.toString():
                         reneableInitialSetup(product);
                     break;
                 }
             } else {
                 lastId = TestMetaDataModel.initialEnsId;
                 switch(selectedItem) {
-                    case EnsParametersUtil.PRODUCT_DATA_ENS_TYPE:
+                    case EnsParametersUtil.PRODUCT_DATA_ENS_TYPE.toString():
                         productFinalSetup(product, lastId, position);
                     break;
-                    case EnsParametersUtil.DIELECTRIC_TEST_CHARACTERISTIC_LIST_TYPE:
+                    case EnsParametersUtil.DIELECTRIC_TEST_CHARACTERISTIC_LIST_TYPE.toString():
                         dielectricFinalSetup(product, lastId, position);
                     break;
-                    case EnsParametersUtil.FUNCTIONAL_TEST_CHARACTERISTIC_LIST_TYPE:
+                    case EnsParametersUtil.FUNCTIONAL_TEST_CHARACTERISTIC_LIST_TYPE.toString():
                         functionalFinalSetup(product, lastId, position);
                     break;
-                    case EnsParametersUtil.LOAD_TEST_CHARACTERISTIC_LIST_TYPE:
+                    case EnsParametersUtil.LOAD_TEST_CHARACTERISTIC_LIST_TYPE.toString():
                         loadFinalSetup(product, lastId, position);
                     break;
-                    case EnsParametersUtil.RENEABLE_TEST_CHARACTERISTIC_LIST_TYPE:
+                    case EnsParametersUtil.RENEABLE_TEST_CHARACTERISTIC_LIST_TYPE.toString():
                         reneableFinalSetup(product, lastId, position);
                     break;
                 }
             }
         }
     }
+    */
+    private void mapValues() {
+        int lastId;
+        for(int position = 0; position < TestMetaDataModel.productDataEnsList.size(); position++) {
+            ProductDataEns product = TestMetaDataModel.productDataEnsList.get(position);
+            if(start) {
+                TestMetaDataModel.initialEnsId = this.id; 
+
+                if(EnsParametersUtil.PRODUCT_DATA_ENS_TYPE.name().equals(selectedItem)) {
+                    productInitialSetup(product, position);
+                }
+                if(EnsParametersUtil.DIELECTRIC_TEST_CHARACTERISTIC_LIST_TYPE.name().equals(selectedItem)) {
+                    dielectricInitialSetup(product);
+                }
+                if(EnsParametersUtil.FUNCTIONAL_TEST_CHARACTERISTIC_LIST_TYPE.name().equals(selectedItem)) {
+                    functionalInitialSetup(product);
+                }
+                if(EnsParametersUtil.LOAD_TEST_CHARACTERISTIC_LIST_TYPE.name().equals(selectedItem)) {
+                    loadInitialSetup(product);
+                }
+                if(EnsParametersUtil.RENEABLE_TEST_CHARACTERISTIC_LIST_TYPE.name().equals(selectedItem)) {
+                    reneableInitialSetup(product);
+                }
+            } else {
+                lastId = TestMetaDataModel.initialEnsId;
+
+                if(EnsParametersUtil.PRODUCT_DATA_ENS_TYPE.name().equals(selectedItem)) {
+                    productFinalSetup(product, lastId, position);
+                }
+                if(EnsParametersUtil.DIELECTRIC_TEST_CHARACTERISTIC_LIST_TYPE.name().equals(selectedItem)) {
+                    dielectricFinalSetup(product, lastId, position);
+                }
+                if(EnsParametersUtil.FUNCTIONAL_TEST_CHARACTERISTIC_LIST_TYPE.name().equals(selectedItem)) {
+                    functionalFinalSetup(product, lastId, position);
+                }
+                if(EnsParametersUtil.LOAD_TEST_CHARACTERISTIC_LIST_TYPE.name().equals(selectedItem)) {
+                    loadFinalSetup(product, lastId, position);
+                }
+                if(EnsParametersUtil.RENEABLE_TEST_CHARACTERISTIC_LIST_TYPE.name().equals(selectedItem)) {
+                    reneableFinalSetup(product, lastId, position);
+                }
+            }
+        }
+    }
 
     private void productInitialSetup(ProductDataEns product, int position) {
-        //product.setSerial(Long.parseLong(TestMetaDataModel.sapConnector.get(position).get(SapCaracUtil.SERIAL)));
-        product.setSerial(serialProduct);
+        //product.setSerial(Long.parseLong(TestMetaDataModel.sapConnector.get(position).get(SapCaracUtil.SERIAL))); 
+        product.setSerial(serialProduct);   //@Todo: delete thi9s statement ant uncomment the previous
         product.setStartDatetime(new Date());
     }
 

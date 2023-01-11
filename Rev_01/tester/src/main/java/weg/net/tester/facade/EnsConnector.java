@@ -85,6 +85,7 @@ public class EnsConnector {
         */
     //}
 
+    /* 
     private void setEnsObjMesures() {
         for (int id = 0; id < tagList.getList().size(); id++) {
             if (tagList.getList().get(id).getEnsTagConfiguration().isEnabled()) {
@@ -107,6 +108,34 @@ public class EnsConnector {
                         break;
                         default:
                             //Trow error
+                    }
+                }
+            }
+        }
+    }
+    */
+
+    private void setEnsObjMesures() {
+        String type;
+        for (int id = 0; id < tagList.getList().size(); id++) {
+            if (tagList.getList().get(id).getEnsTagConfiguration().isEnabled()) {
+                for (int position = 0; position < tagList.getList().get(id).getEnsTagConfiguration().getEnsType().size(); position++) {
+                    type = tagList.getList().get(id).getEnsTagConfiguration().getEnsType().get(position);
+                    
+                    //case EnsParametersUtil.PRODUCT_DATA_ENS_TYPE:
+                    //    setProductVariable(tagList.getList().get(id).getEnsTagConfiguration(), position, id);
+                    //break;
+                    //case EnsParametersUtil.DIELECTRIC_TEST_CHARACTERISTIC_LIST_TYPE:
+                    //    setDielectricVariable(tagList.getList().get(id).getEnsTagConfiguration(), position, id);
+                    //break;
+                    if(EnsParametersUtil.FUNCTIONAL_TEST_CHARACTERISTIC_LIST_TYPE.name().equals(type)) {
+                        setFunctionalVariable(tagList.getList().get(id).getEnsTagConfiguration(), position, id);
+                    }
+                    //case EnsParametersUtil.LOAD_TEST_CHARACTERISTIC_LIST_TYPE:
+                    //    setLoadVariable(tagList.getList().get(id).getEnsTagConfiguration(), position, id);
+                    //break;
+                    if(EnsParametersUtil.RENEABLE_TEST_CHARACTERISTIC_LIST_TYPE.name().equals(type)) {
+                        setReneableVariable(tagList.getList().get(id).getEnsTagConfiguration(), position, id);
                     }
                 }
             }
@@ -217,6 +246,7 @@ public class EnsConnector {
 		return service;
 	}
 
+    /*
     private void setFunctionalVariable(EnsTagConfiguration config, int position, int idTag) {
         String variable = config.getVariableToReadFrom().get(position);
         JSONObject jsonObj = (JSONObject) this.json.get(idTag);
@@ -389,6 +419,178 @@ public class EnsConnector {
             break;
             default:
                 //Trow error
+        }
+    }
+    */
+
+    private void setFunctionalVariable(EnsTagConfiguration config, int position, int idTag) {
+        String variable = config.getVariableToReadFrom().get(position);
+        JSONObject jsonObj = (JSONObject) this.json.get(idTag);
+        int testPosition = this.tagList.getList().get(idTag).getPosition()-1;
+
+        //@Todo: --------------------------> This switch should be made only in the end of it all
+        String variableName = config.getEnsVariableName().get(position);
+
+        if(EnsParametersUtil.ANALOG_INPUTS_FUNCTIONAL.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getFunctionalTestCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcFunctionalTestMeasurePointType.AnalogInputs, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.ANALOG_OUTPUTS_FUNCTIONAL.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getFunctionalTestCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcFunctionalTestMeasurePointType.AnalogOutputs, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.MOTOR_SPEED_50_FUNCTIONAL.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getFunctionalTestCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcFunctionalTestMeasurePointType.MotorSpeed50, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.MOTOR_SPEED_100_FUNCTIONAL.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getFunctionalTestCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcFunctionalTestMeasurePointType.MotorSpeed100, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.POWER_SUPPLY_24_FUNCTIONAL.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getFunctionalTestCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcFunctionalTestMeasurePointType.PowerSupply24, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.POWER_SUPPLY_REF_P_FUNCTIONAL.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getFunctionalTestCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcFunctionalTestMeasurePointType.PowerSupplyRefP, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.POWER_SUPPLY_REF_N_FUNCTIONAL.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getFunctionalTestCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcFunctionalTestMeasurePointType.PowerSupplyRefN, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.POWER_SUPPLY_5_INTERNAL_FUNCTIONAL.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getFunctionalTestCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcFunctionalTestMeasurePointType.PowerSupply5Internal, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.POWER_SUPPLY_15_ENCODER_FUNCTIONAL.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getFunctionalTestCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcFunctionalTestMeasurePointType.PowerSupply15Encoder, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.POWER_SUPPLY_10_FUNCTIONAL.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getFunctionalTestCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcFunctionalTestMeasurePointType.PowerSupply10, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.CURRENT_INDICATION_FUNCTIONAL.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getFunctionalTestCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcFunctionalTestMeasurePointType.CurrentIndication, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.LINK_VOLTAGE_INDICATION_FUNCTIONAL.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getFunctionalTestCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcFunctionalTestMeasurePointType.LinkVoltageIndication, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.DIGITAL_INPUTS_FUNCTIONAL.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getFunctionalTestCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcFunctionalTestMeasurePointType.DigitalInputs, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.DIGITAL_OUTPUTS_FUNCTIONAL.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getFunctionalTestCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcFunctionalTestMeasurePointType.DigitalOutputs, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.BRAKING_FUNCTIONAL.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getFunctionalTestCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcFunctionalTestMeasurePointType.Braking, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.OUTPUT_SHORT_CIRCUIT_DETECTION_FUNCTIONAL.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getFunctionalTestCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcFunctionalTestMeasurePointType.OutputShortCircuitDetection, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.EARTH_FAULT_DETECTION_FUNCTIONAL.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getFunctionalTestCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcFunctionalTestMeasurePointType.EarthFaultDetection, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.HARDWARE_IDENTIFICATION_FUNCTIONAL.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getFunctionalTestCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcFunctionalTestMeasurePointType.HardwareIdentification, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.USB_AND_SERIAL_COMMUNICATION_FUNCTIONAL.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getFunctionalTestCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcFunctionalTestMeasurePointType.USBandSerialCommunication, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.MEMORY_CARD_FUNCTIONAL.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getFunctionalTestCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcFunctionalTestMeasurePointType.MemoryCard, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.HEAT_SINK_FAN_FUNCTIONAL.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getFunctionalTestCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcFunctionalTestMeasurePointType.HeatSinkFan, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+    }
+
+    //@Todo: arrumar nomenclatura
+    private void setReneableVariable(EnsTagConfiguration config, int position, int idTag) {
+        String variable = config.getVariableToReadFrom().get(position);
+        JSONObject jsonObj = (JSONObject) this.json.get(idTag);
+        int testPosition = this.tagList.getList().get(idTag).getPosition()-1;
+
+        //@Todo: --------------------------> This switch should be made only in the end of it all
+        String variableName = config.getEnsVariableName().get(position);
+
+        if(EnsParametersUtil.CURRENT_INV_U_RENEABLE.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getReneableEnergyCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcReneableEnergyTestMeasurePointType.CurrentInvU, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.CURRENT_INV_V_RENEABLE.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getReneableEnergyCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcReneableEnergyTestMeasurePointType.CurrentInvV, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.CURRENT_INV_W_RENEABLE.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getReneableEnergyCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcReneableEnergyTestMeasurePointType.CurrentInvW, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.TEMP_INV_U_RENEABLE.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getReneableEnergyCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcReneableEnergyTestMeasurePointType.TempInvU, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.TEMP_INV_V_RENEABLE.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getReneableEnergyCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcReneableEnergyTestMeasurePointType.TempInvV, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.TEMP_INV_W_RENEABLE.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getReneableEnergyCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcReneableEnergyTestMeasurePointType.TempInvW, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.TEMP_INDUCTOR_RENEABLE.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getReneableEnergyCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcReneableEnergyTestMeasurePointType.TempInductor, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.CURRENT_RET_U_RENEABLE.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getReneableEnergyCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcReneableEnergyTestMeasurePointType.CurrentRetU, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.CURRENT_RET_V_RENEABLE.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getReneableEnergyCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcReneableEnergyTestMeasurePointType.CurrentRetV, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.CURRENT_RET_W_RENEABLE.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getReneableEnergyCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcReneableEnergyTestMeasurePointType.CurrentRetW, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.TEMP_RET_U1_RENEABLE.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getReneableEnergyCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcReneableEnergyTestMeasurePointType.TempRetU1, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.TEMP_RET_V1_RENEABLE.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getReneableEnergyCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcReneableEnergyTestMeasurePointType.TempRetV1, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.TEMP_RET_W1_RENEABLE.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getReneableEnergyCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcReneableEnergyTestMeasurePointType.TempRetW1, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.TEMP_RET_U2_RENEABLE.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getReneableEnergyCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcReneableEnergyTestMeasurePointType.TempRetU2, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.TEMP_RET_V2_RENEABLE.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getReneableEnergyCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcReneableEnergyTestMeasurePointType.TempRetV2, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.TEMP_RET_W2_RENEABLE.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getReneableEnergyCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcReneableEnergyTestMeasurePointType.TempRetW2, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.CURRENT_PARALLEL_U_RENEABLE.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getReneableEnergyCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcReneableEnergyTestMeasurePointType.CurrentParallelU, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.CURRENT_PARALLEL_V_RENEABLE.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getReneableEnergyCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcReneableEnergyTestMeasurePointType.CurrentParallelV, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.CURRENT_PARALLEL_W_RENEABLE.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getReneableEnergyCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcReneableEnergyTestMeasurePointType.CurrentParallelW, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.TEMP_LIQ_ARREF_RENEABLE.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getReneableEnergyCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcReneableEnergyTestMeasurePointType.TempLiqArref, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.VAZAO_ARREF_RENEABLE.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getReneableEnergyCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcReneableEnergyTestMeasurePointType.VazaoArref, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.PRESS_ARREF_RENEABLE.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getReneableEnergyCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcReneableEnergyTestMeasurePointType.PressArref, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.TEMPO_TEST_SETPOINT_RENEABLE.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getReneableEnergyCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcReneableEnergyTestMeasurePointType.TempoTestSetPoint, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.TENSAO_ALIM_RENEABLE.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getReneableEnergyCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcReneableEnergyTestMeasurePointType.TensaoAlim, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.FREQ_ALIM_RENEABLE.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getReneableEnergyCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcReneableEnergyTestMeasurePointType.FreqAlim, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.TENSAO_RET_RENEABLE.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getReneableEnergyCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcReneableEnergyTestMeasurePointType.TensaoRet, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.FREQ_RET_RENEABLE.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getReneableEnergyCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcReneableEnergyTestMeasurePointType.FreqRet, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.TEMP_LIQ_ARREF_SETPOINT_RENEABLE.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getReneableEnergyCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcReneableEnergyTestMeasurePointType.TempLiqArrefSetPoint, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
+        }
+        if(EnsParametersUtil.PRESS_ARREF_SETPOINT_RENEABLE.name().equals(variableName)) {
+            productDataEnsList.get(testPosition).getReneableEnergyCharacteristicList().getTestInputCharacteristics().add(InputCharacteristicLineFactory.create(WdcReneableEnergyTestMeasurePointType.PressArrefSetPoint, getTolerancyResult(config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))), config.getMinValue().get(position), config.getMaxValue().get(position), String.valueOf(jsonObj.get(variable))));
         }
     }
 

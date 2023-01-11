@@ -38,7 +38,7 @@ public class TagListTests {
         leafEnsSetupTag.setId(1);
         leafEnsSetupTag.setPosition(1);
         leafEnsSetupTag.setTimeout(10000);
-        leafEnsSetupTag.setSelectedItem(EnsParametersUtil.PRODUCT_DATA_ENS_TYPE);
+        leafEnsSetupTag.setSelectedItem(EnsParametersUtil.PRODUCT_DATA_ENS_TYPE.name());
         leafEnsSetupTag.setStart(true);
         leafEnsSetupTag.setSerialProduct(1234567890);
 
@@ -77,7 +77,7 @@ public class TagListTests {
         leafEnsSetupTag3.setId(2);
         leafEnsSetupTag3.setPosition(1);
         leafEnsSetupTag3.setTimeout(10000);
-        leafEnsSetupTag3.setSelectedItem(EnsParametersUtil.RENEABLE_TEST_CHARACTERISTIC_LIST_TYPE);
+        leafEnsSetupTag3.setSelectedItem(EnsParametersUtil.RENEABLE_TEST_CHARACTERISTIC_LIST_TYPE.name());
         leafEnsSetupTag3.setStart(true);
 
         leafEnsSetupTag3.setDurationTimeUnitReneable(WdcTimeUnitType.MINUTES);
@@ -122,16 +122,16 @@ public class TagListTests {
         leafRegisterCompareTag.setPosition(1);
 
         leafRegisterCompareTag.getEnsTagConfiguration().setEnabled(true);
-        leafRegisterCompareTag.getEnsTagConfiguration().getEnsType().add(EnsParametersUtil.RENEABLE_TEST_CHARACTERISTIC_LIST_TYPE);
+        leafRegisterCompareTag.getEnsTagConfiguration().getEnsType().add(EnsParametersUtil.RENEABLE_TEST_CHARACTERISTIC_LIST_TYPE.name());
         leafRegisterCompareTag.getEnsTagConfiguration().getMaxValue().add("30");
         leafRegisterCompareTag.getEnsTagConfiguration().getMinValue().add("10");
-        leafRegisterCompareTag.getEnsTagConfiguration().getEnsVariableName().add(EnsParametersUtil.CURRENT_INV_U_RENEABLE);
+        leafRegisterCompareTag.getEnsTagConfiguration().getEnsVariableName().add(EnsParametersUtil.CURRENT_INV_U_RENEABLE.name());
         leafRegisterCompareTag.getEnsTagConfiguration().getVariableToReadFrom().add("valueOnTest");
         //
-        leafRegisterCompareTag.getEnsTagConfiguration().getEnsType().add(EnsParametersUtil.RENEABLE_TEST_CHARACTERISTIC_LIST_TYPE);
+        leafRegisterCompareTag.getEnsTagConfiguration().getEnsType().add(EnsParametersUtil.RENEABLE_TEST_CHARACTERISTIC_LIST_TYPE.name());
         leafRegisterCompareTag.getEnsTagConfiguration().getMaxValue().add("40");
         leafRegisterCompareTag.getEnsTagConfiguration().getMinValue().add("10");
-        leafRegisterCompareTag.getEnsTagConfiguration().getEnsVariableName().add(EnsParametersUtil.CURRENT_PARALLEL_U_RENEABLE);
+        leafRegisterCompareTag.getEnsTagConfiguration().getEnsVariableName().add(EnsParametersUtil.CURRENT_PARALLEL_U_RENEABLE.name());
         leafRegisterCompareTag.getEnsTagConfiguration().getVariableToReadFrom().add("valueRef");
         tagList.getList().add(leafRegisterCompareTag);
         LeafWriteTag leafWriteTag = new LeafWriteTag();
@@ -163,14 +163,14 @@ public class TagListTests {
         leafEnsSetupTag4.setPosition(1);
         leafEnsSetupTag4.setTimeout(10000);
         leafEnsSetupTag4.setStart(false);
-        leafEnsSetupTag4.setSelectedItem(EnsParametersUtil.RENEABLE_TEST_CHARACTERISTIC_LIST_TYPE);
+        leafEnsSetupTag4.setSelectedItem(EnsParametersUtil.RENEABLE_TEST_CHARACTERISTIC_LIST_TYPE.name());
         tagList.getList().add(leafEnsSetupTag4);
         LeafEnsSetupTag leafEnsSetupTag2 = new LeafEnsSetupTag();
         leafEnsSetupTag2.setId(9);
         leafEnsSetupTag2.setPosition(1);
         leafEnsSetupTag2.setTimeout(10000);
         leafEnsSetupTag2.setStart(false);
-        leafEnsSetupTag2.setSelectedItem(EnsParametersUtil.PRODUCT_DATA_ENS_TYPE);
+        leafEnsSetupTag2.setSelectedItem(EnsParametersUtil.PRODUCT_DATA_ENS_TYPE.name());
         tagList.getList().add(leafEnsSetupTag2);
 
         ObjectMapper mapper = new ObjectMapper();

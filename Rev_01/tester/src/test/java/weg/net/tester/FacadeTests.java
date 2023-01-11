@@ -44,12 +44,13 @@ public class FacadeTests {
     private SapConnector sapConnector;
     
     @Test
-	void sapConnection() {
+	void sapConnection() throws SapException {
         //Código de barras SSW900
         String[] cod = {"017909492093169 211062114337 10 911121714557 24014419092"};
 
         SapConnector sapInstance = new SapConnector();
         sapInstance.setBarCode(cod);
+        sapInstance.getDataBy2DBarcodeString();
         Assert.assertEquals("SSW900", sapInstance.getSapDataMap().get(0).get(Caract.REF_PRODUTO_AUTOMACAO.name()));
 	}
 
