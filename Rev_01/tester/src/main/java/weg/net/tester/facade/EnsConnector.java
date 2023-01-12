@@ -3,7 +3,6 @@ package weg.net.tester.facade;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -57,7 +56,7 @@ public class EnsConnector {
         this.tagList = tagList;
 
         //@Todo: put ens data
-        instantiatePositionObj(tagList.qntOfProductInTest());
+        instantiatePositionObj();
         setEnsObjMesures();
         //setEnsObj();
         saveEveryEnabledPosition(); //@Todo: create enabler value on ens
@@ -119,8 +118,8 @@ public class EnsConnector {
         String type;
         for (int id = 0; id < tagList.getList().size(); id++) {
             if (tagList.getList().get(id).getEnsTagConfiguration().isEnabled()) {
-                for (int position = 0; position < tagList.getList().get(id).getEnsTagConfiguration().getEnsType().size(); position++) {
-                    type = tagList.getList().get(id).getEnsTagConfiguration().getEnsType().get(position);
+                for (int positionVariable = 0; positionVariable < tagList.getList().get(id).getEnsTagConfiguration().getEnsType().size(); positionVariable++) {
+                    type = tagList.getList().get(id).getEnsTagConfiguration().getEnsType().get(positionVariable);
                     
                     //case EnsParametersUtil.PRODUCT_DATA_ENS_TYPE:
                     //    setProductVariable(tagList.getList().get(id).getEnsTagConfiguration(), position, id);
@@ -129,20 +128,20 @@ public class EnsConnector {
                     //    setDielectricVariable(tagList.getList().get(id).getEnsTagConfiguration(), position, id);
                     //break;
                     if(EnsParametersUtil.FUNCTIONAL_TEST_CHARACTERISTIC_LIST_TYPE.name().equals(type)) {
-                        setFunctionalVariable(tagList.getList().get(id).getEnsTagConfiguration(), position, id);
+                        setFunctionalVariable(tagList.getList().get(id).getEnsTagConfiguration(), positionVariable, id);
                     }
                     //case EnsParametersUtil.LOAD_TEST_CHARACTERISTIC_LIST_TYPE:
                     //    setLoadVariable(tagList.getList().get(id).getEnsTagConfiguration(), position, id);
                     //break;
                     if(EnsParametersUtil.RENEABLE_TEST_CHARACTERISTIC_LIST_TYPE.name().equals(type)) {
-                        setReneableVariable(tagList.getList().get(id).getEnsTagConfiguration(), position, id);
+                        setReneableVariable(tagList.getList().get(id).getEnsTagConfiguration(), positionVariable, id);
                     }
                 }
             }
         }
     }
 
-    private void instantiatePositionObj(int qnt) {
+    private void instantiatePositionObj() {
         /* 
         for (int i = 0; i < qnt; i++) {
             productDataEnsList.add(new ProductDataEns());

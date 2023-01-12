@@ -170,7 +170,7 @@ public class LeafEnsSetupTag extends NodeEnsTag {
         }
     }
     */
-    private void mapValues() {
+    private void mapValues() {  //@Todo: for loop is instantiating one product for every position indiscriminatelly
         int lastId;
         for(int position = 0; position < TestMetaDataModel.productDataEnsList.size(); position++) {
             ProductDataEns product = TestMetaDataModel.productDataEnsList.get(position);
@@ -178,7 +178,7 @@ public class LeafEnsSetupTag extends NodeEnsTag {
                 TestMetaDataModel.initialEnsId = this.id; 
 
                 if(EnsParametersUtil.PRODUCT_DATA_ENS_TYPE.name().equals(selectedItem)) {
-                    productInitialSetup(product, position);
+                    productInitialSetup(product);
                 }
                 if(EnsParametersUtil.DIELECTRIC_TEST_CHARACTERISTIC_LIST_TYPE.name().equals(selectedItem)) {
                     dielectricInitialSetup(product);
@@ -214,7 +214,7 @@ public class LeafEnsSetupTag extends NodeEnsTag {
         }
     }
 
-    private void productInitialSetup(ProductDataEns product, int position) {
+    private void productInitialSetup(ProductDataEns product) {
         //product.setSerial(Long.parseLong(TestMetaDataModel.sapConnector.get(position).get(SapCaracUtil.SERIAL))); 
         product.setSerial(serialProduct);   //@Todo: delete thi9s statement ant uncomment the previous
         product.setStartDatetime(new Date());
@@ -236,7 +236,7 @@ public class LeafEnsSetupTag extends NodeEnsTag {
         functional.setStartDateTime(new Date());
         functional.setTimeUnit(timeUnitFunctional);
         functional.setEmployeeCode(Integer.parseInt(SessionUtil.sessionModel.getCadastro()));
-        functional.setTestPosition(this.position);
+        //functional.setTestPosition(this.position);  //Wrong position
         product.setFunctionalTestCharacteristicList(functional);
     }
 
@@ -245,7 +245,7 @@ public class LeafEnsSetupTag extends NodeEnsTag {
         load.setStartDateTime(new Date());
         load.setTimeUnit(timeUnitLoad);
         load.setEmployeeCode(Integer.parseInt(SessionUtil.sessionModel.getCadastro()));
-        load.setTestPosition(String.valueOf(this.position));
+        //load.setTestPosition(String.valueOf(this.position));  //Wrong position
         load.setVoltageSetpoint(voltageSetpointLoad);
         load.setTemperatureSetpoint(temperatureSetpointLoad);
         load.setDeratingPercentage(deratingPercentageLoad);
@@ -259,7 +259,7 @@ public class LeafEnsSetupTag extends NodeEnsTag {
     private void reneableInitialSetup(ProductDataEns product) {
         ReneableEnergyCharacteristicList reneable = new ReneableEnergyCharacteristicList();
         reneable.setEmployeeCode(Integer.parseInt(SessionUtil.sessionModel.getCadastro()));
-        reneable.setPosition(this.position);
+        //reneable.setPosition(this.position);  //Wrong position
         reneable.setUnit(unitReneable);
         reneable.setStartDateTime(new Date());
         reneable.setVoltageMain(voltageMainReneable);
@@ -278,12 +278,12 @@ public class LeafEnsSetupTag extends NodeEnsTag {
             product.setReleased(true);
             product.setTestStatus((byte) 1);
             //protected String failureDescriptionProduct; //@Todo: maybe later
-            product.setFailureDescription("Falha"); //@Todo: get real error
+            product.setFailureDescription("Aprovado->Adjust LeafEnsSetupTag"); //@Todo: get real error
         } else {
             product.setReleased(false);
             product.setTestStatus((byte) 2);
             //protected String failureDescriptionProduct; //@Todo: maybe later
-            product.setFailureDescription("Cancelado"); //@Todo: get real error
+            product.setFailureDescription("Reprovado->Adjust LeafEnsSetupTag"); //@Todo: get real error
         }
     }
 
@@ -303,21 +303,23 @@ public class LeafEnsSetupTag extends NodeEnsTag {
     }
 
     private void functionalFinalSetup(ProductDataEns product, int lastId, int position) {
+        product.getFunctionalTestCharacteristicList().setTestPosition(position);
         product.getFunctionalTestCharacteristicList().setEndDateTime(new Date());
         long testDuration = product.getFunctionalTestCharacteristicList().getEndDateTime().getTime() - product.getFunctionalTestCharacteristicList().getStartDateTime().getTime();
         product.getFunctionalTestCharacteristicList().setTestDuration((int) testDuration);
         if(TestMetaDataModel.isPositionEnabled[position].get()) {
             product.getFunctionalTestCharacteristicList().setTestResult(WdcTestResultType.Approved);
             //protected String faultDescriptionFunctional;    //@Todo: maybe later
-            product.getFunctionalTestCharacteristicList().setFaultDescription("Falha");
+            product.getFunctionalTestCharacteristicList().setFaultDescription("Aprovado");  //@Todo: futuramente colocar erro correto
         } else {
             product.getFunctionalTestCharacteristicList().setTestResult(WdcTestResultType.Failed);
             //protected String faultDescriptionFunctional;    //@Todo: maybe later
-            product.getFunctionalTestCharacteristicList().setFaultDescription("Cancelado");
+            product.getFunctionalTestCharacteristicList().setFaultDescription("Reprovado"); //@Todo: futuramente colocar erro correto
         }
     }
 
     private void loadFinalSetup(ProductDataEns product, int lastId, int position) {
+        product.getLoadTestCharacteristicList().setTestPosition(String.valueOf(position));
         product.getLoadTestCharacteristicList().setEndDateTime(new Date());
         long testDuration = product.getLoadTestCharacteristicList().getEndDateTime().getTime() - product.getLoadTestCharacteristicList().getStartDateTime().getTime();
         product.getLoadTestCharacteristicList().setTestDuration((int) testDuration);
@@ -326,17 +328,18 @@ public class LeafEnsSetupTag extends NodeEnsTag {
             //protected int timeUntilFailureLoad;  //@Todo: maybe later
             //protected String csvBinFileLoad;     //@Todo: maybe later
             //protected String faultDescriptionLoad;   //@Todo: maybe later
-            product.getLoadTestCharacteristicList().setFaultDescription("Falha");
+            product.getLoadTestCharacteristicList().setFaultDescription("Aprovado");    //@Todo: futuramente colocar erro correto
         } else {
             product.getLoadTestCharacteristicList().setTestResult(WdcTestResultType.Failed);
             //protected int timeUntilFailureLoad;  //@Todo: maybe later
             //protected String csvBinFileLoad;     //@Todo: maybe later
             //protected String faultDescriptionLoad;   //@Todo: maybe later
-            product.getLoadTestCharacteristicList().setFaultDescription("Cancelado");
+            product.getLoadTestCharacteristicList().setFaultDescription("Reprovado");   //@Todo: futuramente colocar erro correto
         }
     }
 
     private void reneableFinalSetup(ProductDataEns product, int lastId, int position) {
+        product.getReneableEnergyCharacteristicList().setPosition(position);
         product.getReneableEnergyCharacteristicList().setEndDateTime(new Date());
         long testDuration = product.getReneableEnergyCharacteristicList().getEndDateTime().getTime() - product.getReneableEnergyCharacteristicList().getStartDateTime().getTime();
         product.getReneableEnergyCharacteristicList().setTestDuration((int) testDuration);
@@ -344,12 +347,12 @@ public class LeafEnsSetupTag extends NodeEnsTag {
             product.getReneableEnergyCharacteristicList().setTestResult(WdcTestResultType.Approved);
             //protected int WdcTimeUntilFailureReneable;   //@Todo: maybe later
             //protected String defectReneable;     //@Todo: maybe later
-            product.getReneableEnergyCharacteristicList().setDefect("Falha");
+            product.getReneableEnergyCharacteristicList().setDefect("Aprovado");    //@Todo: futuramente colocar erro correto
         } else {
             product.getReneableEnergyCharacteristicList().setTestResult(WdcTestResultType.Failed);
             //protected int WdcTimeUntilFailureReneable;   //@Todo: maybe later
             //protected String defectReneable;     //@Todo: maybe later
-            product.getReneableEnergyCharacteristicList().setDefect("Cancelado");
+            product.getReneableEnergyCharacteristicList().setDefect("Reprovado");   //@Todo: futuramente colocar erro correto
         }
     }
 

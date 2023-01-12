@@ -19,12 +19,15 @@ import weg.net.tester.exception.TestSetupException;
 import weg.net.tester.exception.TestUnmarshalingException;
 import weg.net.tester.facade.DataCenter;
 import weg.net.tester.models.web.CommandLog;
+import weg.net.tester.models.web.ProductLog;
+import weg.net.tester.models.web.ResultLog;
 import weg.net.tester.tag.TagList;
 import weg.net.tester.tag.TestMetaDataModel;
 import weg.net.tester.utils.ActionCommandUtil;
 import weg.net.tester.utils.FrontEndFeedbackUtil;
 import weg.net.tester.utils.SapCaracUtil;
 import weg.net.tester.utils.SessionUtil;
+import weg.net.tester.utils.TestStatusUtil;
 
 @Getter
 @Setter
@@ -44,22 +47,34 @@ public class TestExecutor {
         String initSetupStatus = initSetup();
         if(initSetupStatus.equals(FrontEndFeedbackUtil.OK)) {
             this.result = startTestingRoutine();
-            for (int i = 1; i <= this.result.length; i++) {
-                sendFeedbackAfter(this.result[0], true, i);   
+            for (int i = 0; i < this.result.length; i++) {
+                if(this.result[i].equals(FrontEndFeedbackUtil.OK)) {
+                    sendFeedbackAfter(this.result[i], true, TestStatusUtil.OK,i+1);   
+                } else {
+                    sendFeedbackAfter(this.result[i], true, TestStatusUtil.FAULT,i+1);  
+                }
             }
         } else {
-            sendFeedbackAfter(initSetupStatus, false, 1);
+            sendFeedbackAfter(initSetupStatus, false, TestStatusUtil.FAULT, 0);
         }
         endSetup();
     }
 
     //@Todo: "/feedback2" must become "/feedback", the functionality will be implemented in the angular environment
+    /* 
     private void sendFeedbackAfter(String result, boolean finished, int position) {
         CommandLog commandLog = new CommandLog(result, ActionCommandUtil.SHOW_FINAL_RESULT, finished, position);
         this.template.convertAndSend("/feedback2",  commandLog);
-    }   
+    }
+    */   
+
+    private void sendFeedbackAfter(String result, boolean finished, String status, int position) {
+        ResultLog resultLog = new ResultLog(result, finished, status, position);
+        this.template.convertAndSend("/feedback2",  resultLog);
+    } 
 
     //@Todo: Maybe create sendFeedbackMiddle method
+    /* 
     private void sendFeedbackBefore(String descricao, int position) {
         CommandLog commandLog = new CommandLog(descricao, ActionCommandUtil.STARTING_INFO, position);
         this.template.convertAndSend("/feedback2",  commandLog);
@@ -72,6 +87,24 @@ public class TestExecutor {
             sendFeedbackBefore("Material: " + TestMetaDataModel.sapConnector.get(position).get(SapCaracUtil.MATERIAL), position+1);
             sendFeedbackBefore("Produto: " + TestMetaDataModel.sapConnector.get(position).get(SapCaracUtil.REF_PRODUTO_AUTOMACAO), position+1);
             sendFeedbackBefore("Descricao: " + TestMetaDataModel.sapConnector.get(position).get(SapCaracUtil.SHORT_TEXT), position+1);
+        }
+    }
+    */
+
+    private void sendProductDescriptionFeedback() {
+        ProductLog productLog;
+        for (int position = 0; position < TestMetaDataModel.tagList.qntOfProductInTest(); position++) {
+            productLog = new ProductLog();
+            productLog.setSerial(TestMetaDataModel.sapConnector.get(position).get(SapCaracUtil.SERIAL));
+            productLog.setMaterial(TestMetaDataModel.sapConnector.get(position).get(SapCaracUtil.MATERIAL));
+            productLog.setProduto(TestMetaDataModel.sapConnector.get(position).get(SapCaracUtil.REF_PRODUTO_AUTOMACAO));
+            productLog.setDescricao(TestMetaDataModel.sapConnector.get(position).get(SapCaracUtil.SHORT_TEXT));
+            productLog.setPosition(position+1);
+
+            this.template.convertAndSend("/feedback2", productLog);
+
+            ResultLog resultLog = new ResultLog("Em andamento", false, TestStatusUtil.ON_TEST, position+1);
+            this.template.convertAndSend("/feedback2",  resultLog);
         }
     }
 
@@ -115,13 +148,13 @@ public class TestExecutor {
             SessionUtil.endTest(result);
             this.dataCenter.end(result);
         } catch (InlineException e) {
-            sendFeedbackAfter(FrontEndFeedbackUtil.INLINE_ERROR, false, 1);
+            sendFeedbackAfter(FrontEndFeedbackUtil.INLINE_ERROR, false, TestStatusUtil.FAULT, 0);
         } catch (DataBaseException e) {
-            sendFeedbackAfter(FrontEndFeedbackUtil.DATABASE_ERROR, false, 1);
+            sendFeedbackAfter(FrontEndFeedbackUtil.DATABASE_ERROR, false, TestStatusUtil.FAULT, 0);
         } catch (EnsException e) {
-            sendFeedbackAfter(FrontEndFeedbackUtil.ENS_ERROR, false, 1);
+            sendFeedbackAfter(FrontEndFeedbackUtil.ENS_ERROR, false, TestStatusUtil.FAULT, 0);
         } catch (Exception e) {
-            sendFeedbackAfter(FrontEndFeedbackUtil.ERRO_INESPERADO, false, 1);
+            sendFeedbackAfter(FrontEndFeedbackUtil.ERRO_INESPERADO, false, TestStatusUtil.FAULT, 0);
         }
     }
 
