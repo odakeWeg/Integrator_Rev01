@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 
 import weg.net.tester.models.database.StackTraceLogModel;
 import weg.net.tester.services.TestExecutor;
+import weg.net.tester.utils.EndPointPathUtil;
 import weg.net.tester.utils.SessionUtil;
 
 @Controller
@@ -22,7 +23,7 @@ public class TestRoutineHandlerController {
     @Autowired
     private  TestExecutor testExecutor;
 
-    @MessageMapping("/log")
+    @MessageMapping(EndPointPathUtil.LOG)
     public void onReceivedMessage(String barCode) {
         try {
             testExecutor.setBarCode(barCode.split(","));

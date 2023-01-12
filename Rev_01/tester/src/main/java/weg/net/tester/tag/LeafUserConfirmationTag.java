@@ -11,7 +11,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.Setter;
+import weg.net.tester.models.web.PopUpLog;
 import weg.net.tester.utils.ActionCommandUtil;
+import weg.net.tester.utils.EndPointPathUtil;
 import weg.net.tester.utils.FailureCodeUtil;
 import weg.net.tester.utils.TagNameUtil;
 
@@ -40,7 +42,8 @@ public class LeafUserConfirmationTag extends NodeCompareTag {
         responseFlag = false;
 
         //@Todo: change feedback
-        this.template.convertAndSend("/feedback",  messageToDisplay);
+        PopUpLog popUpLog = new PopUpLog(messageToDisplay, ActionCommandUtil.USER_CONFIRM, timeout);
+        this.template.convertAndSend(EndPointPathUtil.CHANNEL,  popUpLog);
         waitConfirmation();
         if(confirmationValue) {
             testResult = FailureCodeUtil.OK;
@@ -62,7 +65,7 @@ public class LeafUserConfirmationTag extends NodeCompareTag {
     }
 
     //@Todo: Create class to implement every web socket stuff
-    @MessageMapping("/confirmation")
+    @MessageMapping(EndPointPathUtil.CONFIRMATION)
     public void onReceivedMesage(boolean confirmation) {
         LeafUserConfirmationTag.confirmation = confirmation;
         LeafUserConfirmationTag.responseFlag = true;

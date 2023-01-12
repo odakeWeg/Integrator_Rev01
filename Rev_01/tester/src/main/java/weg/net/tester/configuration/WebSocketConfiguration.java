@@ -14,14 +14,14 @@ import weg.net.tester.utils.EndPointPathUtil;
 public class WebSocketConfiguration extends AbstractWebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/socket")
+        registry.addEndpoint(EndPointPathUtil.SOCKET)
                 .setAllowedOrigins(EndPointPathUtil.ORIGIN_ALLOWED)
                 .withSockJS();
     }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.setApplicationDestinationPrefixes("/tester")
-                .enableSimpleBroker("/feedback");
+        registry.setApplicationDestinationPrefixes(EndPointPathUtil.TESTER)
+                .enableSimpleBroker(EndPointPathUtil.CHANNEL);
     }
 }

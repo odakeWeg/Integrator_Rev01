@@ -31,9 +31,6 @@ import weg.net.tester.tag.TagList;
 import weg.net.tester.tag.TestMetaDataModel;
 import weg.net.tester.utils.EnsParametersUtil;
 
-//----------------------------------------------------------------------------------------------------->
-//@Todo: EVERY SWITCH COULD BE CHANGED BY ITERATING OVER ENUM CLASSES --------------------------------->
-//----------------------------------------------------------------------------------------------------->
 @Configuration
 public class EnsConnector {
     //@Todo: Refactor this class ASAP

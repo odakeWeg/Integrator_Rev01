@@ -5,13 +5,17 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
+import weg.net.tester.models.web.SessionLog;
 import weg.net.tester.repositories.SessionRepository;
+import weg.net.tester.utils.ActionCommandUtil;
+import weg.net.tester.utils.EndPointPathUtil;
 import weg.net.tester.utils.FrontEndFeedbackUtil;
 import weg.net.tester.utils.SessionUtil;
 
 @Controller
 public class SessionController {
     private SimpMessagingTemplate template;
+    private SessionLog sessionLog;
 
     @Autowired
     void WebSocketController(SimpMessagingTemplate template) {
@@ -21,25 +25,29 @@ public class SessionController {
     @Autowired
     private SessionRepository sessionRepository;
 
-    @MessageMapping("/startSession")
+    @MessageMapping(EndPointPathUtil.START_SESSION)
     public void startSession(String cadastro){
         try {
             SessionUtil.initiateSession(cadastro);
-            this.template.convertAndSend("/feedback", FrontEndFeedbackUtil.OK);
+            sessionLog = new SessionLog(FrontEndFeedbackUtil.OK, ActionCommandUtil.LOGIN);
+            this.template.convertAndSend(EndPointPathUtil.CHANNEL, sessionLog);
         } catch (Exception e) {
-            this.template.convertAndSend("/feedback", FrontEndFeedbackUtil.ERRO_INESPERADO);
+            sessionLog = new SessionLog(FrontEndFeedbackUtil.ERRO_INESPERADO, ActionCommandUtil.LOGIN);
+            this.template.convertAndSend(EndPointPathUtil.CHANNEL, sessionLog);
         }
     }
 
-    @MessageMapping("/endSession")
+    @MessageMapping(EndPointPathUtil.END_SESSION)
     public void endSession(){
         try {
             SessionUtil.endSession();
             sessionRepository.save(SessionUtil.sessionModel);
             SessionUtil.reset();
-            this.template.convertAndSend("/feedback", FrontEndFeedbackUtil.OK);
+            sessionLog = new SessionLog(FrontEndFeedbackUtil.OK, ActionCommandUtil.LOGOUT);
+            this.template.convertAndSend(EndPointPathUtil.CHANNEL, sessionLog);
         } catch (Exception e) {
-            this.template.convertAndSend("/feedback", FrontEndFeedbackUtil.ERRO_INESPERADO);
+            sessionLog = new SessionLog(FrontEndFeedbackUtil.ERRO_INESPERADO, ActionCommandUtil.LOGOUT);
+            this.template.convertAndSend(EndPointPathUtil.CHANNEL, sessionLog);
         }
     }
 }

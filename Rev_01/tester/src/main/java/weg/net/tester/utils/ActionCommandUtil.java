@@ -8,4 +8,6 @@ public class ActionCommandUtil {
     public static final String SHOW_FINAL_RESULT = "finalizacao";
     public static final String TEST_STATUS_UPDATE = "status";
     public static final String STARTING_INFO = "starting";
+    public static final String LOGIN = "login";
+    public static final String LOGOUT = "logout";
 }

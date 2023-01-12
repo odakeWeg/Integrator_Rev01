@@ -24,6 +24,7 @@ import weg.net.tester.models.web.ResultLog;
 import weg.net.tester.tag.TagList;
 import weg.net.tester.tag.TestMetaDataModel;
 import weg.net.tester.utils.ActionCommandUtil;
+import weg.net.tester.utils.EndPointPathUtil;
 import weg.net.tester.utils.FrontEndFeedbackUtil;
 import weg.net.tester.utils.SapCaracUtil;
 import weg.net.tester.utils.SessionUtil;
@@ -70,7 +71,7 @@ public class TestExecutor {
 
     private void sendFeedbackAfter(String result, boolean finished, String status, int position) {
         ResultLog resultLog = new ResultLog(result, finished, status, position);
-        this.template.convertAndSend("/feedback2",  resultLog);
+        this.template.convertAndSend(EndPointPathUtil.CHANNEL,  resultLog);
     } 
 
     //@Todo: Maybe create sendFeedbackMiddle method
@@ -101,10 +102,10 @@ public class TestExecutor {
             productLog.setDescricao(TestMetaDataModel.sapConnector.get(position).get(SapCaracUtil.SHORT_TEXT));
             productLog.setPosition(position+1);
 
-            this.template.convertAndSend("/feedback2", productLog);
+            this.template.convertAndSend(EndPointPathUtil.CHANNEL, productLog);
 
             ResultLog resultLog = new ResultLog("Em andamento", false, TestStatusUtil.ON_TEST, position+1);
-            this.template.convertAndSend("/feedback2",  resultLog);
+            this.template.convertAndSend(EndPointPathUtil.CHANNEL,  resultLog);
         }
     }
 
@@ -167,7 +168,7 @@ public class TestExecutor {
                     return results;
                 } else {
                     CommandLog commandLog = baseTagList.getList().get(i).command();
-                    this.template.convertAndSend("/feedback2",  commandLog);
+                    this.template.convertAndSend(EndPointPathUtil.CHANNEL,  commandLog);
                 }
             }
             for (int c = 0; c < baseTagList.qntOfProductInTest(); c++) {
@@ -183,7 +184,7 @@ public class TestExecutor {
         return results;
     }
 
-    @MessageMapping("/stop")
+    @MessageMapping(EndPointPathUtil.STOP)
     public void stopRoutine() {
         TestMetaDataModel.exitFlag = true;
     }

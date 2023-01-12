@@ -13,7 +13,10 @@ import lombok.Setter;
 import weg.net.tester.communication.BaseCommunication;
 import weg.net.tester.exception.CommunicationException;
 import weg.net.tester.exception.ObjectNotFoundException;
+import weg.net.tester.models.web.PopUpLog;
+import weg.net.tester.utils.ActionCommandUtil;
 import weg.net.tester.utils.CompareUtil;
+import weg.net.tester.utils.EndPointPathUtil;
 import weg.net.tester.utils.FailureCodeUtil;
 import weg.net.tester.utils.TagNameUtil;
 
@@ -32,7 +35,6 @@ public class LeafUserInputTag extends NodeCompareTag {
     private static boolean inputFailure;
 
     protected String messageToDisplay;
-
     
     protected boolean userInputFailure;
     protected int inputValue;
@@ -54,7 +56,8 @@ public class LeafUserInputTag extends NodeCompareTag {
         responseFlag = false;
 
         //@Todo: change feedback
-        this.template.convertAndSend("/feedback",  messageToDisplay);
+        PopUpLog popUpLog = new PopUpLog(messageToDisplay, ActionCommandUtil.USER_INPUT, timeout);
+        this.template.convertAndSend(EndPointPathUtil.CHANNEL,  popUpLog);
         if (!waitConfirmation()) {
             checkInputValue();
         } else {
@@ -142,7 +145,7 @@ public class LeafUserInputTag extends NodeCompareTag {
         return this.userInputFailure;
     }
 
-    @MessageMapping("/input")
+    @MessageMapping(EndPointPathUtil.INPUT)
     public void onReceivedMesage(String input) {
         try {
             LeafUserInputTag.input = Integer.parseInt(input);
