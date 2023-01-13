@@ -8,6 +8,8 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import org.springframework.scheduling.annotation.Async;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
@@ -123,11 +125,15 @@ public abstract class ParentTag extends BaseTag {
         individualTestDurationMillis = endTime - startTime;
     }
 
-    protected void setFailureCommandLog(String testResult, String log) {
-        this.testResult = testResult;
-        this.log = log;
-        TestMetaDataModel.isPositionEnabled[this.position-1].set(false);
-        TestMetaDataModel.testStep[this.position-1] = this.id;
+    protected void setFailureCommandLog(String testResult, String log) {    //@Todo: BadPractice. If statement only used because of interrupting problems, another solution should be avaluated
+        if (this.testResult.equals(FailureCodeUtil.TIMEOUT)) {
+            this.log = log = "Etapa do teste passou do limite de tempo especificado de " + timeout + " segundos";
+        } else {
+            this.testResult = testResult;
+            this.log = log;
+            TestMetaDataModel.isPositionEnabled[this.position-1].set(false);
+            TestMetaDataModel.testStep[this.position-1] = this.id;
+        }
     }
 
     protected void setMainCommunicationFailure(String testResult, String log) {

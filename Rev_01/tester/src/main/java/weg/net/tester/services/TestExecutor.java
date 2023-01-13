@@ -104,7 +104,7 @@ public class TestExecutor {
 
             this.template.convertAndSend(EndPointPathUtil.CHANNEL, productLog);
 
-            ResultLog resultLog = new ResultLog("Em andamento", false, TestStatusUtil.ON_TEST, position+1);
+            ResultLog resultLog = new ResultLog("Em andamento", false, TestStatusUtil.ON_TEST, position+1); //@Todo: maybe make an Util for this "Em andamento"
             this.template.convertAndSend(EndPointPathUtil.CHANNEL,  resultLog);
         }
     }
@@ -159,7 +159,7 @@ public class TestExecutor {
         }
     }
 
-    private String[] startTestingRoutine() { 
+    private String[] startTestingRoutine() {    //@Todo: Reformulate this method, maybe put some for loop outside or so
         String[] results = new String[baseTagList.qntOfProductInTest()];
         try {
             for (int i = 0; i < baseTagList.getList().size(); i++) {
@@ -175,7 +175,12 @@ public class TestExecutor {
                 if (TestMetaDataModel.isPositionEnabled[c].get()) {
                     results[c] = FrontEndFeedbackUtil.OK;
                 } else {
-                    results[c] = FrontEndFeedbackUtil.FALHA_NO_TESTE;
+                    for (int i = 0; i < baseTagList.getList().size(); i++) {
+                        if(!baseTagList.getList().get(i).getTestResult().equals(FrontEndFeedbackUtil.OK) && baseTagList.getList().get(i).getPosition()==(c+1)) {
+                            results[c] = baseTagList.getList().get(i).getTestResult();
+                            break;
+                        }
+                    }
                 }
             }
         } catch (Exception e) {
