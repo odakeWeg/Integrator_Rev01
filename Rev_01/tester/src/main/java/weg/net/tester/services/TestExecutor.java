@@ -1,6 +1,7 @@
 package weg.net.tester.services;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -42,21 +43,24 @@ public class TestExecutor {
     private SimpMessagingTemplate template;
     private String[] barCode;
     private String[] result;
+    private String[] log;
     TagList baseTagList;
 
     public void execute() {
         String initSetupStatus = initSetup();
         if(initSetupStatus.equals(FrontEndFeedbackUtil.OK)) {
-            this.result = startTestingRoutine();
+            HashMap<String, String[]> map = startTestingRoutine();
+            this.result = map.get("results");
+            this.log = map.get("log");
             for (int i = 0; i < this.result.length; i++) {
                 if(this.result[i].equals(FrontEndFeedbackUtil.OK)) {
-                    sendFeedbackAfter(this.result[i], true, TestStatusUtil.OK,i+1);   
+                    sendFeedbackAfter(this.result[i], log[i], true, TestStatusUtil.OK,i+1);   
                 } else {
-                    sendFeedbackAfter(this.result[i], true, TestStatusUtil.FAULT,i+1);  
+                    sendFeedbackAfter(this.result[i], log[i], true, TestStatusUtil.FAULT,i+1);  
                 }
             }
         } else {
-            sendFeedbackAfter(initSetupStatus, false, TestStatusUtil.FAULT, 0);
+            sendFeedbackAfter(initSetupStatus, "", false, TestStatusUtil.FAULT, 0);
         }
         endSetup();
     }
@@ -69,8 +73,8 @@ public class TestExecutor {
     }
     */   
 
-    private void sendFeedbackAfter(String result, boolean finished, String status, int position) {
-        ResultLog resultLog = new ResultLog(result, finished, status, position);
+    private void sendFeedbackAfter(String result, String log, boolean finished, String status, int position) {
+        ResultLog resultLog = new ResultLog(result, log, finished, status, position);
         this.template.convertAndSend(EndPointPathUtil.CHANNEL,  resultLog);
     } 
 
@@ -104,7 +108,7 @@ public class TestExecutor {
 
             this.template.convertAndSend(EndPointPathUtil.CHANNEL, productLog);
 
-            ResultLog resultLog = new ResultLog("Em andamento", false, TestStatusUtil.ON_TEST, position+1); //@Todo: maybe make an Util for this "Em andamento"
+            ResultLog resultLog = new ResultLog("Em andamento", "", false, TestStatusUtil.ON_TEST, position+1); //@Todo: maybe make an Util for this "Em andamento"
             this.template.convertAndSend(EndPointPathUtil.CHANNEL,  resultLog);
         }
     }
@@ -149,23 +153,28 @@ public class TestExecutor {
             SessionUtil.endTest(result);
             this.dataCenter.end(result);
         } catch (InlineException e) {
-            sendFeedbackAfter(FrontEndFeedbackUtil.INLINE_ERROR, false, TestStatusUtil.FAULT, 0);
+            sendFeedbackAfter(FrontEndFeedbackUtil.INLINE_ERROR, "", false, TestStatusUtil.FAULT, 0);
         } catch (DataBaseException e) {
-            sendFeedbackAfter(FrontEndFeedbackUtil.DATABASE_ERROR, false, TestStatusUtil.FAULT, 0);
+            sendFeedbackAfter(FrontEndFeedbackUtil.DATABASE_ERROR, "", false, TestStatusUtil.FAULT, 0);
         } catch (EnsException e) {
-            sendFeedbackAfter(FrontEndFeedbackUtil.ENS_ERROR, false, TestStatusUtil.FAULT, 0);
+            sendFeedbackAfter(FrontEndFeedbackUtil.ENS_ERROR, "", false, TestStatusUtil.FAULT, 0);
         } catch (Exception e) {
-            sendFeedbackAfter(FrontEndFeedbackUtil.ERRO_INESPERADO, false, TestStatusUtil.FAULT, 0);
+            sendFeedbackAfter(FrontEndFeedbackUtil.ERRO_INESPERADO, "", false, TestStatusUtil.FAULT, 0);
         }
     }
 
-    private String[] startTestingRoutine() {    //@Todo: Reformulate this method, maybe put some for loop outside or so
+    private HashMap<String, String[]> startTestingRoutine() {    //@Todo: Reformulate this method, maybe put some for loop outside or so
+        HashMap<String, String[]> map = new HashMap<String, String[]>();
         String[] results = new String[baseTagList.qntOfProductInTest()];
+        String[] log = new String[baseTagList.qntOfProductInTest()];
+        Arrays.fill(log, "");
         try {
             for (int i = 0; i < baseTagList.getList().size(); i++) {
                 if (TestMetaDataModel.exitFlag) {
                     Arrays.fill(results, FrontEndFeedbackUtil.CANCELADO);
-                    return results;
+                    map.put("results", results);
+                    map.put("log", log);
+                    return map;
                 } else {
                     CommandLog commandLog = baseTagList.getList().get(i).command();
                     this.template.convertAndSend(EndPointPathUtil.CHANNEL,  commandLog);
@@ -178,6 +187,7 @@ public class TestExecutor {
                     for (int i = 0; i < baseTagList.getList().size(); i++) {
                         if(!baseTagList.getList().get(i).getTestResult().equals(FrontEndFeedbackUtil.OK) && baseTagList.getList().get(i).getPosition()==(c+1)) {
                             results[c] = baseTagList.getList().get(i).getTestResult();
+                            log[c] = baseTagList.getList().get(i).getLog();
                             break;
                         }
                     }
@@ -186,7 +196,9 @@ public class TestExecutor {
         } catch (Exception e) {
             Arrays.fill(results, FrontEndFeedbackUtil.ERRO_INESPERADO);
         }
-        return results;
+        map.put("results", results);
+        map.put("log", log);
+        return map;
     }
 
     @MessageMapping(EndPointPathUtil.STOP)

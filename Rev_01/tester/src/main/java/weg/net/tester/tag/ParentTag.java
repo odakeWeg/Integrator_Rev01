@@ -114,7 +114,7 @@ public abstract class ParentTag extends BaseTag {
 
     //@Todo: maybe eliminate this function and use the other one declared in BaseTag
     private boolean nonTrivialOperation() {
-        if(tagIdentifier.equals(TagIdentifierUtil.TEST)) {
+        if(tagIdentifier.equals(TagIdentifierUtil.TEST)) {  //@Todo: make it a list of Strings
             return false;
         }
         return true;

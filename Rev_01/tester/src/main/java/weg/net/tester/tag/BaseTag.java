@@ -14,4 +14,5 @@ public abstract class BaseTag {
     abstract public EnsTagConfiguration getEnsTagConfiguration();
     abstract public boolean trivialTag();
     abstract public String getTestResult();
+    abstract public String getLog();
 }
