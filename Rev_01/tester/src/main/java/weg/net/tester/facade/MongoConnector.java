@@ -11,11 +11,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import weg.net.tester.converter.JsonObjConverter;
 import weg.net.tester.exception.DataBaseException;
 import weg.net.tester.exception.SessionException;
+import weg.net.tester.helper.SessionHelper;
 import weg.net.tester.models.database.TestingResultModel;
 import weg.net.tester.repositories.TestingResultRepository;
 import weg.net.tester.tag.BaseTag;
 import weg.net.tester.tag.TagList;
-import weg.net.tester.utils.SessionUtil;
 
 @Configuration 
 public class MongoConnector {
@@ -49,8 +49,8 @@ public class MongoConnector {
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             this.timestamp = String.valueOf(timestamp.getTime()); 
 
-            this.cadastro = SessionUtil.sessionModel.getCadastro();
-            this.sessionId = SessionUtil.sessionModel.getTimestamp();
+            this.cadastro = SessionHelper.sessionModel.getCadastro();
+            this.sessionId = SessionHelper.sessionModel.getTimestamp();
         } catch (Exception e) {
             throw new SessionException("Falha no setup inicial da base de dados");
         }

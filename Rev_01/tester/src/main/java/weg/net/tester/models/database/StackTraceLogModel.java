@@ -1,5 +1,6 @@
 package weg.net.tester.models.database;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Getter;
@@ -7,9 +8,10 @@ import lombok.Getter;
 @Document
 @Getter
 public class StackTraceLogModel {
-    private String errorMessage;
+    @Id
     private String timeStamp;
     private String cadastro;
+    private String errorMessage;
 
     public StackTraceLogModel(String errorMessage, String timeStamp, String cadastro) {
         this.errorMessage = errorMessage;

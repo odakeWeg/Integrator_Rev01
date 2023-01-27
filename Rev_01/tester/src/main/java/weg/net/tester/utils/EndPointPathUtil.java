@@ -1,6 +1,6 @@
 package weg.net.tester.utils;
 
-public class EndPointPathUtil {
+public class EndPointPathUtil { //@Todo: mudar nomenclatura para saber se é um endpoint de saída ou entrada
     public static final String ORIGIN_ALLOWED = "http://localhost:4200/";
     public static final String CHANNEL = "/channel";
     public static final String TESTER = "/tester";

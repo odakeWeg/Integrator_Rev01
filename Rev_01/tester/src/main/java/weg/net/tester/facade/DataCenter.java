@@ -89,7 +89,11 @@ public class DataCenter {
             }
         }
         BaseConverter converter = new JsonObjConverter();
-        return converter.getRoutineFromFileName(FilePathUtil.TEST_ROUTINE_PATH + fileReferenceName + ".json");
+        TagList list = converter.getRoutineFromFileName(FilePathUtil.TEST_ROUTINE_PATH + fileReferenceName + ".json");
+        if(list.qntOfProductInTest()!=qnt) {
+            throw new TestSetupException("Falha no setup do produto: Quantidade de produtos lidos diferente da quantidade de posições de teste, quantidade lida = "+ qnt + ", quantidade esperada: " + list.qntOfProductInTest());
+        }
+        return list;
     }
 
     public InlineConnector getInlineConnector() {

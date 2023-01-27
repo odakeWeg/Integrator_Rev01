@@ -19,6 +19,7 @@ import weg.net.tester.exception.SessionException;
 import weg.net.tester.facade.InlineConnector;
 import weg.net.tester.facade.MongoConnector;
 import weg.net.tester.facade.SapConnector;
+import weg.net.tester.helper.SessionHelper;
 import weg.net.tester.models.database.SessionModel;
 import weg.net.tester.models.database.TestingResultModel;
 import weg.net.tester.repositories.SessionRepository;
@@ -27,7 +28,6 @@ import weg.net.tester.tag.BaseTag;
 import weg.net.tester.tag.LeafForTestTag;
 import weg.net.tester.tag.LeafTestTag;
 import weg.net.tester.tag.TagList;
-import weg.net.tester.utils.SessionUtil;
 
 @SpringBootTest
 public class FacadeTests {
@@ -98,15 +98,15 @@ public class FacadeTests {
 
     @Test
 	void mongoSessionConnection() {
-        SessionUtil.initiateSession("7881");
-        SessionUtil.endSession();
-        sessionRepository.save(SessionUtil.sessionModel);
+        SessionHelper.initiateSession("7881");
+        SessionHelper.endSession();
+        sessionRepository.save(SessionHelper.sessionModel);
 
         List<SessionModel> sessionModel = sessionRepository.findByCadastro("7881");
         
         Assert.assertEquals("7881", sessionModel.get(0).getCadastro());
 
-        sessionRepository.delete(SessionUtil.sessionModel);
+        sessionRepository.delete(SessionHelper.sessionModel);
 
         sessionModel= sessionRepository.findByCadastro("7881");
 
@@ -134,9 +134,9 @@ public class FacadeTests {
         TagList tagList = new TagList();
         tagList.setList(list);
 
-        SessionUtil.sessionModel = new SessionModel();
-        SessionUtil.sessionModel.setCadastro("7881");
-        SessionUtil.sessionModel.setTimestamp("1234567890");
+        SessionHelper.sessionModel = new SessionModel();
+        SessionHelper.sessionModel.setCadastro("7881");
+        SessionHelper.sessionModel.setTimestamp("1234567890");
         mongoConnector.initialSetup();
 
         int[] step = {1};

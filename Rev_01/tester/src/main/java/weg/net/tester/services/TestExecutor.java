@@ -19,6 +19,7 @@ import weg.net.tester.exception.SessionException;
 import weg.net.tester.exception.TestSetupException;
 import weg.net.tester.exception.TestUnmarshalingException;
 import weg.net.tester.facade.DataCenter;
+import weg.net.tester.helper.SessionHelper;
 import weg.net.tester.models.web.CommandLog;
 import weg.net.tester.models.web.ProductLog;
 import weg.net.tester.models.web.ResultLog;
@@ -28,7 +29,6 @@ import weg.net.tester.utils.ActionCommandUtil;
 import weg.net.tester.utils.EndPointPathUtil;
 import weg.net.tester.utils.FrontEndFeedbackUtil;
 import weg.net.tester.utils.SapCaracUtil;
-import weg.net.tester.utils.SessionUtil;
 import weg.net.tester.utils.TestStatusUtil;
 
 @Getter
@@ -116,7 +116,7 @@ public class TestExecutor {
     private String initSetup() {
         //@Todo: refactor into different functions with catches, this one just calls every other
         try {
-            SessionUtil.initiateTest();
+            SessionHelper.initiateTest();
             //sendFeedbackBefore("Iniciando..."); //@Todo: Change this to a rolling circle to feedback the user, doesnt need a position
             this.baseTagList = this.dataCenter.initiate(barCode);
             this.setTestMetaDataModel();
@@ -150,7 +150,7 @@ public class TestExecutor {
 
     private void endSetup() {
         try {
-            SessionUtil.endTest(result);
+            SessionHelper.endTest(result);
             this.dataCenter.end(result);
         } catch (InlineException e) {
             sendFeedbackAfter(FrontEndFeedbackUtil.INLINE_ERROR, "", false, TestStatusUtil.FAULT, 0);

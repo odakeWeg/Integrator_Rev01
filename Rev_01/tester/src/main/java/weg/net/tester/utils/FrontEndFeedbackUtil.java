@@ -15,4 +15,5 @@ public class FrontEndFeedbackUtil {
     public static final String TESTE_NAO_AUTORIZADO = "Teste nao autorizado";
     public static final String FALHA_SETUP_PRODUTO = "Falha no setup do produto";
     public static final String SESSION_ERROR = "Tempo de login expirou";
+    public static final String INVALID_LOGIN = "Login inválido, cadastro ou senha incorreto";
 }

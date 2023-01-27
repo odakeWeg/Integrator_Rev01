@@ -1,11 +1,13 @@
-package weg.net.tester.utils;
+package weg.net.tester.helper;
 
 import java.sql.Timestamp;
 
 import weg.net.tester.models.database.SessionModel;
+import weg.net.tester.utils.FrontEndFeedbackUtil;
 
 //@Todo: Maybe make it non static class
-public class SessionUtil {
+public class SessionHelper {
+
     public static SessionModel sessionModel;
     private static long initialTime;
     private static long endingTime;
@@ -22,6 +24,14 @@ public class SessionUtil {
 
         sessionModel.setCadastro(cadastro);
         sessionModel.setTimestamp(timestampString);
+    }
+
+    private static void validateLogin(String cadastro, String password) {
+
+    }
+
+    private static void setSessionValues(String cadastro) {
+
     }
 
     public static void endSession() {

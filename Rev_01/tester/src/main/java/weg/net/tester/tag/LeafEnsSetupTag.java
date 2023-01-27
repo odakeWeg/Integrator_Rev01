@@ -12,11 +12,11 @@ import net.weg.wdc.ens.ReneableEnergyCharacteristicList;
 import net.weg.wdc.ens.entity.WdcTestResultType;
 import net.weg.wdc.ens.entity.WdcTimeUnitType;
 import weg.net.tester.facade.DataCenter;
+import weg.net.tester.helper.SessionHelper;
 import weg.net.tester.utils.ActionCommandUtil;
 import weg.net.tester.utils.EnsParametersUtil;
 import weg.net.tester.utils.FailureCodeUtil;
 import weg.net.tester.utils.SapCaracUtil;
-import weg.net.tester.utils.SessionUtil;
 import weg.net.tester.utils.TagNameUtil;
 
 @Getter
@@ -223,7 +223,7 @@ public class LeafEnsSetupTag extends NodeEnsTag {
     private void dielectricInitialSetup(ProductDataEns product) {
         DielectricTestCharacteristicList dielectric = new DielectricTestCharacteristicList();
         dielectric.setStartDateTime(new Date());
-        dielectric.setEmployeeCode(Integer.parseInt(SessionUtil.sessionModel.getCadastro()));
+        dielectric.setEmployeeCode(Integer.parseInt(SessionHelper.sessionModel.getCadastro()));
         dielectric.setVoltageSetpoint(voltageSetpointDielectric);
         dielectric.setCurrentSetpointIn_mA(currentSetpointIn_mADielectric);
         dielectric.setCurrentAcceptanceIn_mA(currentAcceptanceIn_mADielectric);
@@ -235,7 +235,7 @@ public class LeafEnsSetupTag extends NodeEnsTag {
         FunctionalTestCharacteristicList functional = new FunctionalTestCharacteristicList();
         functional.setStartDateTime(new Date());
         functional.setTimeUnit(timeUnitFunctional);
-        functional.setEmployeeCode(Integer.parseInt(SessionUtil.sessionModel.getCadastro()));
+        functional.setEmployeeCode(Integer.parseInt(SessionHelper.sessionModel.getCadastro()));
         //functional.setTestPosition(this.position);  //Wrong position
         product.setFunctionalTestCharacteristicList(functional);
     }
@@ -244,7 +244,7 @@ public class LeafEnsSetupTag extends NodeEnsTag {
         LoadTestCharacteristicList load = new LoadTestCharacteristicList();
         load.setStartDateTime(new Date());
         load.setTimeUnit(timeUnitLoad);
-        load.setEmployeeCode(Integer.parseInt(SessionUtil.sessionModel.getCadastro()));
+        load.setEmployeeCode(Integer.parseInt(SessionHelper.sessionModel.getCadastro()));
         //load.setTestPosition(String.valueOf(this.position));  //Wrong position
         load.setVoltageSetpoint(voltageSetpointLoad);
         load.setTemperatureSetpoint(temperatureSetpointLoad);
@@ -258,7 +258,7 @@ public class LeafEnsSetupTag extends NodeEnsTag {
 
     private void reneableInitialSetup(ProductDataEns product) {
         ReneableEnergyCharacteristicList reneable = new ReneableEnergyCharacteristicList();
-        reneable.setEmployeeCode(Integer.parseInt(SessionUtil.sessionModel.getCadastro()));
+        reneable.setEmployeeCode(Integer.parseInt(SessionHelper.sessionModel.getCadastro()));
         //reneable.setPosition(this.position);  //Wrong position
         reneable.setUnit(unitReneable);
         reneable.setStartDateTime(new Date());

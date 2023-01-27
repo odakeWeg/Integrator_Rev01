@@ -6,10 +6,10 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
+import weg.net.tester.helper.SessionHelper;
 import weg.net.tester.models.database.StackTraceLogModel;
 import weg.net.tester.services.TestExecutor;
 import weg.net.tester.utils.EndPointPathUtil;
-import weg.net.tester.utils.SessionUtil;
 
 @Controller
 public class TestRoutineHandlerController {
@@ -31,7 +31,8 @@ public class TestRoutineHandlerController {
             testExecutor.execute();
         } catch (Exception e) {
             //@Todo: send trace to dataBase -> instantiate reposito and stuff like that
-            StackTraceLogModel stackTraceLogModel = new StackTraceLogModel(e.getMessage(), Long.toString(System.currentTimeMillis()), SessionUtil.sessionModel.getCadastro());
+            //@Todo: every unknown error should throw an exception to end up here
+            StackTraceLogModel stackTraceLogModel = new StackTraceLogModel(e.getMessage(), Long.toString(System.currentTimeMillis()), SessionHelper.sessionModel.getCadastro());
             
         }
     }
