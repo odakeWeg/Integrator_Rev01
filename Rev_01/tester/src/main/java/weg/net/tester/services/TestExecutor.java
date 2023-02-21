@@ -47,6 +47,7 @@ public class TestExecutor {
     TagList baseTagList;
 
     public void execute() {
+        boolean initSetupFail = false;
         String initSetupStatus = initSetup();
         if(initSetupStatus.equals(FrontEndFeedbackUtil.OK)) {
             HashMap<String, String[]> map = startTestingRoutine();
@@ -59,10 +60,23 @@ public class TestExecutor {
                     sendFeedbackAfter(this.result[i], log[i], true, TestStatusUtil.FAULT,i+1);  
                 }
             }
-        } else {
-            sendFeedbackAfter(initSetupStatus, "", false, TestStatusUtil.FAULT, 0);
+        } else {    //@Todo: Different feedback because positions werent even setted
+            sendFeedbackAfter(initSetupStatus, "", false, TestStatusUtil.INITIALIZATION_FAULT, 0);
+            
+            //@Todo: Refactor this fillNull
+            fillNullVariables();
+            initSetupFail = true;
         }
-        endSetup();
+        if(endSetup(initSetupFail) && !initSetupFail) {
+            sendFeedbackAfter("", "", true, TestStatusUtil.FIM, 0);
+        }
+    }
+
+    private void fillNullVariables() {
+        this.result = new String[this.barCode.length];
+        Arrays.fill(result, TestStatusUtil.INITIALIZATION_FAULT);
+        //TestMetaDataModel.tagList = new TagList();
+        //TestMetaDataModel.testStep = new int[this.barCode.length];
     }
 
     //@Todo: "/feedback2" must become "/feedback", the functionality will be implemented in the angular environment
@@ -108,7 +122,7 @@ public class TestExecutor {
 
             this.template.convertAndSend(EndPointPathUtil.CHANNEL, productLog);
 
-            ResultLog resultLog = new ResultLog("Em andamento", "", false, TestStatusUtil.ON_TEST, position+1); //@Todo: maybe make an Util for this "Em andamento"
+            ResultLog resultLog = new ResultLog(FrontEndFeedbackUtil.ONGOING, "@Todo", false, TestStatusUtil.ON_TEST, position+1); //@Todo: maybe make an Util for this "Em andamento"
             this.template.convertAndSend(EndPointPathUtil.CHANNEL,  resultLog);
         }
     }
@@ -118,12 +132,18 @@ public class TestExecutor {
         try {
             SessionHelper.initiateTest();
             //sendFeedbackBefore("Iniciando..."); //@Todo: Change this to a rolling circle to feedback the user, doesnt need a position
-            this.baseTagList = this.dataCenter.initiate(barCode);
-            this.setTestMetaDataModel();
-            sendProductDescriptionFeedback();
+            //this.baseTagList = this.dataCenter.initiate(barCode);
+            //this.setTestMetaDataModel();
+            //sendProductDescriptionFeedback();
             if (this.dataCenter.getInlineConnector().isTestAllowed()) {
+                this.baseTagList = this.dataCenter.initiate(barCode, true);
+                this.setTestMetaDataModel();
+                sendProductDescriptionFeedback();
                 return FrontEndFeedbackUtil.OK;
             } else {
+                this.baseTagList = this.dataCenter.initiate(barCode, false);
+                this.setTestMetaDataModel();
+                sendProductDescriptionFeedback();
                 return FrontEndFeedbackUtil.TESTE_NAO_AUTORIZADO;
             }
         } catch (SapException e) {
@@ -138,6 +158,8 @@ public class TestExecutor {
             return FrontEndFeedbackUtil.FALHA_SETUP_PRODUTO;
         } catch (Exception e) {
             return FrontEndFeedbackUtil.ERRO_INESPERADO;
+        } finally {
+            //@Todo: probably useless
         }
     }
 
@@ -148,19 +170,48 @@ public class TestExecutor {
         TestMetaDataModel.sapConnector = this.dataCenter.getSapConnector().getSapDataMap();
     }
 
-    private void endSetup() {
-        try {
-            SessionHelper.endTest(result);
-            this.dataCenter.end(result);
-        } catch (InlineException e) {
-            sendFeedbackAfter(FrontEndFeedbackUtil.INLINE_ERROR, "", false, TestStatusUtil.FAULT, 0);
-        } catch (DataBaseException e) {
-            sendFeedbackAfter(FrontEndFeedbackUtil.DATABASE_ERROR, "", false, TestStatusUtil.FAULT, 0);
-        } catch (EnsException e) {
-            sendFeedbackAfter(FrontEndFeedbackUtil.ENS_ERROR, "", false, TestStatusUtil.FAULT, 0);
-        } catch (Exception e) {
-            sendFeedbackAfter(FrontEndFeedbackUtil.ERRO_INESPERADO, "", false, TestStatusUtil.FAULT, 0);
+    private boolean endSetup(boolean initSetupFail) {
+        //@Todo: Enhance this function
+        if(initSetupFail || TestMetaDataModel.exitFlag) {
+            if(initSetupFail) {
+                try {
+                    SessionHelper.endTest(result);
+                    //this.dataCenter.saveMongo(result);
+                    return true;
+                //} catch (DataBaseException e) {
+                //    sendFeedbackAfter(FrontEndFeedbackUtil.DATABASE_ERROR, "", false, TestStatusUtil.ENDING_SETUP_FAULT, 0);
+                } catch (Exception e) {
+                    sendFeedbackAfter(FrontEndFeedbackUtil.ERRO_INESPERADO, "", false, TestStatusUtil.ENDING_SETUP_FAULT, 0);
+                }
+            }
+            if(TestMetaDataModel.exitFlag) {
+                try {
+                    SessionHelper.endTest(result);
+                    this.dataCenter.saveMongo(result);
+                    return true;
+                } catch (DataBaseException e) {
+                    sendFeedbackAfter(FrontEndFeedbackUtil.DATABASE_ERROR, "", false, TestStatusUtil.ENDING_SETUP_FAULT, 0);
+                } catch (Exception e) {
+                    sendFeedbackAfter(FrontEndFeedbackUtil.ERRO_INESPERADO, "", false, TestStatusUtil.ENDING_SETUP_FAULT, 0);
+                }
+            }
+        } else {
+            try {
+                SessionHelper.endTest(result);
+                this.dataCenter.end(result);
+                return true;
+            } catch (InlineException e) {
+                sendFeedbackAfter(FrontEndFeedbackUtil.INLINE_ERROR, "", false, TestStatusUtil.ENDING_SETUP_FAULT, 0);
+            } catch (DataBaseException e) {
+                sendFeedbackAfter(FrontEndFeedbackUtil.DATABASE_ERROR, "", false, TestStatusUtil.ENDING_SETUP_FAULT, 0);
+            } catch (EnsException e) {
+                sendFeedbackAfter(FrontEndFeedbackUtil.ENS_ERROR, "", false, TestStatusUtil.ENDING_SETUP_FAULT, 0);
+            } catch (Exception e) {
+                sendFeedbackAfter(FrontEndFeedbackUtil.ERRO_INESPERADO, "", false, TestStatusUtil.ENDING_SETUP_FAULT, 0);
+            }
         }
+
+        return false;
     }
 
     private HashMap<String, String[]> startTestingRoutine() {    //@Todo: Reformulate this method, maybe put some for loop outside or so

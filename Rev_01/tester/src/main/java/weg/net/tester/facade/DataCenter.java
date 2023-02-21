@@ -36,7 +36,7 @@ public class DataCenter {
     //@Todo: implement mongo
     //@Todo: or make it multi-threaded or make an array
     //@Todo: Save test end HTML file (easy way for the people who fix the product)
-    public TagList initiate(String[] barCode) throws SapException, InlineException, SessionException, TestUnmarshalingException, TestSetupException {
+    public TagList initiate(String[] barCode, boolean isTestAllowed) throws SapException, InlineException, SessionException, TestUnmarshalingException, TestSetupException {
         this.sapConnector.setBarCode(barCode);
         this.sapConnector.getDataBy2DBarcodeString();
 
@@ -49,7 +49,9 @@ public class DataCenter {
 
         TagList baseTagList = getList(barCode.length);
         mongoConnector.initialSetup();
-        this.inlineConnector.saveInitialEvent();
+        if(isTestAllowed) {
+            this.inlineConnector.saveInitialEvent();
+        }
         //Make it a loop or something
 
         //@Todo: take the inline initialization that is in the Test Executor and bring here
@@ -61,9 +63,13 @@ public class DataCenter {
         return baseTagList;
     }
 
-    public void end(String[] result) throws InlineException, DataBaseException, EnsException, JsonProcessingException, ParseException {
-        saveInlineEnd(result);
+    public void saveMongo(String[] result) throws DataBaseException {
         mongoConnector.endingSetup(result, TestMetaDataModel.testStep, TestMetaDataModel.tagList);
+    }
+
+    public void end(String[] result) throws InlineException, DataBaseException, EnsException, JsonProcessingException, ParseException {
+        mongoConnector.endingSetup(result, TestMetaDataModel.testStep, TestMetaDataModel.tagList);
+        saveInlineEnd(result);
         ensConnector.saveEns(TestMetaDataModel.tagList);
     }
 

@@ -10,10 +10,10 @@ import lombok.Getter;
 public class StackTraceLogModel {
     @Id
     private String timeStamp;
-    private String cadastro;
+    private int cadastro;
     private String errorMessage;
 
-    public StackTraceLogModel(String errorMessage, String timeStamp, String cadastro) {
+    public StackTraceLogModel(String errorMessage, String timeStamp, int cadastro) {
         this.errorMessage = errorMessage;
         this.timeStamp = timeStamp;
         this.cadastro = cadastro;

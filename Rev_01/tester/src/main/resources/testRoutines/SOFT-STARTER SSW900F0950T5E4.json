@@ -377,6 +377,29 @@
             "coolantTemperatureReneable": 0.0,
             "coolantSystemPressureReneable": 0.0,
             "durationTimeUnitReneable": null
+        },
+		{
+            "id": 10,
+            "tagIdentifier": "Test",
+            "tagName": "LeafTestTag",
+            "descricao": null,
+            "log": null,
+            "action": "exibir",
+            "errorMessage": null,
+            "testResult": "N/A",
+            "timeout": 10,
+            "position": 1,
+            "finished": false,
+            "individualTestDurationMillis": 0,
+            "ensTagConfiguration": {
+                "enabled": false,
+                "ensType": [],
+                "ensVariableName": [],
+                "variableToReadFrom": [],
+                "minValue": [],
+                "maxValue": []
+            },
+            "testName": "teste 3"
         }
     ]
 }

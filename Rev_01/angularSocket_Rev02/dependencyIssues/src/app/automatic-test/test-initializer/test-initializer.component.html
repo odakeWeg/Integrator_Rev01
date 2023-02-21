@@ -1,0 +1,139 @@
+<div id="overlay-background"></div>
+<div id="overlay">
+    <div class="close-btn" *ngIf="!firstTest">
+        <h2><a class="clickable" (click)="hideInitiateLayer()"><i class="bi bi-arrows-angle-contract"></i></a></h2>
+    </div>
+    <div class="centralize">
+        <!--
+        <input  id="input" type="text" #input>
+        <div class="send" (click)="initiateTest()">
+            <button class="btn btn-primary">Mac</button> 
+        </div>
+        -->
+        <form>
+            <div class="form-group">
+              <div class="qrCodeField" *ngFor="let productQRCode of productQRCodeList">
+                <input type="text" class="form-control" id="qrCode-{{productQRCode.position}}" placeholder="QR Code {{productQRCode.position}}" (input)="checkQRCode('qrCode-' + productQRCode.position)" autofocus>
+              </div>
+            </div>
+            <div class="btn-initiate">
+                <button type="submit" (click)="initiateTest()" class="btn btn-primary btn-submit">Iniciar</button>
+            </div>
+        </form>
+    </div>  
+</div>
+<div class="columns-container container-fluid" >
+    <div class="row flex-nowrap">
+        <div class="side-bar col-auto col-md-3 col-xl-2 px-sm-2 px-0">
+            <div class="header-side">
+                <h3>WDT</h3>
+            </div>
+            <div class="operator-info">
+                <label>Nome:</label>
+                <h5>Edson</h5>
+                <label>Cadastro:</label>
+                <h5>7881</h5>
+            </div>
+            <div class="initiative-btn">
+                <button type="button" (click)="openQRCodeReceiver()" class="btn btn-primary standart">Testar</button><br>
+                <button type="button" (click)="cancelTest()" class="btn btn-danger standart">Cancelar</button>
+            </div>
+            
+        </div>
+        <div class="main-bar col py-3 scrollbar">
+            <!-- Content -->
+            <div class="colunas">
+                <div *ngIf="testContainers.length!=0 && positionContainers.length!=0 && resultContainers.length!=0 ;else noInfo">
+                    <div class="description folders">
+                        <div class="folder-description"><!--Aqui vem um for loop-->       
+                            <div class="center-pagination">
+                                <ul class="pagination">
+                                    <li *ngFor="let positionContainer of positionContainers"><button (click)="selectedPosition(positionContainer.position)" class="btn btn-primary">{{positionContainer.position}}</button></li>
+                                </ul>
+                            </div>
+                            <h5 class="solo-wrapper product-number">Produto {{positionToShow}}</h5>
+                            <div class="desc">              
+                                <div class="solo-wrapper">Produto: {{positionContainers[positionToShow-1].produto}}</div>
+                                <div class="solo-wrapper">Serial: {{positionContainers[positionToShow-1].serial}}</div>
+                                <div class="solo-wrapper">Descrição: {{positionContainers[positionToShow-1].descricao}}</div>
+                                <div class="solo-wrapper">Material: {{positionContainers[positionToShow-1].material}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="test-steps folders">
+                        <h5 id="title">Test title</h5>
+                        <!--
+                        <div class="folder-steps" *ngFor="let testContainer of testContainers">
+                            <a routerLink="/test" (click)="toogleTestVisibility(testContainer)"><a class="bi bi-caret-right-fill"></a><span>{{testContainer.testName}}</span></a><a routerLink="/test" style="float: right;"><span class="dot"></span></a>
+                            <div *ngIf="testContainer.testVisibility">
+                                <p>Visible</p>
+                            </div>
+                        </div>
+                        -->
+                    </div>
+                    <div class="results folders">
+                        <div class="folder-results">
+                            <div class="center-pagination">
+                                <ul class="pagination">
+                                    <li *ngFor="let resultContainer of resultContainers"><button class="btn btn-primary" (click)="selectedPosition(resultContainer.position)">{{resultContainer.position}}</button></li>
+                                </ul>
+                            </div>
+                            <h5 class="solo-wrapper product-number">Produto 1</h5>
+                            <div class="desc">              
+                                <div class="solo-wrapper">Log: {{resultContainers[positionToShow-1].log}}</div>
+                                <div class="solo-wrapper">Position: {{resultContainers[positionToShow-1].position}}</div>
+                                <div class="solo-wrapper">Result: {{resultContainers[positionToShow-1].result}}</div>
+                                <div class="solo-wrapper">Status: {{resultContainers[positionToShow-1].status}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ng-template #noInfo>
+                    <div *ngIf="firstTest; else loading" class="centralize foscoText">
+                        <h2>No info</h2>
+                    </div>
+                    <ng-template #loading>
+                        <div class="centralize">
+                            <div class="loader"></div>
+                        </div>
+                    </ng-template>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button id="inputModalTrigger" class="btn btn-lg btn-outline-primary noDisplay" (click)="open(inputModal)"></button>  
+<button id="confirmationModalTrigger" class="btn btn-lg btn-outline-primary noDisplay" (click)="open(confirmationModal)"></button>  
+
+<ng-template #inputModal let-modal>  
+    <div class="modal-header">  
+      <h4 class="modal-title" id="modal-basic-title">Bootstrap Modal</h4>  
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">  
+        <span aria-hidden="true">?</span>  
+      </button>  
+    </div>  
+    <div class="modal-body">  
+        <label>{{modalText}}</label><br>
+        <input [(ngModel)]="answer" type="text">
+    </div>  
+    <div class="modal-footer">  
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click'); inputResponse()">Ok</button>  
+    </div>  
+</ng-template>  
+
+<ng-template #confirmationModal let-modal>  
+    <div class="modal-header">  
+      <h4 class="modal-title" id="modal-basic-title">Bootstrap Modal</h4>  
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">  
+        <span aria-hidden="true">?</span>  
+      </button>  
+    </div>  
+    <div class="modal-body">  
+      <h3>{{modalText}}</h3>
+    </div>  
+    <div class="modal-footer">  
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click'); response(true)">YES</button>  
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click'); response(false)">NO</button>  
+    </div>  
+</ng-template>  

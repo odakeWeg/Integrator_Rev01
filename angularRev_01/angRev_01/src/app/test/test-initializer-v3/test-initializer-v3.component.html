@@ -1,0 +1,194 @@
+<div id="overlay-background"></div>
+<div id="overlay">
+    <div class="close-btn">
+        <h2><a class="clickable" (click)="hideInitiateLayer()"><i class="bi bi-arrows-angle-contract"></i></a></h2>
+    </div>
+    <div class="centralize-init">
+        <form>
+            <div class="form-group">
+              <div class="qrCodeField" *ngFor="let productQRCode of productQRCodeList">
+                <input type="text" class="form-control" id="qrCode-{{productQRCode.position}}" placeholder="QR Code {{productQRCode.position}}" (keyup)="checkQRCodeInput(productQRCode.position)" autofocus >
+              </div>
+            </div>
+            <div class="btn-initiate">
+                <button type="submit" (click)="initiateTest()" class="btn btn-primary btn-submit">Iniciar</button>
+            </div>
+        </form>
+    </div>  
+</div>
+
+<div *ngIf="!firstTest && positionContainers.length!=0;else noInfo">
+    <div class="nav-wrapper">
+        <nav class="navbar navbar-expand-lg navbar-light" id="navbar-index">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/home">WEG</a>
+                <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="/home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="../home#section1">System</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../home#section2">Test</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../home#section3">Data</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" [routerLink]="['/usuario/cadastro']">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" [routerLink]="['/login']">logoff</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="wrapper">
+        <div class="box sidebar">
+            <div class="user-info-margin">
+                <label>@Todo: Local storage</label><br>
+                <label>Nome: Edson Odake</label><br>
+                <label>Cadastro: 7881</label><br>
+                <label>Perfil: Administrador</label>
+            </div>
+            <hr>
+            <div>
+                <label>Tempo em teste: 6s</label>
+                <label>Quantidade de testes: 3</label>
+
+                <label>Botão iniciar->OK</label>
+                <label>Botão Cancelar->OK</label>
+            </div>
+        </div>
+
+        <!--
+        <div class="box danger">
+            <div class="centralize">
+                <i class="bi bi-lightning-charge-fill elementToFadeInAndOut" style="font-size: 3em; color: rgba(214, 130, 62, 1);"></i>
+            </div>
+        </div>
+        -->
+
+        <div class="box buttonbar">
+            <div class="centralize">
+                <i class="bi bi-lightning-charge-fill elementToFadeInAndOut" style="font-size: 3em; color: rgba(214, 130, 62, 1);"></i>
+            </div>
+            <div class="centralize">
+                <button type="button" class="btn btn-primary standart" (click)="unhideInitiateLayer()">Testar</button><br>
+                <button type="button" class="btn btn-danger standart" (click)="stopRoutine()">Cancelar</button>
+            </div>
+        </div>
+
+        <div class="box info">
+            <div class="folder-results">
+                <div class="center-pagination">
+                    <h5 class="solo-wrapper product-number">Dados de posição: </h5>
+                    <ul class="pagination">
+                        <li *ngFor="let product of positionContainers"><button class="btn btn-primary btn-sm">{{product.position}}</button></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="box content">
+            <div *ngFor="let test of testContainers; let i = index" class="document">
+                <div class="hidden-user">
+                    <div class="user-id">Id: {{i+1}}</div>
+                    <div class="user-nome">{{test.testName}}</div>
+                    <div class="user-icon">
+                        <button type="button" class="btn btn-primary btn-block show-btn" data-bs-toggle="collapse" [attr.data-bs-target]="'#user-content-' + i"><i class="bi bi-chevron-down"></i></button>
+                    </div>
+                </div>
+                <div id="info" class="collapse shown-user" [attr.id]="'user-content-' + i">
+                    <hr>
+                    <div *ngFor="let tag of test.tagContainer; let c = index">
+                        <h5 style="text-align: center;">Step {{c+1}}</h5>
+                        <label class="testLog">Resultado: {{tag.testResult}}</label><br>
+                        <label class="testLog">Log: {{tag.log}}</label><br>
+                        <label class="testLog">Descrição: {{tag.descricao}}</label><br>
+                        <label class="testLog">Mensagem de erro: {{tag.errorMessage}}</label>
+                    <hr>
+                    </div>
+                    <!--
+                    <h5 style="text-align: center;">Step 2</h5>
+                    <label class="testLog">testResult!: string</label><br>
+                    <label class="testLog">log!: string</label><br>
+                    <label class="testLog">descricao!: string</label><br>
+                    <label class="testLog">errorMessage!: string</label>
+                    <hr>
+                    -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #noInfo>
+    <div class="nav-wrapper">
+        <nav class="navbar navbar-expand-lg navbar-light" id="navbar-index">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/home">WEG</a>
+                <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="/home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="../home#section1">System</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../home#section2">Test</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../home#section3">Data</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" [routerLink]="['/usuario/cadastro']">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" [routerLink]="['/login']">logoff</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="wrapper">
+        <div class="box sidebar">
+            <div class="user-info-margin">
+                <label>Nome: Edson Odake</label><br>
+                <label>Cadastro: 7881</label><br>
+                <label>Perfil: Administrador</label>
+            </div>
+            <hr>
+        </div>
+
+        <div class="box buttonbar">
+            <div class="centralize">
+                <button type="button" class="btn btn-primary standart" (click)="unhideInitiateLayer()">Testar</button><br>
+                <button type="button" class="btn btn-danger standart" (click)="cancelTest()">Cancelar</button>
+            </div>
+        </div>
+
+        <div class="box info">
+        </div>
+        
+        <div class="box content">
+
+            <h1 class="centralize" *ngIf="firstTest;else waitingResponse">No Test Information</h1>
+            <ng-template #waitingResponse>
+                <div class="loader centralize-loader"></div>
+            </ng-template>
+        </div>
+    </div>
+</ng-template>
+<div class="foot"></div>

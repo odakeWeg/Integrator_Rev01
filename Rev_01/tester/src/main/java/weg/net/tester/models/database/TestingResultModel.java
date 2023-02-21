@@ -11,7 +11,7 @@ public class TestingResultModel {
     @Id
     private String timestamp;
     private String sessionId;
-    private String cadastro;
+    private int cadastro;
     private String[] serial;
     private String[] result;
     private long duration;
@@ -19,7 +19,7 @@ public class TestingResultModel {
     private String[] descricaoProduto;
     private int[] testStep;
 
-    public TestingResultModel(String[] descricaoProduto, String sessionId, String cadastro, String[] serial, String[] result, long duration, String tagList, String timestamp, int[] testStep) {
+    public TestingResultModel(String[] descricaoProduto, String sessionId, int cadastro, String[] serial, String[] result, long duration, String tagList, String timestamp, int[] testStep) {
         this.testStep = testStep;
         this.descricaoProduto = descricaoProduto;
         this.sessionId = sessionId;

@@ -15,7 +15,7 @@ public class SessionHelper {
     private static long initialTestTime;
     private static long endingTestTime;
 
-    public static void initiateSession(String cadastro) {
+    public static void initiateSession(int cadastro) {
         sessionModel = new SessionModel();
 
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -26,11 +26,11 @@ public class SessionHelper {
         sessionModel.setTimestamp(timestampString);
     }
 
-    private static void validateLogin(String cadastro, String password) {
+    private static void validateLogin(int cadastro, String password) {
 
     }
 
-    private static void setSessionValues(String cadastro) {
+    private static void setSessionValues(int cadastro) {
 
     }
 

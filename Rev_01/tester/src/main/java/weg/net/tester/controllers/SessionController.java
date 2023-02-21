@@ -7,9 +7,11 @@ import org.springframework.stereotype.Controller;
 
 import weg.net.tester.helper.SessionHelper;
 import weg.net.tester.models.database.LoginModel;
+import weg.net.tester.models.database.UserModel;
 import weg.net.tester.models.web.SessionLog;
 import weg.net.tester.repositories.LoginRepository;
 import weg.net.tester.repositories.SessionRepository;
+import weg.net.tester.repositories.UserRepository;
 import weg.net.tester.utils.ActionCommandUtil;
 import weg.net.tester.utils.EndPointPathUtil;
 import weg.net.tester.utils.FrontEndFeedbackUtil;
@@ -27,12 +29,12 @@ public class SessionController {
     @Autowired
     private SessionRepository sessionRepository;
     @Autowired
-    private LoginRepository loginRepository;
+    private UserRepository userRepository;
 
     @MessageMapping(EndPointPathUtil.START_SESSION)
-    public void startSession(LoginModel login){
+    public void startSession(UserModel login){
         try {
-            LoginModel loginModel = loginRepository.findById(login.getCadastro()).get();
+            UserModel loginModel = userRepository.findByCadastro(login.getCadastro()).get(0);
             if (loginModel!=null && login.toString().equals(loginModel.toString())) {
                 SessionHelper.initiateSession(login.getCadastro());
                 sessionLog = new SessionLog(FrontEndFeedbackUtil.OK, ActionCommandUtil.LOGIN);

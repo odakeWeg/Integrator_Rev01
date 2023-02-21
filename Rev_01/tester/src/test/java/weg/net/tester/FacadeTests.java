@@ -92,8 +92,11 @@ public class FacadeTests {
 
     @Test
 	void inlineConnection() throws Exception {
-        inlineConnector.setSerial("1062114337");
+        inlineConnector.setSerial("1080107977");
         inlineConnector.isTestAllowed();
+        System.out.println("This is the response: " + inlineConnector.isTestAllowed());
+
+        Assert.assertEquals(true, inlineConnector.isTestAllowed());
 	}
 
     @Test

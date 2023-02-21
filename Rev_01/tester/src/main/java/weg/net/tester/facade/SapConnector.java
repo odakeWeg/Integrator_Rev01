@@ -42,6 +42,7 @@ public class SapConnector {
             sapDataMap.get(position).put(SapCaracUtil.MAC_2, sapDataMap.get(position).get(SapCaracUtil.MAC).substring(16, 24));
             sapDataMap.get(position).put(SapCaracUtil.MAC_3, sapDataMap.get(position).get(SapCaracUtil.MAC).substring(24));
         } catch (NullPointerException e) {
+            //@Todo: this is bad practice
         }
     }
 
