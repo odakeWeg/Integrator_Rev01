@@ -11,6 +11,7 @@ public class LeafVariableStringWriteTag extends NodeWriteTag {
     protected String variableName;
     protected String variableValue;
     protected String communicationNameRef;
+    protected String registerName;
     protected int registerRef;
     protected int waitBefore;
     protected int waitAfter;

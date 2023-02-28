@@ -16,6 +16,7 @@ public class LeafVariableCompareTag extends NodeCompareTag {
     protected String variableName;
     protected int variableValue;
     protected String communicationNameRef;
+    protected String registerName;
     protected int registerRef;
     protected int valueRef;
     protected String calculateBy;

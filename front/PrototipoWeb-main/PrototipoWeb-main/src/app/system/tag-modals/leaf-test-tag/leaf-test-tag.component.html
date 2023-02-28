@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-md-3">
                     <label class="form-label" for="position">Position</label>
-                    <input type="text" id="position" name="position" class="form-control"
+                    <input type="number" id="position" name="position" class="form-control"
                     [(ngModel)]="newTag.position" #position="ngModel">
                 </div>
             </div>
@@ -29,10 +29,13 @@
             </div>
             
             <hr>
+
             <div class="form-outline mb-4">
-                <label class="form-label" for="oneVariable">Necessary stuff</label>
-                <input type="text">
+                <label class="form-label" for="testName">Test name</label>
+                <input type="text" id="testName" name="testName" class="form-control"
+                  [(ngModel)]="newTag.testName" #testName="ngModel">
             </div>
+
             <div id="info" class="collapse shown-user" [attr.id]="'hidden-fields'">
                 <hr>
                 <div class="form-outline mb-4">
@@ -117,7 +120,7 @@
                 </div>
                 <div class="col-md-3">
                     <label class="form-label" for="position">Position</label>
-                    <input type="text" id="position" name="position" class="form-control"
+                    <input type="number" id="position" name="position" class="form-control"
                     [(ngModel)]="tagToUpdate.position" #position="ngModel">
                 </div>
             </div>
@@ -132,10 +135,13 @@
                   [(ngModel)]="tagToUpdate.description" #description="ngModel" cols="30" rows="3"></textarea>
             </div>
             <hr>
+            
             <div class="form-outline mb-4">
-                <label class="form-label" for="oneVariable">Necessary stuff</label>
-                <input type="text">
+                <label class="form-label" for="testName">Test name</label>
+                <input type="text" id="testName" name="testName" class="form-control"
+                  [(ngModel)]="tagToUpdate.testName" #testName="ngModel">
             </div>
+
             <div id="info" class="collapse shown-user" [attr.id]="'hidden-fields'">
                 <hr>
                 <div class="form-outline mb-4">

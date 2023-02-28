@@ -2,7 +2,7 @@ import { BaseTag } from "./base-tag.model";
 
 export class LeafTestTag extends BaseTag {
     constructor(
-        public ensSetup?: number
+        public testName?: string
     ) {
         super()
     }

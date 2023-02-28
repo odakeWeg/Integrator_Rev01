@@ -197,9 +197,9 @@ export class TagComponent implements OnInit {
       modalRef.result.then(
         (result) => {
 
-          console.log(this.filterArray)
+          //console.log(this.filterArray)
           this.shownUsers = this.filterArray.filter(Boolean).length
-          console.log(this.shownUsers)
+          //console.log(this.shownUsers)
           //console.log(this.projects);
           //console.log(this.filterArray);
           //console.log(this.shownUsers);

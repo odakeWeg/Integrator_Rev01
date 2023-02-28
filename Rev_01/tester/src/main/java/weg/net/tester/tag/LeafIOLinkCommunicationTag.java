@@ -11,7 +11,7 @@ import weg.net.tester.utils.TagNameUtil;
 @Getter
 @Setter
 public class LeafIOLinkCommunicationTag extends NodeCommunicationTag {
-    protected String communicationName;
+    //protected String communicationName;
     protected String ip;
     protected int port;
     protected int address;
