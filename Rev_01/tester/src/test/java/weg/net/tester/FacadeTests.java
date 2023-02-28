@@ -101,7 +101,7 @@ public class FacadeTests {
 
     @Test
 	void mongoSessionConnection() {
-        SessionHelper.initiateSession("7881");
+        SessionHelper.initiateSession(7881);
         SessionHelper.endSession();
         sessionRepository.save(SessionHelper.sessionModel);
 
@@ -138,7 +138,7 @@ public class FacadeTests {
         tagList.setList(list);
 
         SessionHelper.sessionModel = new SessionModel();
-        SessionHelper.sessionModel.setCadastro("7881");
+        SessionHelper.sessionModel.setCadastro(7881);
         SessionHelper.sessionModel.setTimestamp("1234567890");
         mongoConnector.initialSetup();
 

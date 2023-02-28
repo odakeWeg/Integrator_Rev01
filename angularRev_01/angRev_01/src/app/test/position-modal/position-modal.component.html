@@ -1,0 +1,54 @@
+<div *ngIf="result.result=='Em andamento'">
+    <div class="modal-header" >
+        <label>Dados de produto</label>
+        <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+    </div>
+    <div class="modal-body text-center ongoing-color">
+        <label>Produto: {{product.produto}}</label><br>
+        <label>Serial: {{product.serial}}</label><br>
+        <label>Descrição: {{product.descricao}}</label><br>
+        <label>Material: {{product.material}}</label><br>
+        <label>Posição: {{product.position}}</label><br><br>
+        <label>Result: {{result.result}}</label><br>
+        <label>Status: {{result.status}}</label><br>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Fechar</button>
+    </div>
+</div>
+<div *ngIf="result.result=='OK'">
+    <div class="modal-header" >
+        <label>Dados de produto</label>
+        <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+    </div>
+    <div class="modal-body text-center success-color">
+        <label>Produto: {{product.produto}}</label><br>
+        <label>Serial: {{product.serial}}</label><br>
+        <label>Descrição: {{product.descricao}}</label><br>
+        <label>Material: {{product.material}}</label><br>
+        <label>Posição: {{product.position}}</label><br><br>
+        <label>Result: {{result.result}}</label><br>
+        <label>Status: {{result.status}}</label><br>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Fechar</button>
+    </div>
+</div>
+<div *ngIf="result.result!='Em andamento' && result.result!='OK'">
+    <div class="modal-header" >
+        <label>Dados de produto</label>
+        <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+    </div>
+    <div class="modal-body text-center failed-color">
+        <label>Produto: {{product.produto}}</label><br>
+        <label>Serial: {{product.serial}}</label><br>
+        <label>Descrição: {{product.descricao}}</label><br>
+        <label>Material: {{product.material}}</label><br>
+        <label>Posição: {{product.position}}</label><br><br>
+        <label>Result: {{result.result}}</label><br>
+        <label>Status: {{result.status}}</label><br>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Fechar</button>
+    </div>
+</div>

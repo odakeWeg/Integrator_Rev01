@@ -1,0 +1,93 @@
+<div *ngIf="project==null;else updateTag">
+    <div class="modal-header" >
+        <label>Cadastro de projeto</label>
+        <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+    </div>
+    <div class="modal-body text-center">
+        <form #formNewProject="ngForm">
+            <div class="form-outline mb-4">
+                <label class="form-label" for="nome">Nome</label>
+                <input placeholder="Enter name" type="text" id="nome" name="nome" class="form-control"
+                  [(ngModel)]="newProject.nome" #nome="ngModel">
+            </div>
+
+            <div class="row mb-4">
+                <div class="form-outline col-md-3">
+                    <label class="form-label" for="node">Node</label>
+                    <input placeholder="Node" type="number" id="node" name="node" class="form-control"
+                    [(ngModel)]="newProject.node" #node="ngModel">
+                </div>
+
+                <div class="form-outline col-md-9">
+                    <label class="form-label" for="connections">Connections</label>
+                    <input placeholder="Enter connections" type="text" id="connections" name="connections" class="form-control"
+                    [(ngModel)]="newProject.connections" #connections="ngModel">
+                </div>
+            </div>
+
+            <div class="form-outline mb-4">
+                <label class="form-label" for="description">Description</label>
+                <input placeholder="Enter description" type="text" id="description" name="description" class="form-control"
+                  [(ngModel)]="newProject.description" #description="ngModel">
+            </div>
+
+            <div class="form-outline mb-4">
+                <label class="form-label" for="keyWords">KeyWords</label>
+                <input placeholder="Enter keyWords" type="text" id="keyWords" name="keyWords" class="form-control"
+                  [(ngModel)]="newProject.keyWords" #keyWords="ngModel">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="add()">Salvar</button>
+        <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Fechar</button>
+    </div>
+</div>
+
+<ng-template #updateTag>
+    <div class="modal-header" >
+        <label>Cadastro de projeto</label>
+        <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+    </div>
+    <div class="modal-body text-center">
+        <form #formProject="ngForm">
+            <div class="form-outline mb-4">
+                <label class="form-label" for="nome">Nome</label>
+                <input placeholder="Enter name" type="text" id="nome" name="nome" class="form-control"
+                  [(ngModel)]="projectToUpdate.nome" #nome="ngModel">
+            </div>
+
+            <div class="row mb-4">
+                <div class="form-outline col-md-3">
+                    <label class="form-label" for="node">Node</label>
+                    <input placeholder="Node" type="number" id="node" name="node" class="form-control"
+                    [(ngModel)]="projectToUpdate.node" #node="ngModel">
+                </div>
+
+                <div class="form-outline col-md-9">
+                    <label class="form-label" for="connections">Connections</label>
+                    <input placeholder="Enter connections" type="text" id="connections" name="connections" class="form-control"
+                    [(ngModel)]="projectToUpdate.connections" #connections="ngModel">
+                </div>
+            </div>
+
+            <div class="form-outline mb-4">
+                <label class="form-label" for="description">Description</label>
+                <input placeholder="Enter description" type="text" id="description" name="description" class="form-control"
+                  [(ngModel)]="projectToUpdate.description" #description="ngModel">
+            </div>
+
+            <div class="form-outline mb-4">
+                <label class="form-label" for="keyWords">KeyWords</label>
+                <input placeholder="Enter keyWords" type="text" id="keyWords" name="keyWords" class="form-control"
+                  [(ngModel)]="projectToUpdate.keyWords" #keyWords="ngModel">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" [routerLink]="['/system', projectToUpdate.line]" (click)="activeModal.close()">Open</button>
+        <button type="button" class="btn btn-outline-dark" (click)="update()">Update</button>
+        <button type="button" class="btn btn-outline-danger" (click)="disable()">Disable</button>
+        <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Fechar</button>
+    </div>
+</ng-template>

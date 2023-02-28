@@ -8,13 +8,18 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./test-modal.component.css']
 })
 export class TestModalComponent implements OnInit {
-  @Input() result!: ResultLog
+  @Input() result: string = "N/A"
+  @Input() resultContainers!: ResultLog[]
+
+  positionToShow: number = 1
 
   constructor(public activeModal: NgbActiveModal) { }
 
   ngOnInit(): void {
   }
 
-  
+  showByPosition(position: number): void {
+    this.positionToShow = position
+  }
 
 }

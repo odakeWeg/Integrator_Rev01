@@ -1,16 +1,62 @@
-<div>
+<div *ngIf="result=='Fim'; else error">
     <div class="modal-header" >
-        <button type="button" class="close" aria-label="Fechar" (click)="activeModal.dismiss()">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title" id="modalLabel">Resultado</h4>
+        <label>Resultados</label>
+        <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
     </div>
-    <div class="modal-body text-center">
-        <h3>Frase sobre resultado</h3>
-        <label>Frase sobre log</label><br>
-        <label>Frase sobre status</label>
+    <div *ngIf="resultContainers[positionToShow-1].result=='OK'" class="modal-body ok-color">
+        <h3>Testes finalizados</h3>
+        <div class="centralize">
+            <ul class="pagination">
+                <li *ngFor="let result of resultContainers; let i = index">
+                    <button *ngIf="result.result=='Em andamento'" class="btn btn-warning btn-sm" (click)="showByPosition(result.position)">{{result.position}}</button>
+                    <button *ngIf="result.result=='OK'" class="btn btn-primary btn-sm" (click)="showByPosition(result.position)">{{result.position}}</button>
+                    <button *ngIf="result.result!='Em andamento' && resultContainers[i].result!='OK'" class="btn btn-danger btn-sm" (click)="showByPosition(result.position)">{{result.position}}</button>
+                </li>
+            </ul>
+        </div>
+        <p>Produto {{positionToShow}}: {{resultContainers[positionToShow-1].result}}</p>
+    </div>
+    <div *ngIf="resultContainers[positionToShow-1].result=='Pass'" class="modal-body pass-color">
+        <h3>Testes finalizados</h3>
+        <div class="centralize">
+            <ul class="pagination">
+                <li *ngFor="let result of resultContainers; let i = index">
+                    <button *ngIf="result.result=='Em andamento'" class="btn btn-warning btn-sm" (click)="showByPosition(result.position)">{{result.position}}</button>
+                    <button *ngIf="result.result=='OK'" class="btn btn-primary btn-sm" (click)="showByPosition(result.position)">{{result.position}}</button>
+                    <button *ngIf="result.result!='Em andamento' && resultContainers[i].result!='OK'" class="btn btn-danger btn-sm" (click)="showByPosition(result.position)">{{result.position}}</button>
+                </li>
+            </ul>
+        </div>
+        <p>Produto {{positionToShow}}: {{resultContainers[positionToShow-1].result}}</p>
+    </div>
+    <div *ngIf="resultContainers[positionToShow-1].result!='OK' && resultContainers[positionToShow-1].result!='Pass'" class="modal-body failed-color">
+        <h3>Testes finalizados</h3>
+        <div class="centralize">
+            <ul class="pagination">
+                <li *ngFor="let result of resultContainers; let i = index">
+                    <button *ngIf="result.result=='Em andamento'" class="btn btn-warning btn-sm" (click)="showByPosition(result.position)">{{result.position}}</button>
+                    <button *ngIf="result.result=='OK'" class="btn btn-primary btn-sm" (click)="showByPosition(result.position)">{{result.position}}</button>
+                    <button *ngIf="result.result!='Em andamento' && resultContainers[i].result!='OK'" class="btn btn-danger btn-sm" (click)="showByPosition(result.position)">{{result.position}}</button>
+                </li>
+            </ul>
+        </div>
+        <p>Produto {{positionToShow}}: {{resultContainers[positionToShow-1].result}}</p>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Fechar</button>
     </div>
 </div>
+
+<ng-template #error>
+    <div class="modal-header" >
+        <label>Resultados</label>
+        <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+    </div>
+    <div class="modal-body failed-color">
+        <h3>Teste não finalizado</h3>
+        <p>{{result}}</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Fechar</button>
+    </div>
+</ng-template>

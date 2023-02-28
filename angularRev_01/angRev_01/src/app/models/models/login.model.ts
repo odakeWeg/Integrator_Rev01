@@ -1,5 +1,5 @@
 export class LoginModel {
-    cadastro!: string
+    cadastro!: number
     password!: string
 
     toString() {

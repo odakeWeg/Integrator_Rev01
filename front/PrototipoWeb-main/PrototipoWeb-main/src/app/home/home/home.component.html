@@ -1,0 +1,208 @@
+
+    <div class="scroll-container">
+        <section id='section1'>
+        <header class="header" id="header-index">
+            <nav class="navbar navbar-expand-lg navbar-light" id="navbar-index">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="/home">WEG</a>
+                    <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="/home">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="../home#section1">System</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="../home#section2">Test</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="../home#section3">Data</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" [routerLink]="['/usuario/cadastro']">Register</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" (click)="logoff()" [routerLink]="['/login']">logoff</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="right" [routerLink]="['/system']">
+                <h1>System Configurations</h1>
+                <h4>Explicação breve do que isso significa</h4>
+                <h4>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt officiis voluptatibus cum, repellendus accusantium omnis? Temporibus voluptatum eius nam ea ipsum incidunt impedit, id veritatis laborum, dolorem doloremque maxime modi! </h4>
+            </div>
+            <!--
+            <div class='system'>
+                <h1><a [routerLink]="['/system']">System</a></h1>
+                <h3>Todo</h3>
+            </div>
+            <div class="importance">
+                <div class='container'>
+                    <h1>Descricao</h1>
+                    <h4>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt officiis voluptatibus cum, repellendus accusantium omnis? Temporibus voluptatum eius nam ea ipsum incidunt impedit, id veritatis laborum, dolorem doloremque maxime modi! </h4>
+                </div>
+            </div>
+            -->
+        </header>
+        </section>
+        <section id='section2'>
+            <header class="header" id="test">
+                <nav class="navbar navbar-expand-lg navbar-light" id="navbar-index">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="/home">WEG</a>
+                        <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+                            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="/home">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="../home#section1">System</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="../home#section2">Test</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="../home#section3">Data</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" [routerLink]="['/usuario/cadastro']">Register</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" (click)="logoff()" [routerLink]="['/login']">logoff</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <div class="left" [routerLink]="['/system']">
+                    <h1>Test Routines</h1>
+                    <h4>Explicação breve do que isso significa</h4>
+                    <h4>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt officiis voluptatibus cum, repellendus accusantium omnis? Temporibus voluptatum eius nam ea ipsum incidunt impedit, id veritatis laborum, dolorem doloremque maxime modi! </h4>
+                </div>
+                <!--
+                <div class='weather'>
+                    <h1>Test Routines</h1>
+                    <h3>Todo</h3>
+                </div>
+                <div class="importance">
+                    <div class='container'>
+                        <h1>Desc</h1>
+                        <h4>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt officiis voluptatibus cum, repellendus accusantium omnis? Temporibus voluptatum eius nam ea ipsum incidunt impedit, id veritatis laborum, dolorem doloremque maxime modi! </h4>
+                    </div>
+                </div>
+                -->
+                <!--
+                <div class='weather'>
+                    <h1><a [routerLink]="['/system']">System</a></h1>
+                    <h3>Todo</h3>
+                </div>
+                <div class="importance">
+                    <div class='container'>
+                        <h1>Descricao</h1>
+                        <h4>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt officiis voluptatibus cum, repellendus accusantium omnis? Temporibus voluptatum eius nam ea ipsum incidunt impedit, id veritatis laborum, dolorem doloremque maxime modi! </h4>
+                    </div>
+                </div>
+                -->
+            </header>
+        </section>
+        <section id='section3'>
+            <div class='about'>
+                <nav class="navbar navbar-expand-lg navbar-light" id='navbar-about'>
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="/home">WEG</a>
+                        <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+                            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="/home">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="../home#section1">System</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="../home#section2">Test</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="../home#section3">Data</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" [routerLink]="['/usuario/cadastro']">Register</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" (click)="logoff()">logoff</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <div class="right-data" [routerLink]="['/system']">
+                    <h1>Test Routines</h1>
+                    <h4>Explicação breve do que isso significa</h4>
+                    <h4>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt officiis voluptatibus cum, repellendus accusantium omnis? Temporibus voluptatum eius nam ea ipsum incidunt impedit, id veritatis laborum, dolorem doloremque maxime modi! </h4>
+                </div>
+                <!--
+                <div class='weather'>
+                    <h1>Test Routines</h1>
+                    <h3>Todo</h3>
+                </div>
+                <div class="importance">
+                    <div class='container'>
+                        <h1>Desc</h1>
+                        <h4>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt officiis voluptatibus cum, repellendus accusantium omnis? Temporibus voluptatum eius nam ea ipsum incidunt impedit, id veritatis laborum, dolorem doloremque maxime modi! </h4>
+                    </div>
+                </div>
+                -->
+            </div>
+            </section>
+            <!--
+            <section id='section4'>
+                <nav class="navbar navbar-expand-lg navbar-light" id="navbar-index">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="/home">WEG</a>
+                    <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="/home">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="../home#section1">System</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="../home#section2">Test</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="../home#section3">Data</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" [routerLink]="['/usuario/cadastro']">Register</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" (click)="logoff()">logoff</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class='container'>
+                <div class='about-text'>
+                    <h1>Data</h1>
+                    <h4>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quisquam pariatur, id rerum perferendis deleniti molestiae labore illum tenetur neque quis doloribus omnis corrupti nesciunt nobis fuga. Ratione deleniti eius eaque!</h4>
+                </div>
+            </div>    
+            </section>
+        </div>
+        -->

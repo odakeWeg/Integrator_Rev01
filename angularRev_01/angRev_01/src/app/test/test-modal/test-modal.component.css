@@ -1,0 +1,56 @@
+.pagination {
+    /*
+    float: right;
+    */
+    gap: 4px;
+}
+
+.center-pagination {
+    display: flex;
+    margin: auto auto;
+    padding-top: 8px;
+    gap: 12px;
+    /*
+    display: flex;
+    */
+    /*
+    width: 50%;
+    */
+}
+
+.centralize {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: auto;
+}
+
+h3 {
+    text-align: center;
+}
+
+p {
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.ok-color {
+    background-color: rgba(22, 105, 122, 0.2);
+}
+
+.pass-color {
+    background-color: rgba(249, 250, 171, 0.2);
+}
+
+.failed-color {
+    background-color: rgba(255, 36, 101, 0.2);
+}
+
+label {
+    font-size: large;
+}
+
+.form-label {
+    float: left;
+}

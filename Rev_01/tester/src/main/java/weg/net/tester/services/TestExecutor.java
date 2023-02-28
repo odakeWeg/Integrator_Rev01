@@ -21,6 +21,7 @@ import weg.net.tester.exception.TestUnmarshalingException;
 import weg.net.tester.facade.DataCenter;
 import weg.net.tester.helper.SessionHelper;
 import weg.net.tester.models.web.CommandLog;
+import weg.net.tester.models.web.PopUpLog;
 import weg.net.tester.models.web.ProductLog;
 import weg.net.tester.models.web.ResultLog;
 import weg.net.tester.tag.TagList;

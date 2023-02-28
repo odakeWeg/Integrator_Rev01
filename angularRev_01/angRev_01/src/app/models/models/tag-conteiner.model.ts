@@ -3,4 +3,5 @@ export class TagContainer {
     log!: string
     descricao!: string
     errorMessage!: string
+    position!: number
   }

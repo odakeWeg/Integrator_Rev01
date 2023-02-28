@@ -1,0 +1,63 @@
+<div *ngIf="tag==null;else updateTag">
+    <div class="modal-header" >
+        <button type="button" class="close" aria-label="Fechar" (click)="activeModal.dismiss()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="modalLabel">Algo</h4>
+    </div>
+    <div class="modal-body text-center">
+        <form #formNewTag="ngForm">
+            <div class="form-outline mb-4">
+              <label class="form-label" for="line">line:</label>
+              <input type="text" id="line" name="line" class="form-control"
+                [(ngModel)]="newTag.line" #line="ngModel">
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="nome">nome:</label>
+                <input type="text" id="nome" name="nome" class="form-control"
+                  [(ngModel)]="newTag.nome" #nome="ngModel">
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="description">description:</label>
+                <input type="text" id="description" name="description" class="form-control"
+                  [(ngModel)]="newTag.description" #nome="ngModel">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="add()">Salvar</button>
+        <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Fechar</button>
+    </div>
+</div>
+
+<ng-template #updateTag>
+    <div class="modal-header" >
+        <button type="button" class="close" aria-label="Fechar" (click)="activeModal.dismiss()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="modalLabel">Algo</h4>
+    </div>
+    <div class="modal-body text-center">
+        <form #formTag="ngForm">
+            <div class="form-outline mb-4">
+                <label class="form-label" for="line">line:</label>
+                <input type="text" id="line" name="line" class="form-control"
+                  [(ngModel)]="tagToUpdate.line" #line="ngModel">
+              </div>
+  
+            <div class="form-outline mb-4">
+                <label class="form-label" for="nome">nome:</label>
+                <input type="text" id="nome" name="nome" class="form-control"
+                [(ngModel)]="tagToUpdate.nome" #nome="ngModel">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <!--
+        <button type="button" class="btn btn-outline-dark" [routerLink]="['/system', mappingToUpdate.line]" (click)="activeModal.close()">Open</button>
+        -->
+        <button type="button" class="btn btn-outline-dark" (click)="update()">Update</button>
+        <button type="button" class="btn btn-outline-danger" (click)="disable()">Disable</button>
+        <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Fechar</button>
+    </div>
+</ng-template>

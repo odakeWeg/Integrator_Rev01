@@ -1,0 +1,269 @@
+
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital@1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Stalinist+One&display=swap');
+
+html {
+    scroll-behavior: smooth;
+}
+.scroll-container{
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+}
+section{
+    height: 100vh;
+    scroll-snap-align: center;
+}
+#header-index{
+    background-image: url("../../../assets/images/tech1.jpg");
+    /* Full height */
+    height: 100vh; 
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    /* margin-bottom: 30px; */
+    /* border-bottom: 3px double white;  */
+}
+#navbar-index{
+    background-color:rgba(0,0,0,0);
+    border-bottom: none;
+}
+h1{
+    text-align: center;
+}
+
+h2{
+    text-align: center;
+}
+.name{
+    text-align: center;
+}
+.container{
+    margin-bottom: 50px;
+}
+.jumbotron {
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+    background-color: #e9ecef;
+    border-radius: .3rem;
+}
+.navbar{
+    background-color: rgba(0, 183, 255, 0);
+    /* border-bottom: 3px double white; */
+    font-family: 'PT Serif', serif;
+    font-size: 1.5rem;
+    padding: auto;
+    padding-right: 2.1rem;
+    /* height: 0rem; Não sei pra que e fode o dropdown*/
+    min-height: 9vh;
+}
+.navbar-brand{
+    padding-left: 2.1rem;
+    font-size: 1.8em;
+    font-family: 'Stalinist One', cursive;
+}
+
+#navbarSupportedContent{
+    margin-left: auto;
+    margin-right: auto;
+} 
+
+.system{
+    height: 30vh;
+    /* border-bottom: 3px double rgba(0, 183, 255, 0.753); */
+}
+.system h1{
+    padding-top: 9vh ;
+}
+.system h3{
+    text-align: center;
+}
+.memberImg{
+    padding: 5%;
+}
+.importance h4{
+    text-align: center;
+    /* background-color: rgba(0, 183, 255, 0.753); */
+    /* height: 60vh; */
+    /* border-bottom: 3px double white; */
+}
+
+.right {
+    /*
+    position: absolute;
+    top: 30%;
+    right: 6em;
+    */
+    margin-right: 9em;
+    margin-left: auto;
+    margin-top: 10%;
+    width: 36em;
+    background-color: rgba(66, 138, 185, 0.54);/*rgba(13, 166, 250, 0.3);*//* rgba(169, 211, 221, 0.54);*/
+    border-radius: 1em;
+    border: 1px solid rgba(66, 138, 185, 1);
+    padding: 10px;
+}
+
+.right:hover {
+    background-color: rgba(66, 138, 185, 0.45);
+    cursor: pointer;
+}
+
+.right-data {
+    /*
+    position: absolute;
+    top: 30%;
+    right: 6em;
+    */
+    color: black;
+    margin-right: 9em;
+    margin-left: auto;
+    margin-top: 10%;
+    width: 36em;
+    background-color: rgba(252, 255, 75, 0.45);/*rgba(13, 166, 250, 0.3);*//* rgba(169, 211, 221, 0.54);*/
+    border-radius: 1em;
+    border: 1px solid rgba(252, 255, 75, 1);
+    padding: 10px;
+}
+
+.right-data:hover {
+    background-color: rgba(252, 255, 75, 0.39);
+    cursor: pointer;
+}
+
+.left {
+    /*
+    position: absolute;
+    top: 30%;
+    right: 6em;
+    */
+    margin-left: 9em;
+    margin-top: 10%;
+    width: 36em;
+    background-color: rgba(179, 188, 197, 0.6);/* rgba(169, 211, 221, 0.54);*/
+    border-radius: 1em;
+    border: 1px solid rgba(179, 188, 197, 1);
+    padding: 10px;
+}
+
+.left:hover {
+    background-color: rgba(179, 188, 197, 0.51);
+    cursor: pointer;
+}
+
+
+#test{
+    background-image: url("../../../assets/images/tech6.jpg");
+    /* Full height */
+    height: 100vh; 
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    /* margin-bottom: 30px; */
+    /* border-bottom: 3px double white;  */
+}
+
+.about{
+    color: white;
+    background-image: url("../../../assets/images/tech3.jpg");
+    /* Full height */
+    height: 100.3vh; 
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    margin-bottom: 30px;
+    border-bottom: 3px double white; 
+}
+
+/*
+.about  h4{
+    text-align: center;
+}
+*/
+
+.nada{
+    margin: auto;
+    height: 10vh;
+    width: 30vh;
+    border: 3px solid white;
+}
+.about-text{
+    margin-top: 15vh;
+}
+#navbar-about{
+    background-color:rgba(0,0,0,0);
+    border-bottom: none;
+}
+#navbar-about .navbar-brand{
+    color: rgba(255, 173, 5); /*rgb(255, 213, 0);*/
+}
+#navbar-about a{
+    color: rgba(255, 173, 5); /*rgb(255, 213, 0);*/
+}
+#navbar-about button .navbar-toggler-icon{
+    color: rgba(255, 173, 5); /*rgb(255, 213, 0);*/
+}
+#navbar-about button .custom-toggler .navbar-toggler { 
+    border-color: rgba(255, 173, 5); /*rgb(255, 213, 0);*/
+    border: 2px solid yellow;
+} 
+/* Setting the stroke to green using rgb values (0, 128, 0) */ 
+  
+#navbar-about .custom-toggler .navbar-toggler-icon { 
+    background-image: url( 
+"data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 213, 0, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E"); 
+} 
+/* Grid Members*/
+.jumbotronIn{
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+    background-color: #e9ecef;
+    border-radius: .3rem;
+}
+@media (min-width:768px){
+    .jumbotronIn{
+        padding: 2rem 1rem;
+        margin-bottom: 2rem;
+        background-color: #e9ecef;
+        border-radius: .3rem;
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        grid-template-rows: 1fr 3fr;
+        grid-template-areas: "name name"
+                            "memberImg memberP";
+        grid-gap:1.5rem;
+    }
+    .memberP{
+        grid-area: memberP;
+    }
+    .memberImg{
+        grid-area: memberImg;
+        padding: 0;
+    }
+    .name{
+        grid-area: name;
+    }
+}
+
+
+
+
+/* RandomShit */
+/* Fazer função hover javascrit */
+/* .navbar-light .navbar-brand:hover{
+    color:#c1d132;
+} */
+
+/*SignIn and SignUp
+#Sign{
+    display: block;
+} */

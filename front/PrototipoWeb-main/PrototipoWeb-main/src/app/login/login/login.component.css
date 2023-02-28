@@ -1,0 +1,33 @@
+.background-radial-gradient {
+    background-color: hsl(218, 41%, 15%);
+    background-image: url("../../../assets/images/tech5.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .login-box {
+    opacity: 0.87;
+  }
+
+  .login-box:hover {
+    opacity: 0.96;
+  }
+
+  section{
+    height: 100vh;
+}
+
+  .aviso {
+    font-size: 10px;
+    text-align: center; 
+    margin-top: 12px;
+  }
+
+  .warning {
+    color: red;
+  }
+
+  .bg-glass {
+    background-color: hsla(0, 100%, 99%, 0.9) !important;
+    backdrop-filter: saturate(200%) blur(25px);
+  }

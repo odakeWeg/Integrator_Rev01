@@ -1,0 +1,22 @@
+<div class="modal-header" >
+    <label>Entrada de usuário</label>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+</div>
+<div class="modal-body text-center">
+    <form #formSend="ngForm">
+        <div class="form-outline mb-4">
+            <label class="form-label" for="inputBuffer">{{message}}</label>
+            <input placeholder="Digite a resposta" type="text" id="inputBuffer" name="inputBuffer" class="form-control"
+                                        [(ngModel)]="inputBuffer" #input="ngModel">
+        </div>
+        <div class="form-outline">
+            <button type="submit" class="btn btn-primary left-btn" (click)="send()">Enviar</button>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <!--
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">OK</button>
+    -->
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss()">Cancelar</button>
+</div>

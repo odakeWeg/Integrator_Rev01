@@ -1,0 +1,202 @@
+<div class="nav-wrapper">
+<nav class="navbar navbar-expand-lg navbar-light" id="navbar-index">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/home">WEG</a>
+        <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="../home#section1">System</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../home#section2">Test</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../home#section3">Data</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="['/usuario/cadastro']">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="['/login']">logoff</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+</div>
+<div class="wrapper">
+    <!--
+    <div class="box header">
+        <h1 class="centered-text">Usuários cadastrados</h1>
+    </div>
+    -->
+    <div class="box sidebar">
+        <div class="user-info-margin">
+            <label>Nome: {{loggedUser.nome}}</label><br>
+            <label>Cadastro: {{loggedUser.cadastro}}</label><br>
+            <label>Perfil: {{loggedUser.perfil}}</label>
+        </div>
+        <hr>
+
+        <h3><i>Quantidade de registros encontrados: {{shownUsers}}</i></h3>
+        <form #formFilter="ngForm">
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <label for="idMin">ID min</label>
+                    <input placeholder="Filter id min" type="number" id="idMin" name="idMin" class="form-control"
+                            [(ngModel)]="idMin" #id="ngModel">
+                </div>
+                <div class="col-md-6">
+                    <label for="idMax">ID max</label>
+                    <input placeholder="Filter id max" type="number" id="idMax" name="idMax" class="form-control"
+                            [(ngModel)]="idMax" #id="ngModel">
+                </div>
+            </div>
+            <div class="form-group mb-4">
+              <label for="nome">Nome</label>
+              <input placeholder="Filter name" type="text" id="nomeFilter" name="nome" class="form-control"
+                            [(ngModel)]="userFilter.nome" #nome="ngModel">
+            </div>
+            <div class="form-group mb-4">
+              <label for="cadastro">Cadastro</label>
+              <input placeholder="Filter cadastro" type="number" id="cadastroFilter" name="cadastro" class="form-control"
+                            [(ngModel)]="userFilter.cadastro" #cadastro="ngModel">
+            </div>
+            <div class="form-group">
+              <label for="perfil">Perfil</label>
+              <select [(ngModel)]='userFilter.perfil' class='form-control' name="perfil" id="perfil">
+                <option value=""></option>  
+                <option *ngFor="let perfil of perfils" value="{{perfil}}">{{perfil}}</option>
+              </select>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary" (click)="filter()">Filter</button>
+        </form>
+    </div>
+    <div class="box content">
+        <h1 class="centered-text">Usuários cadastrados</h1>
+        <div class="document">
+            <div class="hidden-user">
+                <div class="user-id">Id: {{users.length}}</div>
+                <div class="user-nome"><b>Novo cadastro</b></div>
+                <div class="user-icon">
+                    <button type="button" class="btn btn-success btn-block add-btn" data-bs-toggle="collapse" data-bs-target="#new-user">+</button>
+                </div>
+            </div>
+            <div class="collapse add-user" id="new-user">
+                <hr>
+                <form #formNewUser="ngForm">
+                    <div class="row mb-4">
+                        <div class="col-md-10">
+                            <label class="form-label" for="nome">Nome</label>
+                            <input placeholder="Your name" type="text" id="nomeNew" name="nome" class="form-control"
+                                [(ngModel)]="newUser.nome" #nome="ngModel">
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="form-label" for="cadastro">Cadastro</label>
+                            <input placeholder="Number" type="text" id="cadastroNew" name="cadastro" class="form-control"
+                            [(ngModel)]="newUser.cadastro" #cadastro="ngModel">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <label class="form-label" for="form3Example4">Senha</label>
+                            <input placeholder="Password" type="password" id="senhaNew" name="senha" class="form-control"
+                                [(ngModel)]="newUser.senha" #senha="ngModel">
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <label class="form-label" for="form3Example4">Perfil</label>
+                            <select [(ngModel)]='newUser.perfil' class='form-control' name="perfil" id="perfil">
+                                <option *ngFor="let perfil of perfils" value="{{perfil}}">{{perfil}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary btn-block mb-4" data-bs-toggle="collapse" data-bs-target="#new-user" (click)="add()">
+                            Adicionar
+                        </button>
+                        <button type="submit" id="cancel-btn" class="btn btn-primary btn-block mb-4" data-bs-toggle="collapse" data-bs-target="#new-user" (click)="clean()">
+                            Cancelar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div *ngFor="let user of users; let i = index">
+            <div *ngIf="filterArray[i]" class="document">
+                <div class="hidden-user">
+                    <div class="user-id">Id: {{user.line}}</div>
+                    <div class="user-nome">Nome: {{user.nome}}</div>
+                    <div class="user-icon">
+                        <button type="button" class="btn btn-primary btn-block show-btn" data-bs-toggle="collapse" [attr.data-bs-target]="'#user-content-' + user.line"><i class="bi bi-chevron-down"></i></button>
+                    </div>
+                </div>
+                <div id="info" class="collapse shown-user" [attr.id]="'user-content-' + user.line">
+                    <hr>
+                    <form #formUser="ngForm">
+                        <!-- Id input -->
+                        <input type="hidden" id="line" name="line" class="form-control"
+                            [(ngModel)]="user.line" #id="ngModel">
+                        
+                        <div class="row mb-4">
+                            <!-- Nome input -->
+                            <div class="col-md-10">
+                                <label class="form-label" for="nome">Nome</label>
+                                <input type="text" id="nome" name="nome" class="form-control"
+                                [(ngModel)]="user.nome" #nome="ngModel">
+                            </div>
+
+                            <!-- Cadastro input -->
+                            <div class="col-md-2">
+                            <label class="form-label" for="cadastro">Cadastro</label>
+                            <input type="text" id="cadastro" name="cadastro" class="form-control"
+                                [(ngModel)]="user.cadastro" #cadastro="ngModel">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <!-- Password input -->
+                            <div class="col-md-8">
+                            <label class="form-label" for="form3Example4">Senha</label>
+                            <input type="password" id="senha" name="senha" class="form-control"
+                                [(ngModel)]="user.senha" #senha="ngModel">
+                            </div>
+
+                            <!-- Perfil input -->
+                            <div class="col-md-4">
+                                <label class="form-label" for="form3Example4">Perfil</label>
+                                <select [(ngModel)]='user.perfil' class='form-control' name="perfil" id="perfil">
+                                    <option *ngFor="let perfil of perfils" value="{{perfil}}">{{perfil}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="d-flex justify-content-center">
+                            <!-- Submit button -->
+                            <button type="submit" class="btn btn-primary btn-block mb-4 " data-bs-toggle="collapse" [attr.data-bs-target]="'#user-content-' + user.line" (click)="update(user.line)">
+                                Atualizar
+                            </button>
+                            <button type="submit" id="cancel-btn" class="btn btn-primary btn-block mb-4" data-bs-toggle="collapse" [attr.data-bs-target]="'#user-content-' + user.line" (click)="cancel(user.line)">
+                                Cancelar
+                            </button>
+                            <button type="submit" class="btn btn-danger btn-block mb-4" data-bs-toggle="collapse" [attr.data-bs-target]="'#user-content-' + user.line" (click)="remove(user.line)">
+                                Remover
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="foot"></div>

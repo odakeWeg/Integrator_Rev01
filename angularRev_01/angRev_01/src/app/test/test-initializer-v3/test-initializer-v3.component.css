@@ -81,10 +81,13 @@
   
 
 
-
+.nav-wrapper {
+    background-color: #FFFAFF;
+}
 
 .navbar{
-    background-color: rgba(0, 183, 255, 0);
+    /*background-color: rgba(0, 183, 255, 0);*/
+    background-color: #FFFAFF;
     /* border-bottom: 3px double white; */
     font-family: 'PT Serif', serif;
     font-size: 1.5rem;
@@ -110,6 +113,14 @@
 
 .btn-success:hover {
     opacity: 0.87;
+}
+
+.btn-warning {
+    opacity: 0.71;
+}
+
+.btn-warning:hover {
+    opacity: 0.66;
 }
 
 .navbar-brand{
@@ -158,6 +169,28 @@
 .shown-user {
     /*background-color: rgba(22, 105, 122, 0.2);*/
     line-height: 1em;
+}
+
+
+.hr {
+  margin-bottom: 0;
+  margin-top: 0;
+  /*
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  */
+}
+
+.ok-color {
+    background-color: rgba(22, 105, 122, 0.2);
+}
+
+.pass-color {
+    background-color: rgba(249, 250, 171, 0.2);
+}
+
+.failed-color {
+    background-color: rgba(255, 36, 101, 0.2);
 }
 
 .add-user {
@@ -289,6 +322,11 @@
 .elementToFadeInAndOut {
     opacity: 1;
     animation: fade 2s linear infinite;
+}
+
+.energized-icon {
+    font-size: 3em;
+    color: rgba(214, 130, 62, 1);
 }
 
 

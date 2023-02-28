@@ -1,0 +1,174 @@
+
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital@1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Stalinist+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+
+.navbar{
+    background-color: rgba(0, 183, 255, 0);
+    /* border-bottom: 3px double white; */
+    font-family: 'PT Serif', serif;
+    font-size: 1.5rem;
+    padding: auto;
+    padding-right: 2.1rem;
+    /* height: 0rem; Não sei pra que e fode o dropdown*/
+    min-height: 9vh;
+}
+.navbar-brand{
+    padding-left: 2.1rem;
+    font-size: 1.8em;
+    font-family: 'Stalinist One', cursive;
+}
+
+.sidebar {
+    grid-area: sidebar;
+    /*
+    border-style: solid;
+    */
+    border-radius: 5px;
+    padding: 3%;
+}
+
+.header {
+    grid-area: header;
+}
+
+.footer {
+    grid-area: footer;
+}
+
+.foot {
+    height: 4vh;
+    background-color: #FFFAFF;
+}
+
+.nav-wrapper {
+    height: 12vh;
+    background-color: #FFFAFF;
+}
+.project-id {
+    grid-area: id;
+}
+
+.project-nome {
+    grid-area: nome;
+}
+
+.folder-icon {
+    grid-area: icon;
+    margin-left: auto;
+    margin-right: 5px;
+}
+
+.icon:hover {
+    cursor: pointer;
+}
+
+.hidden-project {
+    display: grid;
+    grid-template-columns: 80% 20%;
+    grid-template-areas:
+    "id icon"
+}
+
+.folder-icon {
+    grid-area: icon;
+    margin: 8px;
+    /*
+    margin-left: auto;
+    margin-right: 5px;
+    */
+}
+
+.wrapper {
+    height: 84vh;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 20vw 38vw 38vw;
+    grid-template-areas:
+    "sidebar content content"
+    "sidebar content content"
+    "sidebar content content"
+    "sidebar content content"
+    "sidebar content content"
+    "sidebar content content"
+    "sidebar content content"
+    "sidebar content content"
+    "sidebar content content"
+    "sidebar content content"
+    "sidebar content content";
+    background-color: #FFFAFF;
+}
+
+.folder-name {
+    margin: auto 8px;
+}
+
+.centered-text {
+    font-size: 2rem;
+    text-align: center;
+    margin: auto;
+    margin-bottom: 20px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.content {
+    /*
+    border-style: solid;
+    */
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 150%;
+    overflow:auto;
+    grid-area: content;
+}
+
+.user-info-margin {
+    margin-left: 8px;
+}
+
+.document {
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+.entrar-btn {
+    float: right;
+    width: 6rem;
+}
+
+.btn-primary {
+    background-color: #16697A !important;
+    border-color: #16697A;
+}
+
+@media only screen and (max-height: 550px) {
+    .nav-wrapper {
+        height: 16vh;
+    }
+    .wrapper {
+        height: 80vh;
+    }
+}
+
+@media only screen and (max-height: 420px) {
+    .nav-wrapper {
+        height: 20vh;
+    }
+    .wrapper {
+        height: 76vh;
+    }
+}
+
+@media only screen and (max-height: 380px) {
+    .nav-wrapper {
+        height: 22vh;
+    }
+    .wrapper {
+        height: 74vh;
+    }
+}
+
+

@@ -14,6 +14,7 @@ import weg.net.tester.communication.BaseCommunication;
 import weg.net.tester.exception.CommunicationException;
 import weg.net.tester.exception.ObjectNotFoundException;
 import weg.net.tester.models.web.PopUpLog;
+import weg.net.tester.models.web.ResultLog;
 import weg.net.tester.utils.ActionCommandUtil;
 import weg.net.tester.utils.CompareUtil;
 import weg.net.tester.utils.EndPointPathUtil;
@@ -55,6 +56,8 @@ public class LeafUserInputTag extends NodeCompareTag {
     private void inputRequest() {
         responseFlag = false;
 
+        //ResultLog resultLog = new ResultLog("result", "log", true, "status", 1);
+        //this.template.convertAndSend(EndPointPathUtil.CHANNEL,  resultLog);
         //@Todo: change feedback
         PopUpLog popUpLog = new PopUpLog(messageToDisplay, ActionCommandUtil.USER_INPUT, timeout);
         this.template.convertAndSend(EndPointPathUtil.CHANNEL,  popUpLog);

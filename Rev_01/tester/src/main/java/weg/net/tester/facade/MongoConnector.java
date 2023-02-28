@@ -24,7 +24,7 @@ public class MongoConnector {
 
     private String timestamp;
     private String sessionId;
-    private String cadastro;
+    private int cadastro;
     private String[] serial;
     private String[] result;
     private long duration;

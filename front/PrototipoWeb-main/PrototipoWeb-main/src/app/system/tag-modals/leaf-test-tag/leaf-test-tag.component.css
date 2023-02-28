@@ -1,0 +1,11 @@
+label {
+    font-size: large;
+}
+
+.form-label {
+    float: left;
+}
+
+.blankspace {
+    visibility: hidden;
+}

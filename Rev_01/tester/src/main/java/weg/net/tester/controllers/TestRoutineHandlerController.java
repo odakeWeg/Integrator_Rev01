@@ -28,7 +28,7 @@ public class TestRoutineHandlerController {
     private  TestExecutor testExecutor;
 
     @MessageMapping(EndPointPathUtil.LOG)
-    public void onReceivedMessage(String barCode) {
+    public void onReceivedMessage(String barCode) { //@Todo: put if to check if test is happening
         try {
             LoginModel login = new LoginModel(7881, "edson");
             SessionHelper.initiateSession(login.getCadastro());

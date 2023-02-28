@@ -1,0 +1,109 @@
+<div class="nav-wrapper">
+    <nav class="navbar navbar-expand-lg navbar-light" id="navbar-index">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/home">WEG</a>
+            <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="../home#section1">System</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../home#section2">Test</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../home#section3">Data</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/usuario/cadastro']">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/login']">logoff</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    </div>
+    <div class="wrapper">
+        <!--
+        <div class="box header">
+            <h1>Projeto x - Routines</h1>
+        </div>
+        -->
+        <div class="box sidebar">
+            <div class="user-info-margin">
+                <label>Nome: {{loggedUser.nome}}</label><br>
+                <label>Cadastro: {{loggedUser.cadastro}}</label><br>
+                <label>Perfil: {{loggedUser.perfil}}</label>
+            </div>
+            <hr>
+            <h3><i>Quantidade de rotinas encontradas: {{shownUsers}}</i></h3>
+            <form #formFilter="ngForm">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="idMin">ID min</label>
+                        <input placeholder="Filter id min" type="number" id="idMin" name="idMin" class="form-control"
+                                [(ngModel)]="idMin" #id="ngModel">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="idMax">ID max</label>
+                        <input placeholder="Filter id max" type="number" id="idMax" name="idMax" class="form-control"
+                                [(ngModel)]="idMax" #id="ngModel">
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label for="nome">Nome</label>
+                  <input placeholder="Filter name" type="text" id="nomeFilter" name="nome" class="form-control"
+                                [(ngModel)]="nomeFilter" #nome="ngModel">
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary" (click)="filter()">Filter</button>
+            </form>
+        </div>
+        <div class="box content">
+            <h1 class="centered-text">Projeto {{project.line}} - Routines</h1>
+            <div class="document">
+                <div class="hidden-project">
+                    <div class="project-id">Id: {{routines.length}}</div>
+                    <div class="project-nome">Nome: </div>
+                    <div class="project-icon">
+                        <button type="button" class="btn btn-success btn-block show-btn" (click)="openAddModal()">+</button>
+                    </div>
+                </div>
+            </div>
+            <div *ngFor="let routine of routines; let i = index" >
+                <div class="document" *ngIf="routine.enabled==true && filterArray[i];else disabled">
+                    <!--
+                    <div>Resp: {{filterArray[i]}}: {{i}} =====> {{filterArray}}</div>
+                    -->
+                    <div class="hidden-project" >
+                        <div class="project-id">Id: {{routine.line}}</div>
+                        <div class="project-nome">Nome: {{routine.nome}}</div>
+                        <div class="project-icon">
+                            <button type="button" class="btn btn-primary btn-block add-btn" (click)="openModal(routine)"><i class="bi bi-chevron-down"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <ng-template #disabled>
+                    <div class="document" *ngIf="filterArray[i]" [attr.disabled]="true">
+                        <div class="hidden-project" >
+                            <div class="project-id">Id: {{routine.line}}</div>
+                            <div class="project-nome">Nome: {{routine.nome}}</div>
+                            <div class="project-icon">
+                                <button type="button" class="btn btn-danger btn-block disabled-btn" (click)="remove(routine)">Remove</button>
+                                <button type="button" class="btn btn-primary btn-block disabled-btn" (click)="enable(routine)">Enable</button>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+<div class="foot"></div>
+    

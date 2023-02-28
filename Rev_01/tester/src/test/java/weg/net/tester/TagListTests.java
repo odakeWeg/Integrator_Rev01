@@ -21,7 +21,9 @@ import weg.net.tester.tag.LeafRegisterCompareTag;
 import weg.net.tester.tag.LeafTestTag;
 import weg.net.tester.tag.LeafWriteTag;
 import weg.net.tester.tag.TagList;
+import weg.net.tester.tag.TestMetaDataModel;
 import weg.net.tester.utils.EnsParametersUtil;
+import weg.net.tester.utils.SapCaracUtil;
 
 public class TagListTests {
     @Test
@@ -41,6 +43,7 @@ public class TagListTests {
         leafEnsSetupTag.setSelectedItem(EnsParametersUtil.PRODUCT_DATA_ENS_TYPE.name());
         leafEnsSetupTag.setStart(true);
         leafEnsSetupTag.setSerialProduct(1234567890);
+        //leafEnsSetupTag.setSerialProduct(parseLong(TestMetaDataModel.sapConnector.get(SapCaracUtil.SERIAL)));
 
         leafEnsSetupTag.setVoltageSetpointDielectric(10);
         leafEnsSetupTag.setCurrentAcceptanceIn_mADielectric(20);

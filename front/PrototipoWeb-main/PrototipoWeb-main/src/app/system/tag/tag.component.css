@@ -1,0 +1,202 @@
+
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital@1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Stalinist+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+.navbar{
+    background-color: rgba(0, 183, 255, 0);
+    /* border-bottom: 3px double white; */
+    font-family: 'PT Serif', serif;
+    font-size: 1.5rem;
+    padding: auto;
+    padding-right: 2.1rem;
+    /* height: 0rem; Não sei pra que e fode o dropdown*/
+    min-height: 9vh;
+}
+
+.navbar-brand{
+    padding-left: 2.1rem;
+    font-size: 1.8em;
+    font-family: 'Stalinist One', cursive;
+}
+
+.btn-primary {
+    background-color: #16697A !important;
+    border-color: #16697A;
+}
+
+.btn-primary:hover {
+    opacity: 0.87;
+}
+
+.btn-success {
+    background-color: #9000B3 !important;
+    border-color: #9000B3;
+}
+
+.btn-success:hover {
+    opacity: 0.87;
+}
+
+.disabled-btn {
+    float: right;
+    width: 6em;
+    margin-left: 4px;
+}
+
+.centered-text {
+    font-size: 2rem;
+    text-align: center;
+    margin: auto;
+    margin-bottom: 20px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.sidebar {
+    grid-area: sidebar;
+    /*
+    border-style: solid;
+    */
+    border-radius: 5px;
+    padding: 3%;
+}
+
+.header {
+    grid-area: header;
+}
+
+.footer {
+    grid-area: footer;
+}
+
+.foot {
+    height: 4vh;
+    background-color: #FFFAFF;
+}
+
+.nav-wrapper {
+    height: 12vh;
+    background-color: #FFFAFF;
+}
+
+.project-id {
+    margin: auto;
+    margin-left: 8px;
+    grid-area: id;
+}
+
+.project-nome {
+    /*
+    margin: auto;
+    */
+    margin: auto 0;
+    grid-area: nome;
+}
+
+.project-icon {
+    grid-area: icon;
+    margin: 8px;
+    /*
+    margin-left: auto;
+    margin-right: 5px;
+    */
+}
+
+.icon:hover {
+    cursor: pointer;
+}
+
+.hidden-project {
+    display: grid;
+    grid-template-columns: 20% 50% 30%;
+    grid-template-areas:
+    "id nome icon"
+}
+
+.wrapper {
+    height: 84vh;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 20vw 38vw 38vw;
+    grid-template-areas:
+    "sidebar content content"
+    "sidebar content content"
+    "sidebar content content"
+    "sidebar content content"
+    "sidebar content content"
+    "sidebar content content"
+    "sidebar content content"
+    "sidebar content content"
+    "sidebar content content"
+    "sidebar content content"
+    "sidebar content content";
+    background-color: #FFFAFF;
+}
+
+.content {
+    /*
+    border-style: solid;
+    */
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 150%;
+    overflow:auto;
+    grid-area: content;
+}
+
+.document {
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+.add-btn {
+    float: right;
+    width: 3rem;
+}
+
+.show-btn {
+    float: right;
+    width: 3rem;
+}
+
+#selectedTag {
+    font-size: 1rem;
+    width: 18rem;
+    float: left;
+}
+
+#newTagDisplay {
+    float: left;
+    margin-right: 12px;
+}
+
+@media only screen and (max-height: 550px) {
+    .nav-wrapper {
+        height: 16vh;
+    }
+    .wrapper {
+        height: 80vh;
+    }
+}
+
+@media only screen and (max-height: 420px) {
+    .nav-wrapper {
+        height: 20vh;
+    }
+    .wrapper {
+        height: 76vh;
+    }
+}
+
+@media only screen and (max-height: 380px) {
+    .nav-wrapper {
+        height: 22vh;
+    }
+    .wrapper {
+        height: 74vh;
+    }
+}
+
+

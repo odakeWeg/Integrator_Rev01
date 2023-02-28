@@ -28,6 +28,7 @@ public abstract class ParentTag extends BaseTag {
     protected String tagIdentifier;
     protected String tagName;
 
+    protected String simpleDescription;
     protected String descricao;
     protected String log;
     protected String action = ActionCommandUtil.EXIBIT_VALUES;

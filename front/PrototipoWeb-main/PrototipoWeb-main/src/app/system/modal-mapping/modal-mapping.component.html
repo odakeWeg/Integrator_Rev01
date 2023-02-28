@@ -1,0 +1,53 @@
+<div *ngIf="mapping==null;else updateTag">
+    <div class="modal-header" >
+        <label>Cadastro de mapeamento</label>
+        <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+    </div>
+    <div class="modal-body text-center">
+        <form #formNewMapping="ngForm">
+            <div class="form-outline mb-4">
+                <label class="form-label" for="nome">Nome</label>
+                <input placeholder="Enter name" type="text" id="nome" name="nome" class="form-control"
+                  [(ngModel)]="newMapping.nome" #nome="ngModel">
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="mapping">Mapping</label>
+                <input placeholder="Enter Mapping" type="text" id="mapping" name="mapping" class="form-control"
+                  [(ngModel)]="newMapping.mapping" #nome="ngModel">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="add()">Salvar</button>
+        <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Fechar</button>
+    </div>
+</div>
+
+<ng-template #updateTag>
+    <div class="modal-header" >
+        <label>Atualização de mapeamento</label>
+        <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+    </div>
+    <div class="modal-body text-center">
+        <form #formMapping="ngForm">
+            <div class="form-outline mb-4">
+                <label class="form-label" for="nome">Nome</label>
+                <input type="text" id="nome" name="nome" class="form-control"
+                [(ngModel)]="mappingToUpdate.nome" #nome="ngModel">
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="mapping">Mapping</label>
+                <input placeholder="Enter Mapping" type="number" id="mapping" name="mapping" class="form-control"
+                  [(ngModel)]="mappingToUpdate.mapping" #nome="ngModel">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <!--
+        <button type="button" class="btn btn-outline-dark" [routerLink]="['/system', mappingToUpdate.line]" (click)="activeModal.close()">Open</button>
+        -->
+        <button type="button" class="btn btn-outline-dark" (click)="update()">Update</button>
+        <button type="button" class="btn btn-outline-danger" (click)="disable()">Disable</button>
+        <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Fechar</button>
+    </div>
+</ng-template>

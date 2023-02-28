@@ -1,0 +1,51 @@
+<div *ngIf="routine==null;else updateTag">
+    <div class="modal-header" >
+        <label>Cadastro de Rotina</label>
+        <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+    </div>
+    <div class="modal-body text-center">
+        <form #formNewRoutine="ngForm">
+            <div class="form-outline mb-4">
+                <label class="form-label" for="nome">Nome</label>
+                <input placeholder="Enter name" type="text" id="nome" name="nome" class="form-control"
+                  [(ngModel)]="newRoutine.nome" #nome="ngModel">
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="description">Description</label>
+                <input placeholder="Enter description" type="text" id="description" name="description" class="form-control"
+                  [(ngModel)]="newRoutine.description" #description="ngModel">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="add()">Salvar</button>
+        <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Fechar</button>
+    </div>
+</div>
+
+<ng-template #updateTag>
+    <div class="modal-header" >
+        <label>Atualização de rotina</label>
+        <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+    </div>
+    <div class="modal-body text-center">
+        <form #formRoutine="ngForm">
+            <div class="form-outline mb-4">
+                <label class="form-label" for="nome">Nome</label>
+                <input placeholder="Enter name" type="text" id="nome" name="nome" class="form-control"
+                  [(ngModel)]="routineToUpdate.nome" #nome="ngModel">
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="description">Description</label>
+                <input placeholder="Enter description" type="text" id="description" name="description" class="form-control"
+                  [(ngModel)]="routineToUpdate.description" #description="ngModel">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" [routerLink]="['/system', project.line, 'routine', routineToUpdate.line]" (click)="activeModal.close()">Open</button>
+        <button type="button" class="btn btn-outline-dark" (click)="update()">Update</button>
+        <button type="button" class="btn btn-outline-danger" (click)="disable()">Disable</button>
+        <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Fechar</button>
+    </div>
+</ng-template>

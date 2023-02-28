@@ -27,8 +27,8 @@ public class LeafEnsSetupTag extends NodeEnsTag {
 
     //@Todo: make this class take from material after?
 
-    protected boolean start;
-    protected String selectedItem;
+    protected boolean start;    //Form -> fala se é inicio ou fim
+    protected String selectedItem;  //Form: -> fala qual é o tipo do teste
 
     //Product
     //protected boolean enableProduct; //Form
@@ -223,7 +223,7 @@ public class LeafEnsSetupTag extends NodeEnsTag {
     private void dielectricInitialSetup(ProductDataEns product) {
         DielectricTestCharacteristicList dielectric = new DielectricTestCharacteristicList();
         dielectric.setStartDateTime(new Date());
-        dielectric.setEmployeeCode(Integer.parseInt(SessionHelper.sessionModel.getCadastro()));
+        dielectric.setEmployeeCode(SessionHelper.sessionModel.getCadastro());
         dielectric.setVoltageSetpoint(voltageSetpointDielectric);
         dielectric.setCurrentSetpointIn_mA(currentSetpointIn_mADielectric);
         dielectric.setCurrentAcceptanceIn_mA(currentAcceptanceIn_mADielectric);
@@ -235,7 +235,7 @@ public class LeafEnsSetupTag extends NodeEnsTag {
         FunctionalTestCharacteristicList functional = new FunctionalTestCharacteristicList();
         functional.setStartDateTime(new Date());
         functional.setTimeUnit(timeUnitFunctional);
-        functional.setEmployeeCode(Integer.parseInt(SessionHelper.sessionModel.getCadastro()));
+        functional.setEmployeeCode(SessionHelper.sessionModel.getCadastro());
         //functional.setTestPosition(this.position);  //Wrong position
         product.setFunctionalTestCharacteristicList(functional);
     }
@@ -244,7 +244,7 @@ public class LeafEnsSetupTag extends NodeEnsTag {
         LoadTestCharacteristicList load = new LoadTestCharacteristicList();
         load.setStartDateTime(new Date());
         load.setTimeUnit(timeUnitLoad);
-        load.setEmployeeCode(Integer.parseInt(SessionHelper.sessionModel.getCadastro()));
+        load.setEmployeeCode(SessionHelper.sessionModel.getCadastro());
         //load.setTestPosition(String.valueOf(this.position));  //Wrong position
         load.setVoltageSetpoint(voltageSetpointLoad);
         load.setTemperatureSetpoint(temperatureSetpointLoad);
@@ -258,7 +258,7 @@ public class LeafEnsSetupTag extends NodeEnsTag {
 
     private void reneableInitialSetup(ProductDataEns product) {
         ReneableEnergyCharacteristicList reneable = new ReneableEnergyCharacteristicList();
-        reneable.setEmployeeCode(Integer.parseInt(SessionHelper.sessionModel.getCadastro()));
+        reneable.setEmployeeCode(SessionHelper.sessionModel.getCadastro());
         //reneable.setPosition(this.position);  //Wrong position
         reneable.setUnit(unitReneable);
         reneable.setStartDateTime(new Date());
@@ -306,7 +306,7 @@ public class LeafEnsSetupTag extends NodeEnsTag {
         product.getFunctionalTestCharacteristicList().setTestPosition(position);
         product.getFunctionalTestCharacteristicList().setEndDateTime(new Date());
         long testDuration = product.getFunctionalTestCharacteristicList().getEndDateTime().getTime() - product.getFunctionalTestCharacteristicList().getStartDateTime().getTime();
-        product.getFunctionalTestCharacteristicList().setTestDuration((int) testDuration);
+        product.getFunctionalTestCharacteristicList().setTestDuration((int) testDuration/1000);
         if(TestMetaDataModel.isPositionEnabled[position].get()) {
             product.getFunctionalTestCharacteristicList().setTestResult(WdcTestResultType.Approved);
             //protected String faultDescriptionFunctional;    //@Todo: maybe later
@@ -322,7 +322,7 @@ public class LeafEnsSetupTag extends NodeEnsTag {
         product.getLoadTestCharacteristicList().setTestPosition(String.valueOf(position));
         product.getLoadTestCharacteristicList().setEndDateTime(new Date());
         long testDuration = product.getLoadTestCharacteristicList().getEndDateTime().getTime() - product.getLoadTestCharacteristicList().getStartDateTime().getTime();
-        product.getLoadTestCharacteristicList().setTestDuration((int) testDuration);
+        product.getLoadTestCharacteristicList().setTestDuration((int) testDuration/1000);
         if(TestMetaDataModel.isPositionEnabled[position].get()) {
             product.getLoadTestCharacteristicList().setTestResult(WdcTestResultType.Approved);
             //protected int timeUntilFailureLoad;  //@Todo: maybe later
@@ -342,7 +342,7 @@ public class LeafEnsSetupTag extends NodeEnsTag {
         product.getReneableEnergyCharacteristicList().setPosition(position);
         product.getReneableEnergyCharacteristicList().setEndDateTime(new Date());
         long testDuration = product.getReneableEnergyCharacteristicList().getEndDateTime().getTime() - product.getReneableEnergyCharacteristicList().getStartDateTime().getTime();
-        product.getReneableEnergyCharacteristicList().setTestDuration((int) testDuration);
+        product.getReneableEnergyCharacteristicList().setTestDuration((int) testDuration/1000);
         if(TestMetaDataModel.isPositionEnabled[position].get()) {
             product.getReneableEnergyCharacteristicList().setTestResult(WdcTestResultType.Approved);
             //protected int WdcTimeUntilFailureReneable;   //@Todo: maybe later

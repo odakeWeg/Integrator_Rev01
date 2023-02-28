@@ -1,3 +1,5 @@
+import { User } from './../../models/models/user.model';
+import { PositionModalComponent } from './../position-modal/position-modal.component';
 import { TestModalComponent } from './../test-modal/test-modal.component';
 import { Component, OnInit } from '@angular/core';
 import { ProductLog } from 'src/app/models/models/product-log.model';
@@ -10,6 +12,8 @@ import * as SockJS from 'sockjs-client';
 import * as $ from "jquery";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TagContainer } from 'src/app/models/models/tag-conteiner.model';
+import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-modal.component';
+import { InputModalComponent } from '../input-modal/input-modal.component';
 
 @Component({
   selector: 'app-test-initializer-v3',
@@ -27,17 +31,22 @@ export class TestInitializerV3Component implements OnInit {
   positionToShow: any = 1
 
   firstTest: boolean = true
+  onTest: boolean = false
 
   serverUrl: string = 'http://localhost:8080/socket'
   stompClient: any;
+
+  nIntervId!: any
+  static testTime: number = 0
+
+  LS_CHAVE: string = "userSession"
+  loggedUser: User = JSON.parse(localStorage[this.LS_CHAVE])
 
   constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.initiateQrCode()
     this.initializeWebSocketConnection()
-
-    this.openResultModal("message")
   }
 
   public initiateQrCode(): void {
@@ -49,12 +58,35 @@ export class TestInitializerV3Component implements OnInit {
 
   public initiateTest(): void {
     this.firstTest = false;
+    this.onTest = true;
     
+    this.initiateTimer()
     this.hideInitiateLayer()
     this.resetVariables()
     this.sendMessage()
 
     //document.getElementById('qrCode-'+this.productQRCodeList[i].position)
+  }
+
+  initiateTimer(): void {
+    //console.log("init: " + TestInitializerV3Component.testTime)
+    TestInitializerV3Component.testTime = 0
+    this.nIntervId = setInterval(this.updateSeconds, 1000);
+  }
+
+  updateSeconds(): void {
+    //console.log("update: " + TestInitializerV3Component.testTime)
+    TestInitializerV3Component.testTime = TestInitializerV3Component.testTime + 1
+  }
+
+  get staticTestTime() {
+    return TestInitializerV3Component.testTime;
+  }
+
+  public endTest(): void {
+    //@Todo: implement hide energy icon and stop test timer
+    this.onTest = false
+    clearInterval(this.nIntervId)
   }
 
   public resetVariables(): void {
@@ -125,6 +157,8 @@ export class TestInitializerV3Component implements OnInit {
     this.stompClient = Stomp.over(ws);
     let that = this;
     
+    //@Todo: probably not used nowadays
+    /*
     this.stompClient.connect({}, function(frame: any) {
       that.stompClient.subscribe("/feedback2", (message: any) => {
         if(message.body) {
@@ -133,6 +167,7 @@ export class TestInitializerV3Component implements OnInit {
         }
       });
     });
+    */
     
     let ws2 = new SockJS(this.serverUrl);
     let stompClient2 = Stomp.over(ws2);
@@ -186,6 +221,9 @@ export class TestInitializerV3Component implements OnInit {
         tagContainer.errorMessage = message.errorMessage
         tagContainer.log = message.log
         tagContainer.testResult = message.testResult
+        tagContainer.position = message.position
+        this.checkResult(message.testResult, test)
+        
         test.tagContainer.push(tagContainer)
       }
     }
@@ -201,6 +239,16 @@ export class TestInitializerV3Component implements OnInit {
       }
     }
     */
+  }
+
+  checkResult(testResult: string, test: TestContainer): void {
+    //let test = this.testContainers[this.testContainers.length-1].testResult
+    if (testResult!="OK" && testResult!="Pass") {
+      test.testResult = "Failed"
+    }
+    if (testResult!="OK" && testResult=="Pass" && test.testResult!="Failed") {
+      test.testResult = "Pass"
+    } 
   }
 
   //@Todo Functions called by reflection
@@ -232,22 +280,85 @@ export class TestInitializerV3Component implements OnInit {
         this.resultContainers.push(result)
       }
     } else {
-      this.openResultModal("this")
+      this.endTest()
+      if(result.status=="Fim") {
+        this.openResultModal(result.status)
+        //Mostrar resultados
+      } else {
+        console.log(result.status)
+        this.openResultModal(result.status)
+        //Mostrar erros
+      }
       if(this.positionContainers.length==0) {
         this.firstTest = true
       }
       //@Todo: Open an alert with the information
+      //1) Iterate to check if every result.result is different from "Em andamento"
+      //2) If so open modal and pass variables inside
+      //3) change colors to show witch one passed or not
+      //4) Turn energized icon off 
       //@Todo: Find for a way to check if the hardware is energized -> not a js problem
+
     }
   }
 
-  openResultModal(result: any) {
+  openResultModal(result: string) {
     const modalRef = this.modalService.open(TestModalComponent)
     modalRef.componentInstance.result = result
+    modalRef.componentInstance.resultContainers = this.resultContainers
+  }
+
+  openModalByPosition(position: number) {
+    const modalRef = this.modalService.open(PositionModalComponent)
+    modalRef.componentInstance.position = position
+    modalRef.componentInstance.result = this.resultContainers[position-1]
+    modalRef.componentInstance.product = this.positionContainers[position-1]
   }
 
   stopRoutine():void {
     this.stompClient.send("/tester/stop" , {});
   }
+
+  confirmacao(message: any):void {
+    //@Todo: Implement timeout
+    let stomp = this.stompClient
+    const modalRef = this.modalService.open(ConfirmationModalComponent)
+    modalRef.componentInstance.message = message.message
+    modalRef.result.then(function () {
+      //alert('Modal success');
+      stomp.send("/tester/confirmation", {}, true);
+    }, function () {
+      //alert('Modal dismissed');
+      stomp.send("/tester/confirmation", {}, false);
+    });
+  }
+
+  /*
+  response(message: boolean){
+    this.stompClient.send("/tester/confirmation", {}, message);
+  }
+  */
+
+  input(message: any):void {
+    //@Todo: Implement timeout
+    let stomp = this.stompClient
+    let input: string[] = []
+    const modalRef = this.modalService.open(InputModalComponent)
+    modalRef.componentInstance.message = message.message
+    modalRef.componentInstance.userInput = input
+    modalRef.result.then(function () {
+      //alert('Modal closed');
+      stomp.send("/tester/input", {}, input);
+    }, function () {
+      //alert('Modal dismissed');
+      stomp.send("/tester/input", {}, "Cancelado");
+    });
+  }
+
+  /*
+  inputResponse(message: string){
+    this.stompClient.send("/tester/input", {}, message);
+  }
+  */
 
 }
