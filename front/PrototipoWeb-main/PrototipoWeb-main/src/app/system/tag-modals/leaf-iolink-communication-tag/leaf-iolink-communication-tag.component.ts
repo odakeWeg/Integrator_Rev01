@@ -97,7 +97,7 @@ export class LeafIOLinkCommunicationTagComponent implements OnInit {
 
   updateTagLocally(tag: BaseTag) {
     for(let i = 0; i < this.tags.length; i++) {
-      if(this.tags[i].line==tag.line) {
+      if(this.tags[i].id==tag.id) {
         this.tags[i] = tag
       }
     }
@@ -115,16 +115,16 @@ export class LeafIOLinkCommunicationTagComponent implements OnInit {
 
   update():void {
     let ensBuffer = this.tagToUpdate.ensTagConfiguration
-    let line = this.tag.line
+    let id = this.tag.id
     this.tag = this.formTag.value
     this.tag.ensTagConfiguration = ensBuffer
     this.tag.enabled = true
-    this.tag.line = line
+    this.tag.id = id
     this.updateTagLocally(this.tag)
     this.updateProjectLocally()
 
     this.projectService.updateProject(this.project).subscribe({
-      next: (data) => this.tags[this.tag.line!] = this.tag,
+      next: (data) => this.tags[this.tag.id!] = this.tag,
       error: (err) => console.log(err)
     });
     this.activeModal.close()
@@ -135,7 +135,7 @@ export class LeafIOLinkCommunicationTagComponent implements OnInit {
     this.newTag = this.formNewTag.value
     this.newTag.ensTagConfiguration = ensBuffer
     this.newTag.enabled = true
-    this.newTag.line = this.tags.length
+    this.newTag.id = this.tags.length
     this.tags.push(this.newTag)
     this.routine.tag = this.tags
     this.updateProjectLocally()
@@ -158,7 +158,7 @@ export class LeafIOLinkCommunicationTagComponent implements OnInit {
     this.updateTagLocally(this.tag)
     this.updateProjectLocally()
     this.projectService.updateProject(this.project).subscribe({
-      next: (data) => this.tags[this.tag.line!] = this.tag,
+      next: (data) => this.tags[this.tag.id!] = this.tag,
       error: (err) => console.log(err)
     });
     this.activeModal.close()

@@ -65,11 +65,11 @@ export class TagComponent implements OnInit {
       console.log("out")
       console.log(tag)
       console.log(this.nomeFilter)
-      console.log("idMax:"+this.idMax + " . idMin:" + this.idMin + " . userId:" + tag.line)
+      console.log("idMax:"+this.idMax + " . idMin:" + this.idMin + " . userId:" + tag.id)
       //console.log("in")
       if (tag.nome?.includes(this.nomeFilter) || this.nomeFilter == null) {
         if(tag.position==this.positionFilter || this.positionFilter == null) {
-          if ((tag.line! <= this.idMax && tag.line! >= this.idMin) || this.idMax==null || this.idMin==null) {
+          if ((tag.id! <= this.idMax && tag.id! >= this.idMin) || this.idMax==null || this.idMin==null) {
             console.log("forthIf")
             //console.log(user)
             this.filterArray.push(true)
@@ -101,7 +101,7 @@ export class TagComponent implements OnInit {
 
   updateTagLocally(tag: BaseTag) {
     for(let i = 0; i < this.tags.length; i++) {
-      if(this.tags[i].line==tag.line) {
+      if(this.tags[i].id==tag.id) {
         this.tags[i] = tag
       }
     }
@@ -135,21 +135,21 @@ export class TagComponent implements OnInit {
     this.updateProjectLocally()
 
     this.projectService.updateProject(this.project).subscribe({
-      next: (data) => this.tags[tag.line!] = tag,
+      next: (data) => this.tags[tag.id!] = tag,
       error: (err) => console.log(err)
     });
   }
 
   orderTagsByArrayAsc(): void {
     for(let i = 0; i < this.tags.length; i++) {
-      this.tags[i].line = i
+      this.tags[i].id = i
     }
   }
 
   remove(tag: BaseTag): void {
     //let text = "Tem certeza que deseja deletar essa tag?";
     //if (confirm(text) == true) {
-      this.tags.splice(tag.line!, 1)
+      this.tags.splice(tag.id!, 1)
       this.orderTagsByArrayAsc()
       this.updateProjectLocally()
       

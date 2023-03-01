@@ -41,7 +41,7 @@ export class ModalTagComponent implements OnInit {
 
   updateTagLocally(tag: BaseTag) {
     for(let i = 0; i < this.tags.length; i++) {
-      if(this.tags[i].line==tag.line) {
+      if(this.tags[i].id==tag.id) {
         this.tags[i] = tag
       }
     }
@@ -64,7 +64,7 @@ export class ModalTagComponent implements OnInit {
     this.updateProjectLocally()
 
     this.projectService.updateProject(this.project).subscribe({
-      next: (data) => this.tags[this.tag.line!] = this.tag,
+      next: (data) => this.tags[this.tag.id!] = this.tag,
       error: (err) => console.log(err)
     });
     this.activeModal.close()
@@ -73,7 +73,7 @@ export class ModalTagComponent implements OnInit {
   add():void {
     this.newTag = this.formNewTag.value
     this.newTag.enabled = true
-    this.newTag.line = this.tags.length
+    this.newTag.id = this.tags.length
     console.log(this.newTag)
     this.tags.push(this.newTag)
     this.routine.tag = this.tags
@@ -92,7 +92,7 @@ export class ModalTagComponent implements OnInit {
     this.updateTagLocally(this.tag)
     this.updateProjectLocally()
     this.projectService.updateProject(this.project).subscribe({
-      next: (data) => this.tags[this.tag.line!] = this.tag,
+      next: (data) => this.tags[this.tag.id!] = this.tag,
       error: (err) => console.log(err)
     });
     this.activeModal.close()

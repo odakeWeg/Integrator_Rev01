@@ -8,9 +8,9 @@
     <div class="modal-body text-center">
         <form #formNewTag="ngForm">
             <div class="form-outline mb-4">
-              <label class="form-label" for="line">line:</label>
-              <input type="text" id="line" name="line" class="form-control"
-                [(ngModel)]="newTag.line" #line="ngModel">
+              <label class="form-label" for="id">id:</label>
+              <input type="text" id="id" name="id" class="form-control"
+                [(ngModel)]="newTag.id" #id="ngModel">
             </div>
             <div class="form-outline mb-4">
                 <label class="form-label" for="nome">nome:</label>
@@ -40,9 +40,9 @@
     <div class="modal-body text-center">
         <form #formTag="ngForm">
             <div class="form-outline mb-4">
-                <label class="form-label" for="line">line:</label>
-                <input type="text" id="line" name="line" class="form-control"
-                  [(ngModel)]="tagToUpdate.line" #line="ngModel">
+                <label class="form-label" for="id">id:</label>
+                <input type="text" id="id" name="id" class="form-control"
+                  [(ngModel)]="tagToUpdate.id" #id="ngModel">
               </div>
   
             <div class="form-outline mb-4">
