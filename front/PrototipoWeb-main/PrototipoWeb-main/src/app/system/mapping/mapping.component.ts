@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Mapping, Project } from 'src/app/shared';
+import { Mapping, Project, User } from 'src/app/shared';
 //import { ModalMappingComponent } from '../modal-mapping/modal-mapping.component';
 import { MappingService } from '../services/mapping.service';
 
@@ -8,6 +8,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalMappingComponent } from '../modal-mapping/modal-mapping.component';
 import { ProjectService } from '../services/project.service';
 import { NgForm } from '@angular/forms';
+
+const LS_CHAVE: string = "userSession";
 
 @Component({
   selector: 'app-mapping',
@@ -24,6 +26,8 @@ export class MappingComponent implements OnInit {
   mappingFilter!: Mapping
   idMin!: Number
   idMax!: Number
+
+  loggedUser: User = JSON.parse(localStorage[LS_CHAVE])
 
   constructor(private projectService: ProjectService, public router: Router, private activatedRoute: ActivatedRoute, private modalService: NgbModal) { }
 

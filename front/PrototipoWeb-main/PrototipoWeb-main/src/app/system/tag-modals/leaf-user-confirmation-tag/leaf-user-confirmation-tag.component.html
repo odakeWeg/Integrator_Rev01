@@ -7,9 +7,9 @@
         <form #formNewTag="ngForm">
             <div class="row mb-4">
                 <div class="col-md-9">
-                    <label class="form-label" for="nome">Nome</label>
-                    <input type="text" id="nome" name="nome" class="form-control"
-                    [(ngModel)]="newTag.nome" #nome="ngModel" readonly>
+                    <label class="form-label" for="tagName">Tag name</label>
+                    <input type="text" id="tagName" name="tagName" class="form-control"
+                    [(ngModel)]="newTag.tagName" #tagName="ngModel" readonly>
                 </div>
                 <div class="col-md-3">
                     <label class="form-label" for="position">Position</label>
@@ -114,9 +114,9 @@
         <form #formTag="ngForm">
             <div class="row mb-4">
                 <div class="col-md-9">
-                    <label class="form-label" for="nome">Nome</label>
-                    <input type="text" id="nome" name="nome" class="form-control"
-                    [(ngModel)]="tagToUpdate.nome" #nome="ngModel" readonly>
+                    <label class="form-label" for="tagName">Tag name</label>
+                    <input type="text" id="tagName" name="tagName" class="form-control"
+                    [(ngModel)]="tagToUpdate.tagName" #tagName="ngModel" readonly>
                 </div>
                 <div class="col-md-3">
                     <label class="form-label" for="position">Position</label>

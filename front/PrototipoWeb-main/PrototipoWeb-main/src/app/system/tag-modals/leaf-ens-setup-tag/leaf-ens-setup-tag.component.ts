@@ -59,7 +59,7 @@ export class LeafEnsSetupTagComponent implements OnInit {
     this.newTag.selectedItem = "PRODUCT_DATA_ENS_TYPE"
     this.newTag.start = true
     this.newTag.ensTagConfiguration = new EnsTagConfiguration()
-    this.newTag.nome = this.selectedTag
+    this.newTag.tagName = this.selectedTag
   }
 
   updateProjectLocally() {

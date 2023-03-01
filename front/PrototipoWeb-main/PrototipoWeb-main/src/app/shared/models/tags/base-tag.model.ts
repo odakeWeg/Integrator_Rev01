@@ -3,7 +3,7 @@ export class BaseTag {
     constructor(
         public id?: number,
         //public line?: number,   //@Todo: change
-        public nome?: string,
+        public tagName?: string,
         public simpleDescription?: string,
         public description?: string,
         public position?: number,

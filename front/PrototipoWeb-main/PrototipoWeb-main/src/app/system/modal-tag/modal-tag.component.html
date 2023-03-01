@@ -13,9 +13,9 @@
                 [(ngModel)]="newTag.id" #id="ngModel">
             </div>
             <div class="form-outline mb-4">
-                <label class="form-label" for="nome">nome:</label>
-                <input type="text" id="nome" name="nome" class="form-control"
-                  [(ngModel)]="newTag.nome" #nome="ngModel">
+                <label class="form-label" for="tagName">Tag name:</label>
+                <input type="text" id="tagName" name="tagName" class="form-control"
+                  [(ngModel)]="newTag.tagName" #tagName="ngModel">
             </div>
             <div class="form-outline mb-4">
                 <label class="form-label" for="description">description:</label>
@@ -46,9 +46,9 @@
               </div>
   
             <div class="form-outline mb-4">
-                <label class="form-label" for="nome">nome:</label>
-                <input type="text" id="nome" name="nome" class="form-control"
-                [(ngModel)]="tagToUpdate.nome" #nome="ngModel">
+                <label class="form-label" for="tagName">Tag name:</label>
+                <input type="text" id="tagName" name="tagName" class="form-control"
+                [(ngModel)]="tagToUpdate.tagName" #tagName="ngModel">
             </div>
         </form>
     </div>

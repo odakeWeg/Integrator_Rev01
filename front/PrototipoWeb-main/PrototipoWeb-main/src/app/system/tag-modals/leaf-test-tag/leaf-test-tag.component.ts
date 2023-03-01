@@ -59,7 +59,7 @@ export class LeafTestTagComponent implements OnInit {
   initiateNewTag(): void {
     this.newTag = new BaseTag()
     this.newTag.ensTagConfiguration = new EnsTagConfiguration()
-    this.newTag.nome = this.selectedTag
+    this.newTag.tagName = this.selectedTag
   }
 
   updateProjectLocally() {

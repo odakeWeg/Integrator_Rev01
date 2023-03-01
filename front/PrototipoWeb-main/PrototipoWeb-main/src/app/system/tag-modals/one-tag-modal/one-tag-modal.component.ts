@@ -38,7 +38,7 @@ export class OneTagModalComponent implements OnInit {
 
   initiateNewTag(): void {
     this.newTag = new BaseTag()
-    this.newTag.nome = this.selectedTag
+    this.newTag.tagName = this.selectedTag
   }
 
   updateProjectLocally() {

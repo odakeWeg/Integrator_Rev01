@@ -67,7 +67,7 @@ export class TagComponent implements OnInit {
       console.log(this.nomeFilter)
       console.log("idMax:"+this.idMax + " . idMin:" + this.idMin + " . userId:" + tag.id)
       //console.log("in")
-      if (tag.nome?.includes(this.nomeFilter) || this.nomeFilter == null) {
+      if (tag.tagName?.includes(this.nomeFilter) || this.nomeFilter == null) {
         if(tag.position==this.positionFilter || this.positionFilter == null) {
           if ((tag.id! <= this.idMax && tag.id! >= this.idMin) || this.idMax==null || this.idMin==null) {
             console.log("forthIf")
@@ -170,7 +170,7 @@ export class TagComponent implements OnInit {
   */
 
   openModal(tag: BaseTag) {
-    const modalRef = this.modalService.open(this.getTagName(tag.nome!))
+    const modalRef = this.modalService.open(this.getTagName(tag.tagName!))
     //let modalRef
     //eval("modalRef = this.modalService.open(" + tag.nome + "Component)")
     //eval("modalRef = this.modalService.open(ModalTagComponent)")
