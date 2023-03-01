@@ -29,10 +29,13 @@
             </div>
             
             <hr>
+            
             <div class="form-outline mb-4">
-                <label class="form-label" for="oneVariable">Necessary stuff</label>
-                <input type="text">
+                <label class="form-label" for="messageToDisplay">Message to display</label>
+                <input type="text" id="messageToDisplay" name="messageToDisplay" class="form-control"
+                  [(ngModel)]="newTag.messageToDisplay" #messageToDisplay="ngModel">
             </div>
+
             <div id="info" class="collapse shown-user" [attr.id]="'hidden-fields'">
                 <hr>
                 <div class="form-outline mb-4">
@@ -132,10 +135,13 @@
                   [(ngModel)]="tagToUpdate.description" #description="ngModel" cols="30" rows="3"></textarea>
             </div>
             <hr>
+            
             <div class="form-outline mb-4">
-                <label class="form-label" for="oneVariable">Necessary stuff</label>
-                <input type="text">
+                <label class="form-label" for="messageToDisplay">Message to display</label>
+                <input type="text" id="messageToDisplay" name="messageToDisplay" class="form-control"
+                  [(ngModel)]="tagToUpdate.messageToDisplay" #messageToDisplay="ngModel">
             </div>
+
             <div id="info" class="collapse shown-user" [attr.id]="'hidden-fields'">
                 <hr>
                 <div class="form-outline mb-4">

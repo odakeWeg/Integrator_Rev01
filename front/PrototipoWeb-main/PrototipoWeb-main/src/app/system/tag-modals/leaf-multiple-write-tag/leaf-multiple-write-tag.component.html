@@ -29,12 +29,48 @@
             </div>
             
             <hr>
+            
             <div class="form-outline mb-4">
-                <label class="form-label" for="oneVariable">Necessary stuff</label>
-                <input type="text">
+                <label class="form-label" for="communicationName">Communication name</label>
+                <input type="text" id="communicationName" name="communicationName" class="form-control"
+                  [(ngModel)]="newTag.communicationName" #communicationName="ngModel">
             </div>
+            <div class="row mb-4">
+                <div class="col-md-9">
+                    <label class="form-label" for="registerName">Register name</label>
+                    <select [(ngModel)]='newTag.registerName' class='form-control' name="registerName" id="registerName" (change)="setNewRegister()">
+                        <option value=""></option>  
+                        <option *ngFor="let mapping of project.mappings" value="{{mapping.nome}}">{{mapping.nome}}</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" for="register">Initial reg.</label>
+                    <input type="number" id="register" name="register" class="form-control"
+                    [(ngModel)]="newTag.register" #register="ngModel">
+                </div>
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="quantityOfRegisters">Quantity of registers</label>
+                <input type="number" id="quantityOfRegisters" name="quantityOfRegisters" class="form-control"
+                  [(ngModel)]="newTag.quantityOfRegisters" #quantityOfRegisters="ngModel">
+            </div>
+
             <div id="info" class="collapse shown-user" [attr.id]="'hidden-fields'">
                 <hr>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label" for="waitBefore">Wait before</label>
+                        <input type="text" id="waitBefore" name="waitBefore" class="form-control"
+                        [(ngModel)]="newTag.waitBefore" #waitBefore="ngModel">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label" for="waitAfter">Wait after</label>
+                        <input type="number" id="waitAfter" name="waitAfter" class="form-control"
+                        [(ngModel)]="newTag.waitAfter" #waitAfter="ngModel">
+                    </div>
+                </div>
+
                 <div class="form-outline mb-4">
                     <label class="form-label" for="timeout">Timeout</label>
                     <input type="number" id="timeout" name="timeout" class="form-control"
@@ -132,12 +168,48 @@
                   [(ngModel)]="tagToUpdate.description" #description="ngModel" cols="30" rows="3"></textarea>
             </div>
             <hr>
+            
             <div class="form-outline mb-4">
-                <label class="form-label" for="oneVariable">Necessary stuff</label>
-                <input type="text">
+                <label class="form-label" for="communicationName">Communication name</label>
+                <input type="text" id="communicationName" name="communicationName" class="form-control"
+                  [(ngModel)]="tagToUpdate.communicationName" #communicationName="ngModel">
             </div>
+            <div class="row mb-4">
+                <div class="col-md-9">
+                    <label class="form-label" for="registerName">Register name</label>
+                    <select [(ngModel)]='tagToUpdate.registerName' class='form-control' name="registerName" id="registerName" (change)="setRegister()">
+                        <option value=""></option>  
+                        <option *ngFor="let mapping of project.mappings" value="{{mapping.nome}}">{{mapping.nome}}</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" for="register">Initial reg.</label>
+                    <input type="number" id="register" name="register" class="form-control"
+                    [(ngModel)]="tagToUpdate.register" #register="ngModel">
+                </div>
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="quantityOfRegisters">Quantity of registers</label>
+                <input type="number" id="quantityOfRegisters" name="quantityOfRegisters" class="form-control"
+                  [(ngModel)]="tagToUpdate.quantityOfRegisters" #quantityOfRegisters="ngModel">
+            </div>
+
             <div id="info" class="collapse shown-user" [attr.id]="'hidden-fields'">
                 <hr>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label" for="waitBefore">Wait before</label>
+                        <input type="text" id="waitBefore" name="waitBefore" class="form-control"
+                        [(ngModel)]="tagToUpdate.waitBefore" #waitBefore="ngModel">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label" for="waitAfter">Wait after</label>
+                        <input type="number" id="waitAfter" name="waitAfter" class="form-control"
+                        [(ngModel)]="tagToUpdate.waitAfter" #waitAfter="ngModel">
+                    </div>
+                </div>
+
                 <div class="form-outline mb-4">
                     <label class="form-label" for="timeout">Timeout</label>
                     <input type="number" id="timeout" name="timeout" class="form-control"

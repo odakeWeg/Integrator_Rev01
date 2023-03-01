@@ -40,6 +40,7 @@ public class LeafUserInputTag extends NodeCompareTag {
     protected boolean userInputFailure;
     protected int inputValue;
     protected String communicationNameRef;
+    protected String registerName;
     protected int registerRef;
     protected int valueRef;
     protected String calculateBy;

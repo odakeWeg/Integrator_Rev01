@@ -7,6 +7,7 @@ export class LeafUserInputTag extends BaseTag {
         public communicationNameRef?: string,
         public calculateBy?: string,
         //public inputValue?: number,
+        public registerName?: string,
         public registerRef?: number,
         //public valueRef?: number,
         public tolerancy?: number,
@@ -15,4 +16,4 @@ export class LeafUserInputTag extends BaseTag {
     ) {
         super()
     }
-} 
+}

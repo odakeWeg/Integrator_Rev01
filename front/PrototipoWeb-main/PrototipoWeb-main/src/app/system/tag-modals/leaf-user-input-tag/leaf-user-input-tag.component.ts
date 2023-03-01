@@ -339,4 +339,32 @@ export class LeafUserInputTagComponent implements OnInit {
       //document.getElementById('variableToReadFrom')?.setAttribute("disabled", "disabled")
     }
   }
+
+  setRegister():void {
+    if(this.tagToUpdate.registerName!="") {
+      for(let mapping of this.project.mappings!) {
+        if(this.tagToUpdate.registerName==mapping.nome) {
+          this.tagToUpdate.registerRef = Number(mapping.mapping)
+        }
+      }
+      document.getElementById('registerRef')?.setAttribute("disabled", "disabled")
+    } else {
+      this.tagToUpdate.registerRef = 0
+      document.getElementById('registerRef')?.removeAttribute("disabled");
+    }
+  }
+
+  setNewRegister():void {
+    if(this.newTag.registerName!="") {
+      for(let mapping of this.project.mappings!) {
+        if(this.newTag.registerName==mapping.nome) {
+          this.newTag.registerRef = Number(mapping.mapping)
+        }
+      }
+      document.getElementById('registerRef')?.setAttribute("disabled", "disabled")
+    } else {
+      this.newTag.registerRef = 0
+      document.getElementById('registerRef')?.removeAttribute("disabled");
+    }
+  }
 }

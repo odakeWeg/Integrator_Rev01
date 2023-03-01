@@ -29,12 +29,74 @@
             </div>
             
             <hr>
+            
             <div class="form-outline mb-4">
-                <label class="form-label" for="oneVariable">Necessary stuff</label>
-                <input type="text">
+                <label class="form-label" for="communicationNameRef">Reference communication name</label>
+                <input type="text" id="communicationNameRef" name="communicationNameRef" class="form-control"
+                  [(ngModel)]="newTag.communicationNameRef" #communicationNameRef="ngModel">
             </div>
+            <div class="row mb-4">
+                <div class="col-md-9">
+                    <label class="form-label" for="registerNameRef">Reference register name</label>
+                    <select [(ngModel)]='newTag.registerNameRef' class='form-control' name="registerNameRef" id="registerNameRef" (change)="setNewRegisterRef()">
+                        <option value=""></option>  
+                        <option *ngFor="let mapping of project.mappings" value="{{mapping.nome}}">{{mapping.nome}}</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" for="registerRef">Ref. register</label>
+                    <input type="number" id="registerRef" name="registerRef" class="form-control"
+                    [(ngModel)]="newTag.registerRef" #registerRef="ngModel">
+                </div>
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="communicationNameOnTest">OnTest communication name</label>
+                <input type="text" id="communicationNameOnTest" name="communicationNameOnTest" class="form-control"
+                  [(ngModel)]="newTag.communicationNameOnTest" #communicationNameOnTest="ngModel">
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-9">
+                    <label class="form-label" for="registerNameOnTest">OnTest register name</label>
+                    <select [(ngModel)]='newTag.registerNameOnTest' class='form-control' name="registerNameOnTest" id="registerNameOnTest" (change)="setNewRegisterOnTest()">
+                        <option value=""></option>  
+                        <option *ngFor="let mapping of project.mappings" value="{{mapping.nome}}">{{mapping.nome}}</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" for="registerOnTest">OnTest reg.</label>
+                    <input type="number" id="registerOnTest" name="registerOnTest" class="form-control"
+                    [(ngModel)]="newTag.registerOnTest" #registerOnTest="ngModel">
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <label class="form-label" for="tolerancy">Tolerancy</label>
+                    <input type="text" id="tolerancy" name="tolerancy" class="form-control"
+                    [(ngModel)]="newTag.tolerancy" #tolerancy="ngModel">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="calculateBy">Calculate by</label>
+                    <input type="text" id="calculateBy" name="calculateBy" class="form-control"
+                    [(ngModel)]="newTag.calculateBy" #calculateBy="ngModel">
+                </div>
+            </div>
+
             <div id="info" class="collapse shown-user" [attr.id]="'hidden-fields'">
                 <hr>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label" for="waitBefore">Wait before</label>
+                        <input type="text" id="waitBefore" name="waitBefore" class="form-control"
+                        [(ngModel)]="newTag.waitBefore" #waitBefore="ngModel">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label" for="waitAfter">Wait after</label>
+                        <input type="number" id="waitAfter" name="waitAfter" class="form-control"
+                        [(ngModel)]="newTag.waitAfter" #waitAfter="ngModel">
+                    </div>
+                </div>
+
                 <div class="form-outline mb-4">
                     <label class="form-label" for="timeout">Timeout</label>
                     <input type="number" id="timeout" name="timeout" class="form-control"
@@ -132,12 +194,74 @@
                   [(ngModel)]="tagToUpdate.description" #description="ngModel" cols="30" rows="3"></textarea>
             </div>
             <hr>
+            
             <div class="form-outline mb-4">
-                <label class="form-label" for="oneVariable">Necessary stuff</label>
-                <input type="text">
+                <label class="form-label" for="communicationNameRef">Reference communication name</label>
+                <input type="text" id="communicationNameRef" name="communicationNameRef" class="form-control"
+                  [(ngModel)]="tagToUpdate.communicationNameRef" #communicationNameRef="ngModel">
             </div>
+            <div class="row mb-4">
+                <div class="col-md-9">
+                    <label class="form-label" for="registerNameRef">Reference register name</label>
+                    <select [(ngModel)]='tagToUpdate.registerNameRef' class='form-control' name="registerNameRef" id="registerNameRef" (change)="setRegisterRef()">
+                        <option value=""></option>  
+                        <option *ngFor="let mapping of project.mappings" value="{{mapping.nome}}">{{mapping.nome}}</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" for="registerRef">Ref. register</label>
+                    <input type="number" id="registerRef" name="registerRef" class="form-control"
+                    [(ngModel)]="tagToUpdate.registerRef" #registerRef="ngModel">
+                </div>
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="communicationNameOnTest">OnTest communication name</label>
+                <input type="text" id="communicationNameOnTest" name="communicationNameOnTest" class="form-control"
+                  [(ngModel)]="tagToUpdate.communicationNameOnTest" #communicationNameOnTest="ngModel">
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-9">
+                    <label class="form-label" for="registerNameOnTest">OnTest register name</label>
+                    <select [(ngModel)]='tagToUpdate.registerNameOnTest' class='form-control' name="registerNameOnTest" id="registerNameOnTest" (change)="setRegisterOnTest()">
+                        <option value=""></option>  
+                        <option *ngFor="let mapping of project.mappings" value="{{mapping.nome}}">{{mapping.nome}}</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" for="registerOnTest">OnTest reg.</label>
+                    <input type="number" id="registerOnTest" name="registerOnTest" class="form-control"
+                    [(ngModel)]="tagToUpdate.registerOnTest" #registerOnTest="ngModel">
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <label class="form-label" for="tolerancy">Tolerancy</label>
+                    <input type="text" id="tolerancy" name="tolerancy" class="form-control"
+                    [(ngModel)]="tagToUpdate.tolerancy" #tolerancy="ngModel">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="calculateBy">Calculate by</label>
+                    <input type="text" id="calculateBy" name="calculateBy" class="form-control"
+                    [(ngModel)]="tagToUpdate.calculateBy" #calculateBy="ngModel">
+                </div>
+            </div>
+
             <div id="info" class="collapse shown-user" [attr.id]="'hidden-fields'">
                 <hr>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label" for="waitBefore">Wait before</label>
+                        <input type="text" id="waitBefore" name="waitBefore" class="form-control"
+                        [(ngModel)]="tagToUpdate.waitBefore" #waitBefore="ngModel">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label" for="waitAfter">Wait after</label>
+                        <input type="number" id="waitAfter" name="waitAfter" class="form-control"
+                        [(ngModel)]="tagToUpdate.waitAfter" #waitAfter="ngModel">
+                    </div>
+                </div>
+
                 <div class="form-outline mb-4">
                     <label class="form-label" for="timeout">Timeout</label>
                     <input type="number" id="timeout" name="timeout" class="form-control"

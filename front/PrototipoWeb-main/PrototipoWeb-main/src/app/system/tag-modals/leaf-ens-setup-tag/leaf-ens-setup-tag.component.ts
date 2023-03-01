@@ -56,6 +56,8 @@ export class LeafEnsSetupTagComponent implements OnInit {
 
   initiateNewTag(): void {
     this.newTag = new BaseTag()
+    this.newTag.selectedItem = "PRODUCT_DATA_ENS_TYPE"
+    this.newTag.start = true
     this.newTag.ensTagConfiguration = new EnsTagConfiguration()
     this.newTag.nome = this.selectedTag
   }
@@ -338,5 +340,17 @@ export class LeafEnsSetupTagComponent implements OnInit {
       //document.getElementById('ensVariableName')?.setAttribute("disabled", "disabled")
       //document.getElementById('variableToReadFrom')?.setAttribute("disabled", "disabled")
     }
+  }
+
+  setStart(): void {
+    if((<HTMLInputElement>document.getElementById("start")!).value=="true") {
+      this.newTag.start = true
+    } else {
+      this.newTag.start = false
+    }
+  }
+
+  setSelectedItem(): void {
+    this.newTag.selectedItem = (<HTMLInputElement>document.getElementById("selectedItem")!).value
   }
 }

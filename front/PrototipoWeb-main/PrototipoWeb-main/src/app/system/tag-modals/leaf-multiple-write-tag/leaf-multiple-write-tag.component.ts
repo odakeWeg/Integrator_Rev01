@@ -340,4 +340,32 @@ export class LeafMultipleWriteTagComponent implements OnInit {
       //document.getElementById('variableToReadFrom')?.setAttribute("disabled", "disabled")
     }
   }
+
+  setRegister():void {
+    if(this.tagToUpdate.registerName!="") {
+      for(let mapping of this.project.mappings!) {
+        if(this.tagToUpdate.registerName==mapping.nome) {
+          this.tagToUpdate.register = Number(mapping.mapping)
+        }
+      }
+      document.getElementById('register')?.setAttribute("disabled", "disabled")
+    } else {
+      this.tagToUpdate.register = 0
+      document.getElementById('register')?.removeAttribute("disabled");
+    }
+  }
+
+  setNewRegister():void {
+    if(this.newTag.registerName!="") {
+      for(let mapping of this.project.mappings!) {
+        if(this.newTag.registerName==mapping.nome) {
+          this.newTag.register = Number(mapping.mapping)
+        }
+      }
+      document.getElementById('register')?.setAttribute("disabled", "disabled")
+    } else {
+      this.newTag.register = 0
+      document.getElementById('register')?.removeAttribute("disabled");
+    }
+  }
 }

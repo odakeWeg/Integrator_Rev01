@@ -29,10 +29,192 @@
             </div>
             
             <hr>
-            <div class="form-outline mb-4">
-                <label class="form-label" for="oneVariable">Necessary stuff</label>
-                <input type="text">
+            
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <label class="form-label" for="start">Status</label>
+                    <select class='form-control' name="start" id="start" (change)="setStart()">
+                        <option value="true">Start</option>
+                        <option value="false">End</option>
+                    </select>
+                </div>
+                <div class="col-md-9">
+                    <label class="form-label" for="selectedItem">Select ens type</label>
+                    <select class='form-control' name="selectedItem" id="selectedItem" (change)="setSelectedItem()">
+                        <option value="PRODUCT_DATA_ENS_TYPE">Product</option>
+                        <option value="DIELECTRIC_TEST_CHARACTERISTIC_LIST_TYPE">Dielectric test</option>
+                        <option value="FUNCTIONAL_TEST_CHARACTERISTIC_LIST_TYPE">Functional test</option>
+                        <option value="LOAD_TEST_CHARACTERISTIC_LIST_TYPE">Load test</option>
+                        <option value="RENEABLE_TEST_CHARACTERISTIC_LIST_TYPE">Renewable test</option>
+                    </select>
+                </div>
             </div>
+            <div *ngIf="newTag.selectedItem=='PRODUCT_DATA_ENS_TYPE' && newTag.start">
+                
+            </div>
+            <div *ngIf="newTag.selectedItem=='DIELECTRIC_TEST_CHARACTERISTIC_LIST_TYPE' && newTag.start">
+                <div class="form-group row" style="text-align: left;">
+                    <label for="durationTimeUnitDielectric" class="col-sm-8 col-form-label">Duration time unit dielectric</label>
+                    <div class="col-sm-4">
+                      <input type="number" id="durationTimeUnitDielectric" name="durationTimeUnitDielectric" class="form-control"
+                      [(ngModel)]="newTag.durationTimeUnitDielectric" #durationTimeUnitDielectric="ngModel">
+                    </div>
+                </div>
+                <div class="form-group row" style="text-align: left;">
+                    <label for="voltageSetpointDielectric" class="col-sm-8 col-form-label">Voltage setpoint dielectric</label>
+                    <div class="col-sm-4">
+                      <input type="number" id="voltageSetpointDielectric" name="voltageSetpointDielectric" class="form-control"
+                      [(ngModel)]="newTag.voltageSetpointDielectric" #voltageSetpointDielectric="ngModel">
+                    </div>
+                </div>
+                <div class="form-group row" style="text-align: left;">
+                    <label for="currentSetpointIn_mADielectric" class="col-sm-8 col-form-label">Current setpoint In_mA dielectric</label>
+                    <div class="col-sm-4">
+                      <input type="number" id="currentSetpointIn_mADielectric" name="currentSetpointIn_mADielectric" class="form-control"
+                      [(ngModel)]="newTag.currentSetpointIn_mADielectric" #currentSetpointIn_mADielectric="ngModel">
+                    </div>
+                </div>
+                <div class="form-group row" style="text-align: left;">
+                    <label for="currentAcceptanceIn_mADielectric" class="col-sm-8 col-form-label">Current acceptance In_mA dielectric</label>
+                    <div class="col-sm-4">
+                      <input type="number" id="currentAcceptanceIn_mADielectric" name="currentAcceptanceIn_mADielectric" class="form-control"
+                      [(ngModel)]="newTag.currentAcceptanceIn_mADielectric" #currentAcceptanceIn_mADielectric="ngModel">
+                    </div>
+                </div>
+                <div class="form-group row" style="text-align: left;">
+                    <label for="testDurationDielectric" class="col-sm-8 col-form-label">Test duration dielectric</label>
+                    <div class="col-sm-4">
+                      <input type="number" id="testDurationDielectric" name="testDurationDielectric" class="form-control"
+                      [(ngModel)]="newTag.testDurationDielectric" #testDurationDielectric="ngModel">
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="newTag.selectedItem=='FUNCTIONAL_TEST_CHARACTERISTIC_LIST_TYPE' && newTag.start">
+                <div class="form-group row" style="text-align: left;">
+                    <label for="timeUnitFunctional" class="col-sm-8 col-form-label">Time unit functional</label>
+                    <div class="col-sm-4">
+                      <input type="number" id="timeUnitFunctional" name="timeUnitFunctional" class="form-control"
+                      [(ngModel)]="newTag.timeUnitFunctional" #timeUnitFunctional="ngModel">
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="newTag.selectedItem=='LOAD_TEST_CHARACTERISTIC_LIST_TYPE' && newTag.start">
+                <div class="form-group row" style="text-align: left;">
+                    <label for="timeUnitLoad" class="col-sm-8 col-form-label">Time unit load</label>
+                    <div class="col-sm-4">
+                      <input type="number" id="timeUnitLoad" name="timeUnitLoad" class="form-control"
+                      [(ngModel)]="newTag.timeUnitLoad" #timeUnitLoad="ngModel">
+                    </div>
+                </div>
+                <div class="form-group row" style="text-align: left;">
+                    <label for="voltageSetpointLoad" class="col-sm-8 col-form-label">Voltage setpoint load</label>
+                    <div class="col-sm-4">
+                      <input type="number" id="voltageSetpointLoad" name="voltageSetpointLoad" class="form-control"
+                      [(ngModel)]="newTag.voltageSetpointLoad" #voltageSetpointLoad="ngModel">
+                    </div>
+                </div>
+                <div class="form-group row" style="text-align: left;">
+                    <label for="temperatureSetpointLoad" class="col-sm-8 col-form-label">Temperature setpoint load</label>
+                    <div class="col-sm-4">
+                      <input type="number" id="temperatureSetpointLoad" name="temperatureSetpointLoad" class="form-control"
+                      [(ngModel)]="newTag.temperatureSetpointLoad" #temperatureSetpointLoad="ngModel">
+                    </div>
+                </div>
+                <div class="form-group row" style="text-align: left;">
+                    <label for="deratingPercentageLoad" class="col-sm-8 col-form-label">Derating percentage load</label>
+                    <div class="col-sm-4">
+                      <input type="number" id="deratingPercentageLoad" name="deratingPercentageLoad" class="form-control"
+                      [(ngModel)]="newTag.deratingPercentageLoad" #deratingPercentageLoad="ngModel">
+                    </div>
+                </div>
+                <div class="form-group row" style="text-align: left;">
+                    <label for="speedSetpointInHzLoad" class="col-sm-8 col-form-label">Speed setpoint InHz load</label>
+                    <div class="col-sm-4">
+                      <input type="number" id="speedSetpointInHzLoad" name="speedSetpointInHzLoad" class="form-control"
+                      [(ngModel)]="newTag.speedSetpointInHzLoad" #speedSetpointInHzLoad="ngModel">
+                    </div>
+                </div>
+                <div class="form-group row" style="text-align: left;">
+                    <label for="speedSetpointInRpmLoad" class="col-sm-8 col-form-label">Speed setpoint InRpm load</label>
+                    <div class="col-sm-4">
+                      <input type="number" id="speedSetpointInRpmLoad" name="speedSetpointInRpmLoad" class="form-control"
+                      [(ngModel)]="newTag.speedSetpointInRpmLoad" #speedSetpointInRpmLoad="ngModel">
+                    </div>
+                </div>
+                <div class="form-group row" style="text-align: left;">
+                    <label for="currentSetpointLoad" class="col-sm-8 col-form-label">Current setpoint load</label>
+                    <div class="col-sm-4">
+                      <input type="number" id="currentSetpointLoad" name="currentSetpointLoad" class="form-control"
+                      [(ngModel)]="newTag.currentSetpointLoad" #currentSetpointLoad="ngModel">
+                    </div>
+                </div>
+                <div class="form-group row" style="text-align: left;">
+                    <label for="startDeratingTemperatureSetpointLoad" class="col-sm-8 col-form-label">Start derating temperature setpoint load</label>
+                    <div class="col-sm-4">
+                      <input type="number" id="startDeratingTemperatureSetpointLoad" name="startDeratingTemperatureSetpointLoad" class="form-control"
+                      [(ngModel)]="newTag.startDeratingTemperatureSetpointLoad" #startDeratingTemperatureSetpointLoad="ngModel">
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="newTag.selectedItem=='RENEABLE_TEST_CHARACTERISTIC_LIST_TYPE' && newTag.start">
+                <div class="form-group row" style="text-align: left;">
+                    <label for="durationTimeUnitReneable" class="col-sm-8 col-form-label">Duration time unit renewable</label>
+                    <div class="col-sm-4">
+                      <input type="number" id="durationTimeUnitReneable" name="durationTimeUnitReneable" class="form-control"
+                      [(ngModel)]="newTag.durationTimeUnitReneable" #durationTimeUnitReneable="ngModel">
+                    </div>
+                </div>
+                <div class="form-group row" style="text-align: left;">
+                    <label for="unitReneable" class="col-sm-8 col-form-label">Unit reneable</label>
+                    <div class="col-sm-4">
+                      <input type="number" id="unitReneable" name="unitReneable" class="form-control"
+                      [(ngModel)]="newTag.unitReneable" #unitReneable="ngModel">
+                    </div>
+                </div>
+                <div class="form-group row" style="text-align: left;">
+                    <label for="voltageMainReneable" class="col-sm-8 col-form-label">Voltage main reneable</label>
+                    <div class="col-sm-4">
+                      <input type="number" id="voltageMainReneable" name="voltageMainReneable" class="form-control"
+                      [(ngModel)]="newTag.voltageMainReneable" #voltageMainReneable="ngModel">
+                    </div>
+                </div>
+                <div class="form-group row" style="text-align: left;">
+                    <label for="networkFrequencyReneable" class="col-sm-8 col-form-label">Network frequency reneable</label>
+                    <div class="col-sm-4">
+                      <input type="number" id="networkFrequencyReneable" name="networkFrequencyReneable" class="form-control"
+                      [(ngModel)]="newTag.networkFrequencyReneable" #networkFrequencyReneable="ngModel">
+                    </div>
+                </div>
+                <div class="form-group row" style="text-align: left;">
+                    <label for="rectifierVoltageReneable" class="col-sm-8 col-form-label">Rectifier voltage reneable</label>
+                    <div class="col-sm-4">
+                      <input type="number" id="rectifierVoltageReneable" name="rectifierVoltageReneable" class="form-control"
+                      [(ngModel)]="newTag.rectifierVoltageReneable" #rectifierVoltageReneable="ngModel">
+                    </div>
+                </div>
+                <div class="form-group row" style="text-align: left;">
+                    <label for="rectifierFrequencyReneable" class="col-sm-8 col-form-label">Rectifier frequency reneable</label>
+                    <div class="col-sm-4">
+                      <input type="number" id="rectifierFrequencyReneable" name="rectifierFrequencyReneable" class="form-control"
+                      [(ngModel)]="newTag.rectifierFrequencyReneable" #rectifierFrequencyReneable="ngModel">
+                    </div>
+                </div>
+                <div class="form-group row" style="text-align: left;">
+                    <label for="coolantTemperatureReneable" class="col-sm-8 col-form-label">Coolant temperature reneable</label>
+                    <div class="col-sm-4">
+                      <input type="number" id="coolantTemperatureReneable" name="coolantTemperatureReneable" class="form-control"
+                      [(ngModel)]="newTag.coolantTemperatureReneable" #coolantTemperatureReneable="ngModel">
+                    </div>
+                </div>
+                <div class="form-group row" style="text-align: left;">
+                    <label for="coolantSystemPressureReneable" class="col-sm-8 col-form-label">Coolant system pressure reneable</label>
+                    <div class="col-sm-4">
+                      <input type="number" id="coolantSystemPressureReneable" name="coolantSystemPressureReneable" class="form-control"
+                      [(ngModel)]="newTag.coolantSystemPressureReneable" #coolantSystemPressureReneable="ngModel">
+                    </div>
+                </div>
+            </div>
+
             <div id="info" class="collapse shown-user" [attr.id]="'hidden-fields'">
                 <hr>
                 <div class="form-outline mb-4">

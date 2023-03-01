@@ -91,6 +91,7 @@ export class LeafMultipleRegisterCompareTagComponent implements OnInit {
     let ensBuffer = this.tagToUpdate.ensTagConfiguration
     let line = this.tag.line
     this.tag = this.formTag.value
+    this.tag.tolerancy = this.formTag.value.tolerancy!.split(",").map((el: string) => {return Number(el)})
     this.tag.ensTagConfiguration = ensBuffer
     this.tag.enabled = true
     this.tag.line = line
@@ -107,6 +108,7 @@ export class LeafMultipleRegisterCompareTagComponent implements OnInit {
   add():void {
     let ensBuffer = this.newTag.ensTagConfiguration
     this.newTag = this.formNewTag.value
+    this.newTag.tolerancy = this.formNewTag.value.tolerancy!.split(",").map((el: string) => {return Number(el)})
     this.newTag.ensTagConfiguration = ensBuffer
     this.newTag.enabled = true
     this.newTag.line = this.tags.length
@@ -337,6 +339,62 @@ export class LeafMultipleRegisterCompareTagComponent implements OnInit {
       //document.getElementById('ensType')?.setAttribute("disabled", "disabled")
       //document.getElementById('ensVariableName')?.setAttribute("disabled", "disabled")
       //document.getElementById('variableToReadFrom')?.setAttribute("disabled", "disabled")
+    }
+  }
+
+  setNewRegisterRef(): void {
+    if(this.newTag.registerNameRef!="") {
+      for(let mapping of this.project.mappings!) {
+        if(this.newTag.registerNameRef==mapping.nome) {
+          this.newTag.registerRef = Number(mapping.mapping)
+        }
+      }
+      document.getElementById('registerRef')?.setAttribute("disabled", "disabled")
+    } else {
+      this.newTag.registerRef = 0
+      document.getElementById('registerRef')?.removeAttribute("disabled");
+    }
+  }
+
+  setRegisterRef(): void {
+    if(this.tagToUpdate.registerNameRef!="") {
+      for(let mapping of this.project.mappings!) {
+        if(this.tagToUpdate.registerNameRef==mapping.nome) {
+          this.tagToUpdate.registerRef = Number(mapping.mapping)
+        }
+      }
+      document.getElementById('registerRef')?.setAttribute("disabled", "disabled")
+    } else {
+      this.tagToUpdate.registerRef = 0
+      document.getElementById('registerRef')?.removeAttribute("disabled");
+    }
+  }
+
+  setNewRegisterOnTest(): void {
+    if(this.newTag.registerNameOnTest!="") {
+      for(let mapping of this.project.mappings!) {
+        if(this.newTag.registerNameOnTest==mapping.nome) {
+          this.newTag.registerOnTest = Number(mapping.mapping)
+        }
+      }
+      document.getElementById('registerOnTest')?.setAttribute("disabled", "disabled")
+    } else {
+      this.newTag.registerOnTest = 0
+      document.getElementById('registerOnTest')?.removeAttribute("disabled");
+    }
+  }
+
+  setRegisterOnTest(): void {
+    if(this.tagToUpdate.registerNameOnTest!="") {
+      for(let mapping of this.project.mappings!) {
+        if(this.tagToUpdate.registerNameOnTest==mapping.nome) {
+          this.tagToUpdate.registerOnTest = Number(mapping.mapping)
+        }
+      }
+      document.getElementById('registerOnTest')?.setAttribute("disabled", "disabled")
+    } else {
+      this.tagToUpdate.registerOnTest = 0
+      document.getElementById('registerOnTest')?.removeAttribute("disabled");
     }
   }
 }
