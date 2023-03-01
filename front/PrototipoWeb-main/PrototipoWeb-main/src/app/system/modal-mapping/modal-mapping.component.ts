@@ -40,7 +40,7 @@ export class ModalMappingComponent implements OnInit {
 
   updateMapLocally(mapping: Mapping) {
     for(let i = 0; i < this.mappings.length; i++) {
-      if(this.mappings[i].line==mapping.line) {
+      if(this.mappings[i].id==mapping.id) {
         this.mappings[i] = mapping
       }
     }
@@ -56,15 +56,15 @@ export class ModalMappingComponent implements OnInit {
   }
 
   update():void {
-    let line = this.mapping.line
+    let id = this.mapping.id
     this.mapping = this.formMapping.value
     this.mapping.enabled = true
-    this.mapping.line = line
+    this.mapping.id = id
     this.updateMapLocally(this.mapping)
     this.updateProjectLocally()
 
     this.projectService.updateProject(this.project).subscribe({
-      next: (data) => this.mappings[this.mapping.line!] = this.mapping,
+      next: (data) => this.mappings[this.mapping.id!] = this.mapping,
       error: (err) => console.log(err)
     });
     this.activeModal.close()
@@ -73,7 +73,7 @@ export class ModalMappingComponent implements OnInit {
   add():void {
     this.newMapping = this.formNewMapping.value
     this.newMapping.enabled = true
-    this.newMapping.line = this.mappings.length
+    this.newMapping.id = this.mappings.length
     this.mappings.push(this.newMapping)
     //this.updateProjectLocally()
     this.project.mappings = this.mappings
@@ -93,7 +93,7 @@ export class ModalMappingComponent implements OnInit {
     this.updateMapLocally(this.mapping)
     this.updateProjectLocally()
     this.projectService.updateProject(this.project).subscribe({
-      next: (data) => this.mappings[this.mapping.line!] = this.mapping,
+      next: (data) => this.mappings[this.mapping.id!] = this.mapping,
       error: (err) => console.log(err)
     });
     this.activeModal.close()

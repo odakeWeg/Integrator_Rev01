@@ -96,8 +96,16 @@
     "sidebar content content"
     "sidebar content content"
     "sidebar content content"
-    "sidebar content content";
+    "buttonbar content content";
     background-color: #FFFAFF;
+}
+
+.buttonbar {
+    /*
+    margin-bottom: 12px;
+    */
+    margin-bottom: 0;
+    grid-area: buttonbar;
 }
 
 .folder-name {
@@ -142,6 +150,23 @@
 .btn-primary {
     background-color: #16697A !important;
     border-color: #16697A;
+}
+
+.btn-success {
+    background-color: #9000B3 !important;
+    border-color: #9000B3;
+}
+
+.centralize {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: auto;
+}
+
+.standart {
+    margin: 4px 4px;
+    width: 90%;
 }
 
 @media only screen and (max-height: 550px) {

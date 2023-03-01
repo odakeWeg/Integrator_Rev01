@@ -20,7 +20,7 @@ export class MappingService {
 
   public updateMapping(mapping: Mapping): Observable<Mapping> {
     console.log(mapping)
-    return this.http.put(`${BASE_URL} + ${mapping.line}`, mapping)
+    return this.http.put(`${BASE_URL} + ${mapping.id}`, mapping)
   }
 
   public addMapping(mapping: Mapping): Observable<Mapping> {
@@ -28,6 +28,6 @@ export class MappingService {
   }
 
   public remove(mapping: Mapping): Observable<Mapping> {
-    return this.http.delete(`${BASE_URL} + ${mapping.line}`)
+    return this.http.delete(`${BASE_URL} + ${mapping.id}`)
   }
 }

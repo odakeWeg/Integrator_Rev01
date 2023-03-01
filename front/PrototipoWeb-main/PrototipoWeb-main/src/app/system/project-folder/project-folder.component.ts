@@ -79,4 +79,13 @@ export class ProjectFolderComponent implements OnInit {
   openConfigurations():void {
 
   }
+
+  download(): void {
+    this.projectService.download(String(this.projectId)).subscribe({
+      next: (data) => {
+        console.log(data)
+      },
+      error: (err) => console.log(err)
+    })
+  }
 }

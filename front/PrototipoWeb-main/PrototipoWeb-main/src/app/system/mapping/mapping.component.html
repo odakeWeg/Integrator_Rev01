@@ -44,7 +44,7 @@
             </div>
             <hr>
     
-            <h3><i>Quantidade de registros encontrados: 18</i></h3>
+            <h3><i>Quantidade de registros encontrados: {{mappings.length}}</i></h3>
             <form #formFilter="ngForm">
                 <div class="row">
                     <div class="col-md-6">
@@ -86,7 +86,7 @@
             <div *ngFor="let mapping of mappings" >
                 <div class="document" *ngIf="mapping.enabled==true;else disabled">
                     <div class="hidden-mapping" >
-                        <div class="mapping-id">Id: {{mapping.line}}</div>
+                        <div class="mapping-id">Id: {{mapping.id}}</div>
                         <div class="mapping-nome">Nome: {{mapping.nome}}</div>
                         <div class="mapping-icon">
                             <button type="button" class="btn btn-primary btn-block show-btn" (click)="openModal(mapping)"><i class="bi bi-chevron-down"></i></button>
@@ -96,7 +96,7 @@
                 <ng-template #disabled>
                     <div class="document" [attr.disabled]="true">
                         <div class="hidden-mapping" >
-                            <div class="mapping-id">Id: {{mapping.line}}</div>
+                            <div class="mapping-id">Id: {{mapping.id}}</div>
                             <div class="mapping-nome">Nome: {{mapping.nome}}</div>
                             <div class="mapping-icon">
                                 <button type="button" class="btn btn-danger btn-block disabled-btn" (click)="remove(mapping)">Remove</button>

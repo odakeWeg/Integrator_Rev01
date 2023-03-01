@@ -10,16 +10,16 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MappingModel {
-    @Id
+    //@Id
     private int id;
-    private int line;
+    //private int line;
     private String nome;
     private String mapping;
     private boolean enabled;
 
-    public MappingModel(int id, int line, String nome, String mapping, boolean enabled) {
+    public MappingModel(int id, /*int line,*/ String nome, String mapping, boolean enabled) {
         this.id = id;
-        this.line = line;
+        //this.line = line;
         this.nome = nome;
         this.mapping = mapping;
         this.enabled = enabled;

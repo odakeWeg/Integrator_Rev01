@@ -54,7 +54,7 @@ export class MappingComponent implements OnInit {
 
   updateMapLocally(mapping: Mapping) {
     for(let i = 0; i < this.mappings.length; i++) {
-      if(this.mappings[i].line==mapping.line) {
+      if(this.mappings[i].id==mapping.id) {
         this.mappings[i] = mapping
       }
     }
@@ -82,20 +82,20 @@ export class MappingComponent implements OnInit {
     this.updateProjectLocally()
 
     this.projectService.updateProject(this.project).subscribe({
-      next: (data) => this.mappings[mapping.line!] = mapping,
+      next: (data) => this.mappings[mapping.id!] = mapping,
       error: (err) => console.log(err)
     });
   }
 
   orderMappingsByArrayAsc(): void {
     for(let i = 0; i < this.mappings.length; i++) {
-      this.mappings[i].line = i
+      this.mappings[i].id = i
     }
   }
 
   //someArray.splice(x, 1);
   remove(mapping: Mapping): void {
-    this.mappings.splice(mapping.line!, 1)
+    this.mappings.splice(mapping.id!, 1)
     this.orderMappingsByArrayAsc()
     this.updateProjectLocally()
     

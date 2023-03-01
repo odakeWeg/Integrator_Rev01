@@ -26,7 +26,6 @@ import weg.net.tester.utils.FilePathUtil;
 import weg.net.tester.utils.JsonTagAttributesUtil;
 
 public class JsonObjConverter implements BaseConverter {
-
     @Autowired
     private TestingRoutineRepository testingRoutineRepository;
     
@@ -38,8 +37,7 @@ public class JsonObjConverter implements BaseConverter {
             TagList = convertFromJsonToObj(testFile);
             return TagList;
         } catch (Exception e) {
-            downloadRoutineFromDataBase(fileName);
-            return getRoutineFromFileName(fileName);
+            throw new TestUnmarshalingException("Falha na aquisição da rotina de teste!");
         }
     }
 
@@ -86,17 +84,33 @@ public class JsonObjConverter implements BaseConverter {
         return (JSONArray) jsonObject.get(JsonTagAttributesUtil.LIST);
     }
 
-    private void downloadRoutineFromDataBase(String fileName) throws TestUnmarshalingException {
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(FilePathUtil.TEST_ROUTINE_PATH + fileName + ".json"));
-            writer.write(getRoutineJson(fileName));
-            writer.close();
-        } catch (Exception e) {
-            throw new TestUnmarshalingException("Falha na aquisição da rotina de teste!");
-        }
-    }
-
     private String getRoutineJson(String fileName) {
         return testingRoutineRepository.findByFileName(fileName).getRoutineJson().toString();
     }
 }
+
+
+/*
+@Override
+public TagList getRoutineFromFileName(String fileName) throws TestUnmarshalingException {
+    TagList TagList;
+    try {
+        File testFile = new File(fileName);
+        TagList = convertFromJsonToObj(testFile);
+        return TagList;
+    } catch (Exception e) {
+        downloadRoutineFromDataBase(fileName);
+        return getRoutineFromFileName(fileName);
+    }
+} 
+
+private void downloadRoutineFromDataBase(String fileName) throws TestUnmarshalingException {
+    try {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(FilePathUtil.TEST_ROUTINE_PATH + fileName + ".json"));
+        writer.write(getRoutineJson(fileName));
+        writer.close();
+    } catch (Exception e) {
+        throw new TestUnmarshalingException("Falha na aquisição da rotina de teste!");
+    }
+}
+*/

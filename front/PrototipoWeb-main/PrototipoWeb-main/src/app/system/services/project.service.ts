@@ -34,4 +34,8 @@ export class ProjectService {
   public remove(project: Project): Observable<Project> {
     return this.http.delete(`${BASE_URL} + ${project.line}`)
   }
+
+  public download(line: string): Observable<Boolean> {
+    return this.http.get<Boolean>(BASE_URL + "download/" + line)
+  }
 }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.models.ProjectModel;
 import com.example.demo.repositories.ProjectRepository;
+import com.example.demo.services.ProjectService;
 
 @CrossOrigin(origins = "http://localhost:4200/")
 @RestController
@@ -95,4 +96,10 @@ public class ProjectController {
           return new ResponseEntity<>(HttpStatus.CONFLICT);
       }
   }
+
+    @GetMapping("/download/{line}")
+    public Boolean downloadProjectLocally(@PathVariable(value = "line") int line) {
+        ProjectService projectService = new ProjectService();
+        return projectService.downloadProject(projectRepository.findByLine(line).get(0));
+    }
 }
