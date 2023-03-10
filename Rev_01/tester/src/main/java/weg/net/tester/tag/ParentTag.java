@@ -61,6 +61,7 @@ public abstract class ParentTag extends BaseTag {
                 commandEndingSetup();
             }
         } else {
+            ensTagConfiguration.setEnabled(false);
             testResult = FailureCodeUtil.PASSED;
             log = "Teste desabilitado";
         }
@@ -124,6 +125,10 @@ public abstract class ParentTag extends BaseTag {
     private void commandEndingSetup() {
         long endTime = System.currentTimeMillis();
         individualTestDurationMillis = endTime - startTime;
+        //@Toodo: IMPORTANT
+        if(!testResult.equals(FailureCodeUtil.OK)) {
+            //@send command for PLC to stop
+        }
     }
 
     protected void setFailureCommandLog(String testResult, String log) {    //@Todo: BadPractice. If statement only used because of interrupting problems, another solution should be avaluated

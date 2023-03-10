@@ -213,12 +213,77 @@ export class TagComponent implements OnInit {
     //}
   }
 
+  dragBufferTags: BaseTag[] = []
+  lastDraggedId: number = 0
+  onDragStart(event: DragEvent) {
+    //1) Copiar array
+    //2) Copiar id do selecionado
+    let div = <HTMLDivElement>event.target
+    this.dragBufferTags = JSON.parse(JSON.stringify(this.tags))
+    this.lastDraggedId = Number(this.getStringBetween(div.innerHTML, "Id: ", "</"))
+    //let div = <HTMLDivElement>event.target
+    //console.log(div.innerHTML)
+    //console.log(this.getStringBetween(div.innerHTML, "Id: ", "</"))
+    
+  }
+  
+  onDragEnd(event: DragEvent) {
+    //1) Jogar alerta
+    //2) Trocar array ou não
+    //let div = <HTMLDivElement>event.target
+    //console.log(div.innerHTML)
+    //console.log(this.getStringBetween(div.innerHTML, "Id: ", "</"))
+    let text = "Tem certeza que deseja alterar a posição da tag?";
+    if (confirm(text) == true) {
+      this.project.routines![this.routine.line!].tag = this.tags
+      this.projectService.updateProject(this.project).subscribe({
+        next: (data) => {
+          //this.mappings[mapping.line!] = mapping,
+          this.fillTags()
+        },
+        error: (err) => console.log(err)
+      });
+    } else {
+      this.tags = this.dragBufferTags
+    }
+  }
+
+  onDragLeave(event: DragEvent) {
+    //@Todo: Atualização de posição enquanto faz o hover do draggable
+    let div = <HTMLDivElement>event.target
+    //console.log(div.innerHTML)
+    try {
+      //console.log(Number(this.getStringBetween(div.innerHTML, "Id: ", "</")))
+      let nextDraggedId = Number(this.getStringBetween(div.innerHTML, "Id: ", "</"))
+      this.tags = this.swapArrayElements(this.tags, this.lastDraggedId, nextDraggedId)
+      this.lastDraggedId = nextDraggedId
+    } catch (e) {
+      //console.log("failed")
+    }
+    
+    
+  }
+
+  swapArrayElements(array: BaseTag[], indexOne: number, indexTwo: number): any {
+    //@Todo: there is a nonConsecutive problem, if i drag outside de document div it just swap positions
+    let buffer = array[indexOne];
+    array[indexOne] = array[indexTwo];
+    array[indexOne].id = indexOne
+    array[indexTwo] = buffer;
+    array[indexTwo].id = indexTwo
+    return array
+  }
+
+  getStringBetween(str: string, start: string, end: string): string {
+    const result = str.match(new RegExp(start + "(.*)" + end));
+
+    return result![1].split("<")[0];
+  }
+
 
 
   getTagName(tagName: string): any{ //@Todo: Make it better or at least group some functions to override
     switch (tagName) {
-      case TagEnum.OneTag:
-        return OneTagModalComponent
       case TagEnum.LeafEnsSetupTag:
         return LeafEnsSetupTagComponent
       case TagEnum.LeafEthernetCommunicationTag:

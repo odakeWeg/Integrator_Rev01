@@ -80,6 +80,8 @@ public class LeafUserInputTag extends NodeCompareTag {
                     percentualCompare();
                 break;
             }
+        } else {
+            //@Todo: make feedback log or something
         }
     }
 

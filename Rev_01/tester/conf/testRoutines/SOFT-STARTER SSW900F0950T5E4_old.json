@@ -1,0 +1,24 @@
+{
+    "list": [
+        {
+            "id": 0,
+            "tagIdentifier": null,
+			"communicationName": "ethernetStuff",
+            "tagName": "LeafEthernetCommunicationTag",
+            "ip": null,
+            "port": 0,
+            "address": 0,
+            "timeBetweenCommand": 0,
+			"position": 1,
+			"timeout": 10
+        },
+        {
+            "id": 1,
+            "tagIdentifier": null,
+            "tagName": "LeafTestTag",
+            "testName": null,
+			"position": 2,
+			"timeout": 10
+        }
+    ]
+}

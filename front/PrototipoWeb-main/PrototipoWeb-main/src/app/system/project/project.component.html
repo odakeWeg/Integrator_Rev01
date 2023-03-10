@@ -78,7 +78,7 @@
                     </div>
                 </div>
             </div>
-            <div *ngFor="let project of projects; let i = index" >
+            <div *ngFor="let project of projects; let i = index">
                 <div class="document" *ngIf="project.enabled==true && filterArray[i];else disabled">
                     <!--
                     <div>Resp: {{filterArray[i]}}: {{i}} =====> {{filterArray}}</div>

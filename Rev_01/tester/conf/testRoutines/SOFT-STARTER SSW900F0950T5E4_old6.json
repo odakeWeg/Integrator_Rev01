@@ -1,0 +1,60 @@
+{
+    "list": [
+        {
+            "id": 0,
+            "tagIdentifier": "Test",
+            "tagName": "LeafTestTag",
+            "descricao": null,
+            "log": null,
+            "action": "exibir",
+            "errorMessage": null,
+            "testResult": "N/A",
+            "timeout": 10000,
+            "position": 1,
+            "finished": false,
+            "individualTestDurationMillis": 0,
+            "testName": "teste 1"
+        },
+        {
+            "id": 1,
+            "tagIdentifier": "Communication",
+            "tagName": "LeafEthernetCommunicationTag",
+            "descricao": null,
+            "log": null,
+            "action": "exibir",
+            "errorMessage": null,
+            "testResult": "N/A",
+            "timeout": 10000,
+            "position": 1,
+            "finished": false,
+            "individualTestDurationMillis": 0,
+            "communicationName": "PLC",
+            "ip": "192.168.0.10",
+            "port": 502,
+            "address": 255,
+            "timeBetweenCommand": 0
+        },
+        {
+            "id": 2,
+            "tagIdentifier": "Compare",
+            "tagName": "LeafVariableCompareTag",
+            "descricao": null,
+            "log": null,
+            "action": "exibir",
+            "errorMessage": null,
+            "testResult": "N/A",
+            "timeout": 10000,
+            "position": 1,
+            "finished": false,
+            "individualTestDurationMillis": 0,
+            "variableName": "serial1",
+            "communicationNameRef": "PLC",
+            "registerRef": 8000,
+            "valueRef": 0,
+            "calculateBy": "Absolute",
+            "tolerancy": 10,
+            "waitBefore": 1,
+            "waitAfter": 1
+        }
+    ]
+}

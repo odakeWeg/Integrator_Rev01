@@ -71,7 +71,7 @@
         <div class="box content">
             <h1 class="centered-text">Projeto {{project.line}} - Routine {{routine.line}} - Tags</h1>
             <div *ngFor="let tag of tags; let i = index" >
-                <div class="document" *ngIf="tag.enabled==true && filterArray[i];else disabled">
+                <div class="document" draggable="true" (dragstart)="onDragStart($event)" (dragend)="onDragEnd($event)" (dragleave)="onDragLeave($event)"  *ngIf="tag.enabled==true && filterArray[i];else disabled">
                     <!--
                     <div>Resp: {{filterArray[i]}}: {{i}} =====> {{filterArray}}</div>
                     -->

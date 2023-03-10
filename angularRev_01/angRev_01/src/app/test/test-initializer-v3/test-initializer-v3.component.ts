@@ -14,6 +14,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TagContainer } from 'src/app/models/models/tag-conteiner.model';
 import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-modal.component';
 import { InputModalComponent } from '../input-modal/input-modal.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-test-initializer-v3',
@@ -40,13 +41,28 @@ export class TestInitializerV3Component implements OnInit {
   static testTime: number = 0
 
   LS_CHAVE: string = "userSession"
-  loggedUser: User = JSON.parse(localStorage[this.LS_CHAVE])
+  loggedUser: User = new User()
 
-  constructor(private modalService: NgbModal) { }
+  constructor(private modalService: NgbModal, private router: Router) { }
 
   ngOnInit(): void {
+    this.verifyIfLogged()
     this.initiateQrCode()
     this.initializeWebSocketConnection()
+  }
+
+  public verifyIfLogged() {
+    //@Todo: LoginPage for this software
+    if(localStorage[this.LS_CHAVE]!=null) {
+      this.loggedUser = JSON.parse(localStorage[this.LS_CHAVE])
+    } else {
+      this.loggedUser.id = 0
+      this.loggedUser.line = 0
+      this.loggedUser.nome = "Edson"
+      this.loggedUser.cadastro = 7881
+      this.loggedUser.perfil = "Adm"
+      //this.router.navigateByUrl('/login')
+    }
   }
 
   public initiateQrCode(): void {
@@ -285,8 +301,8 @@ export class TestInitializerV3Component implements OnInit {
         this.openResultModal(result.status)
         //Mostrar resultados
       } else {
-        console.log(result.status)
-        this.openResultModal(result.status)
+        console.log(result.result)
+        this.openResultModal(result.result)
         //Mostrar erros
       }
       if(this.positionContainers.length==0) {

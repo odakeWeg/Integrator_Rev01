@@ -1,5 +1,4 @@
 export enum TagEnum {
-  OneTag = "OneTag",
   LeafEnsSetupTag = "LeafEnsSetupTag",
   LeafEthernetCommunicationTag = "LeafEthernetCommunicationTag",
   LeafIOLinkCommunicationTag = "LeafIOLinkCommunicationTag",

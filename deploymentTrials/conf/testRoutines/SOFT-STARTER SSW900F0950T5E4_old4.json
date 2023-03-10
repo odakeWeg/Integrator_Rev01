@@ -1,0 +1,35 @@
+{
+    "list": [
+        {
+            "id": 0,
+            "tagIdentifier": "Test",
+            "tagName": "LeafTestTag",
+            "descricao": null,
+            "log": null,
+            "action": "exibir",
+            "errorMessage": null,
+            "testResult": "N/A",
+            "timeout": 10000,
+            "position": 1,
+            "finished": false,
+            "individualTestDurationMillis": 0,
+            "testName": "teste 1"
+        },
+        {
+            "id": 1,
+            "tagIdentifier": "Compare",
+            "tagName": "LeafUserConfirmationTag",
+            "descricao": null,
+            "log": null,
+            "action": "exibir",
+            "errorMessage": null,
+            "testResult": "N/A",
+            "timeout": 10000,
+            "position": 1,
+            "finished": false,
+            "individualTestDurationMillis": 0,
+            "messageToDisplay": "My confirmation message",
+            "confirmationValue": false
+        }
+    ]
+}

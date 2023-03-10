@@ -99,14 +99,17 @@ export class MappingComponent implements OnInit {
 
   //someArray.splice(x, 1);
   remove(mapping: Mapping): void {
-    this.mappings.splice(mapping.id!, 1)
-    this.orderMappingsByArrayAsc()
-    this.updateProjectLocally()
-    
-    this.projectService.updateProject(this.project).subscribe({
-      next: (data) => 0,//this.mappings[mapping.line!] = mapping,
-      error: (err) => console.log(err)
-    });
+    let text = "Tem certeza que deseja deletar esse mapeamento?";
+    if (confirm(text) == true) {
+      this.mappings.splice(mapping.id!, 1)
+      this.orderMappingsByArrayAsc()
+      this.updateProjectLocally()
+      
+      this.projectService.updateProject(this.project).subscribe({
+        next: (data) => 0,//this.mappings[mapping.line!] = mapping,
+        error: (err) => console.log(err)
+      });
+    }
   }
 
   openModal(mapping: Mapping) {

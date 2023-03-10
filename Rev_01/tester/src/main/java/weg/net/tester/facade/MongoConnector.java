@@ -35,6 +35,7 @@ public class MongoConnector {
     private long startTime;
     private long endingTime;
 
+    //@Todo: Constructor not used
     public MongoConnector(String[] serial, String[] descricaoProduto) {
         this.serial = serial;
         this.descricaoProduto = descricaoProduto;
@@ -42,8 +43,11 @@ public class MongoConnector {
     public MongoConnector() {
     }
 
-    public void initialSetup() throws SessionException {
+    public void initialSetup(String[] serial, String[] descricaoProduto) throws SessionException {
         try{
+            this.descricaoProduto = descricaoProduto;
+            this.serial = serial;
+            
             this.startTime = System.currentTimeMillis() / 1000;
 
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());

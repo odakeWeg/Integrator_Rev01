@@ -8,6 +8,8 @@ import weg.net.tester.communication.EthernetCommunication;
 import weg.net.tester.exception.CommunicationException;
 
 public class CommunicationStressTest {
+    //@Todo: Doesnt have gateway open
+    /* 
     @Test
     public void ethernetCommunicationStress() throws CommunicationException, InterruptedException {
         EthernetCommunication ethernet = new EthernetCommunication("192.168.0.10", 502, 255, 1, 1);
@@ -22,4 +24,5 @@ public class CommunicationStressTest {
             }
         }
     }
+    */
 }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	
+	<bean id="ensService"
+		class="net.weg.wdc.ens.service.EnsServiceImpl" />
+	<bean id="factory"
+		class="net.weg.wdc.ens.factory.EnsServiceEntitiesFactory" />
+
+<!-- 	<bean class="net.weg.wdc.ats.mic.task.TestDataMonitor"> -->
+<!-- 		<property name="scanDelay" value="20" /> -->
+<!-- 	</bean> -->
+
+	<bean id="ensConfig"
+		class="net.weg.wdc.ens.entity.EnsServiceConfig">
+		<property name="plant" value="1320" />
+		<property name="language" value="PT" />
+		<property name="module" value="15" />
+		<property name="username" value="wau-enstf" />
+		<property name="panel" value="4674" />
+		<property name="reneableTestGroup" value="634" />
+		<property name="functionalTestGroup" value="90" />
+		<property name="dielectricTestGroup" value="89" />
+		<property name="loadTestGroup" value="147" />
+		<property name="reportReleasedGroup" value="308" />
+	</bean>
+
+	<bean id="tokenConfigurator" class="net.weg.soa.serviceclient.JaxWsUsernameTokenClientConfigurator">
+		<constructor-arg type="java.lang.String" value="ENS" />
+		<property name="user" value="wau-enstf" />
+		<property name="password" value="Y4xU0!3LJM$cq6" />
+		<property name="environment" value="production" />
+	</bean>
+	
+</beans>

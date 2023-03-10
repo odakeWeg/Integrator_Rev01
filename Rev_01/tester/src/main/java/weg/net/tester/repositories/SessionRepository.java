@@ -7,5 +7,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import weg.net.tester.models.database.SessionModel;
 
 public interface SessionRepository extends MongoRepository<SessionModel, String> {
-    List<SessionModel> findByCadastro(String cadastro);
+    List<SessionModel> findByCadastro(int cadastro);
 }

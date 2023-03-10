@@ -10,7 +10,8 @@ import javax.script.ScriptException;
 import org.junit.Test;
 
 public class EvalTests {
-    
+    //@Todo: maybe delete
+    /* 
     @Test
     public void eval1() throws ScriptException {
         ScriptEngineManager manager = new ScriptEngineManager();
@@ -45,4 +46,5 @@ public class EvalTests {
     private void randomFunction(int a, int b) {
         System.out.println(a+b);
     }
+    */
 }

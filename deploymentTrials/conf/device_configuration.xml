@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ConnectionConfigs>
+    <ConnectionList FTPAutoStart="false">
+        <Connection name="Ethernet/Modbus-TCP/192.168.0.10:502/@1" description=""/>
+        <Connection name="Ethernet/Modbus-TCP/192.168.1.250:502/@1" description=""/>
+        <Connection name="Ethernet/Modbus-TCP/192.168.100.54:502/@1" description=""/>
+        <Connection name="Ethernet/Modbus-TCP/192.168.100.54:502/@255" description=""/>
+        <Connection name="Ethernet/Modbus-TCP/192.168.0.1:502/@1" description=""/>
+        <Connection name="Ethernet/Modbus-TCP/192.168.0.1:502/@255" description=""/>
+        <Connection name="Ethernet/Modbus-TCP/192.168.0.10:502/@255" description=""/>
+        <Connection name="Ethernet/Modbus-TCP/null:0/@0" description=""/>
+    </ConnectionList>
+</ConnectionConfigs>
