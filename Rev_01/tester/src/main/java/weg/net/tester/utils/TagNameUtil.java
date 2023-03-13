@@ -19,4 +19,6 @@ public class TagNameUtil {
     public static final String ENS_SETUP = "LeafEnsSetupTag";
     public static final String REGISTER_MONITOR = "LeafMonitorRegisterCompareTag";
     public static final String WAIT_TEST = "LeafWaitTestTag";
+    public static final String VERIFY = "LeafVerifyTag";
+    public static final String INLINE = "LeafInlineSetupTag";
 }

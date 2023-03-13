@@ -32,13 +32,21 @@
             
             <div class="form-outline mb-4">
                 <label class="form-label" for="variableName">Variable name</label>
-                <input type="text" id="variableName" name="variableName" class="form-control"
-                  [(ngModel)]="newTag.variableName" #variableName="ngModel">
+                <select [(ngModel)]='newTag.variableName' class='form-control' name="variableName" id="variableName">
+                    <option value=""></option>  
+                    <option *ngFor="let sapName of listOfSapName" value="{{sapName}}">{{sapName}}</option>
+                </select>
             </div>
             <div class="form-outline mb-4">
                 <label class="form-label" for="communicationNameRef">Communication name</label>
+                <!--
                 <input type="text" id="communicationNameRef" name="communicationNameRef" class="form-control"
                   [(ngModel)]="newTag.communicationNameRef" #communicationNameRef="ngModel">
+                -->
+                <select [(ngModel)]='newTag.communicationNameRef' class='form-control' name="communicationNameRef" id="communicationNameRef">
+                    <option value=""></option>  
+                    <option *ngFor="let commName of listOfCommunicationName" value="{{commName}}">{{commName}}</option>
+                </select>
             </div>
             <div class="row mb-4">
                 <div class="col-md-9">
@@ -75,58 +83,6 @@
                     <label class="form-label" for="timeout">Timeout</label>
                     <input type="number" id="timeout" name="timeout" class="form-control"
                       [(ngModel)]="newTag.timeout" #timeout="ngModel">
-                </div>
-                
-                <div *ngIf="newTag.ensTagConfiguration!=null">
-                    <div class="form-outline mb-4" style="text-align: left;">
-                        <input class="form-check-input" type="checkbox" value="" id="enabled" name="enabled" [(ngModel)]="newTag.ensTagConfiguration.enabled" #enabled="ngModel" (change)="ensChecker()">
-                        <label class="form-check-label" for="flexCheckDefault">Enable ens</label>
-                    </div>
-
-                    <div class="row mb-4">
-                        <div class="col-md-10">
-                            <label class="form-label" for="ensType">Ens type</label>
-                            <input disabled type="text" id="ensType" name="ensType" class="form-control"
-                            [(ngModel)]="newTag.ensTagConfiguration.ensType" #ensType="ngModel">
-                        </div>
-                        <div class="col-md-2">
-                            <label class="form-label blankspace" for="ensTypeAux" >blankspace</label>
-                            <select disabled class='form-control' name="ensTypeAux" id="ensTypeAux" (change)="addEnsType()">
-                                <option value=""></option>  
-                                <option *ngFor="let ensVariableName of listOfEnsVariableName" value="{{ensVariableName}}">{{ensVariableName}}</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col-md-10">
-                            <label class="form-label" for="ensVariableName">Ens variable name</label>
-                            <input disabled type="text" id="ensVariableName" name="ensVariableName" class="form-control"
-                            [(ngModel)]="newTag.ensTagConfiguration.ensVariableName" #ensVariableName="ngModel">
-                        </div>
-                        <div class="col-md-2">
-                            <label class="form-label blankspace" for="ensVariableNameAux">blankspace</label>
-                            <select disabled class='form-control' name="ensVariableNameAux" id="ensVariableNameAux" (change)="addEnsVariableName()">
-                                <option value=""></option>  
-                                <option *ngFor="let ensType of listOfEnsType" value="{{ensType}}">{{ensType}}</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col-md-10">
-                            <label class="form-label" for="variableToReadFrom">Variable to read from</label>
-                            <input disabled type="text" id="variableToReadFrom" name="variableToReadFrom" class="form-control"
-                            [(ngModel)]="newTag.ensTagConfiguration.variableToReadFrom" #variableToReadFrom="ngModel">
-                        </div>
-                        <div class="col-md-2">
-                            <label class="form-label blankspace" for="variableToReadFromAux">blankspace</label>
-                            <select disabled class='form-control' name="variableToReadFromAux" id="variableToReadFromAux" (change)="addVariableToReadFrom()">
-                                <option value=""></option>  
-                                <option>Opicao 1</option>
-                                <option>Opicao 2</option>
-                                <option>Opicao 3</option>
-                            </select>
-                        </div>
-                    </div>
                 </div>
             </div>
         </form>
@@ -171,13 +127,21 @@
             
             <div class="form-outline mb-4">
                 <label class="form-label" for="variableName">Variable name</label>
-                <input type="text" id="variableName" name="variableName" class="form-control"
-                  [(ngModel)]="tagToUpdate.variableName" #variableName="ngModel">
+                <select [(ngModel)]='tagToUpdate.variableName' class='form-control' name="variableName" id="variableName">
+                    <option value=""></option>  
+                    <option *ngFor="let sapName of listOfSapName" value="{{sapName}}">{{sapName}}</option>
+                </select>
             </div>
             <div class="form-outline mb-4">
                 <label class="form-label" for="communicationNameRef">Communication name</label>
+                <!--
                 <input type="text" id="communicationNameRef" name="communicationNameRef" class="form-control"
                   [(ngModel)]="tagToUpdate.communicationNameRef" #communicationNameRef="ngModel">
+                -->
+                <select [(ngModel)]='tagToUpdate.communicationNameRef' class='form-control' name="communicationNameRef" id="communicationNameRef">
+                    <option value=""></option>  
+                    <option *ngFor="let commName of listOfCommunicationName" value="{{commName}}">{{commName}}</option>
+                </select>
             </div>
             <div class="row mb-4">
                 <div class="col-md-9">
@@ -214,104 +178,6 @@
                     <label class="form-label" for="timeout">Timeout</label>
                     <input type="number" id="timeout" name="timeout" class="form-control"
                       [(ngModel)]="tagToUpdate.timeout" #timeout="ngModel">
-                </div>
-                <div *ngIf="tagToUpdate.ensTagConfiguration!=null">
-                    <div class="form-outline mb-4" style="text-align: left;">
-                        <input class="form-check-input" type="checkbox" value="" id="enabled" name="enabled" [(ngModel)]="tagToUpdate.ensTagConfiguration.enabled" #enabled="ngModel" (change)="ensUpdateChecker()">
-                        <label class="form-check-label" for="flexCheckDefault">Enable ens</label>
-                    </div>
-                    <div *ngIf="tagToUpdate.ensTagConfiguration.enabled;else disabled">
-                        <div class="row mb-4">
-                            <div class="col-md-10">
-                                <label class="form-label" for="ensType">Ens type</label>
-                                <input disabled type="text" id="ensType" name="ensType" class="form-control"
-                                [(ngModel)]="tagToUpdate.ensTagConfiguration.ensType" #ensType="ngModel">
-                            </div>
-                            <div class="col-md-2">
-                                <label class="form-label blankspace" for="ensTypeAux" >blankspace</label>
-                                <select class='form-control' name="ensTypeAux" id="ensTypeAux" (change)="addUpdateEnsType()">
-                                    <option value=""></option>  
-                                    <option *ngFor="let ensVariableName of listOfEnsVariableName" value="{{ensVariableName}}">{{ensVariableName}}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row mb-4">
-                            <div class="col-md-10">
-                                <label class="form-label" for="ensVariableName">Ens variable name</label>
-                                <input disabled type="text" id="ensVariableName" name="ensVariableName" class="form-control"
-                                [(ngModel)]="tagToUpdate.ensTagConfiguration.ensVariableName" #ensVariableName="ngModel">
-                            </div>
-                            <div class="col-md-2">
-                                <label class="form-label blankspace" for="ensVariableNameAux">blankspace</label>
-                                <select class='form-control' name="ensVariableNameAux" id="ensVariableNameAux" (change)="addUpdateEnsVariableName()">
-                                    <option value=""></option>  
-                                    <option *ngFor="let ensType of listOfEnsType" value="{{ensType}}">{{ensType}}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row mb-4">
-                            <div class="col-md-10">
-                                <label class="form-label" for="variableToReadFrom">Variable to read from</label>
-                                <input disabled type="text" id="variableToReadFrom" name="variableToReadFrom" class="form-control"
-                                [(ngModel)]="tagToUpdate.ensTagConfiguration.variableToReadFrom" #variableToReadFrom="ngModel">
-                            </div>
-                            <div class="col-md-2">
-                                <label class="form-label blankspace" for="variableToReadFromAux">blankspace</label>
-                                <select class='form-control' name="variableToReadFromAux" id="variableToReadFromAux" (change)="addUpdateVariableToReadFrom()">
-                                    <option value=""></option>  
-                                    <option>Opicao 1</option>
-                                    <option>Opicao 2</option>
-                                    <option>Opicao 3</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <ng-template #disabled>
-                        <div class="row mb-4">
-                            <div class="col-md-10">
-                                <label class="form-label" for="ensType">Ens type</label>
-                                <input disabled type="text" id="ensType" name="ensType" class="form-control"
-                                [(ngModel)]="tagToUpdate.ensTagConfiguration.ensType" #ensType="ngModel">
-                            </div>
-                            <div class="col-md-2">
-                                <label class="form-label blankspace" for="ensTypeAux" >blankspace</label>
-                                <select disabled class='form-control' name="ensTypeAux" id="ensTypeAux" (change)="addUpdateEnsType()">
-                                    <option value=""></option>  
-                                    <option *ngFor="let ensVariableName of listOfEnsVariableName" value="{{ensVariableName}}">{{ensVariableName}}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row mb-4">
-                            <div class="col-md-10">
-                                <label class="form-label" for="ensVariableName">Ens variable name</label>
-                                <input disabled type="text" id="ensVariableName" name="ensVariableName" class="form-control"
-                                [(ngModel)]="tagToUpdate.ensTagConfiguration.ensVariableName" #ensVariableName="ngModel">
-                            </div>
-                            <div class="col-md-2">
-                                <label class="form-label blankspace" for="ensVariableNameAux">blankspace</label>
-                                <select disabled class='form-control' name="ensVariableNameAux" id="ensVariableNameAux" (change)="addUpdateEnsVariableName()">
-                                    <option value=""></option>  
-                                    <option *ngFor="let ensType of listOfEnsType" value="{{ensType}}">{{ensType}}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row mb-4">
-                            <div class="col-md-10">
-                                <label class="form-label" for="variableToReadFrom">Variable to read from</label>
-                                <input disabled type="text" id="variableToReadFrom" name="variableToReadFrom" class="form-control"
-                                [(ngModel)]="tagToUpdate.ensTagConfiguration.variableToReadFrom" #variableToReadFrom="ngModel">
-                            </div>
-                            <div class="col-md-2">
-                                <label class="form-label blankspace" for="variableToReadFromAux">blankspace</label>
-                                <select disabled class='form-control' name="variableToReadFromAux" id="variableToReadFromAux" (change)="addUpdateVariableToReadFrom()">
-                                    <option value=""></option>  
-                                    <option>Opicao 1</option>
-                                    <option>Opicao 2</option>
-                                    <option>Opicao 3</option>
-                                </select>
-                            </div>
-                        </div>
-                    </ng-template>
                 </div>
             </div>
         </form>

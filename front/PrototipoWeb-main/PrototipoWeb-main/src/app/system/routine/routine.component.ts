@@ -17,7 +17,7 @@ const LS_CHAVE: string = "userSession";
 
 export class RoutineComponent implements OnInit {
   routines: Routine[] = []
-  project!: Project
+  project: Project = new Project()
 
   idMin!: Number
   idMax!: Number

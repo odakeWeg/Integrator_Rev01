@@ -29,15 +29,73 @@
             </div>
             
             <hr>
-            
+
+
             <div class="form-outline mb-4">
-                <label class="form-label" for="messageToDisplay">Message to display</label>
-                <input type="text" id="messageToDisplay" name="messageToDisplay" class="form-control"
-                  [(ngModel)]="newTag.messageToDisplay" #messageToDisplay="ngModel">
+                <label class="form-label" for="valueRef">Valore de referência</label>
+                <input type="number" id="valueRef" name="valueRef" class="form-control"
+                  [(ngModel)]="newTag.valueRef" #valueRef="ngModel">
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="communicationNameOnTest">OnTest communication name</label>
+                <!--
+                <input type="text" id="communicationNameOnTest" name="communicationNameOnTest" class="form-control"
+                  [(ngModel)]="newTag.communicationNameOnTest" #communicationNameOnTest="ngModel">
+                -->
+                <select [(ngModel)]='newTag.communicationNameOnTest' class='form-control' name="communicationNameOnTest" id="communicationNameOnTest">
+                    <option value=""></option>  
+                    <option *ngFor="let commName of listOfCommunicationName" value="{{commName}}">{{commName}}</option>
+                </select>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-9">
+                    <label class="form-label" for="registerNameOnTest">OnTest register name</label>
+                    <select [(ngModel)]='newTag.registerNameOnTest' class='form-control' name="registerNameOnTest" id="registerNameOnTest" (change)="setNewRegisterOnTest()">
+                        <option value=""></option>  
+                        <option *ngFor="let mapping of project.mappings" value="{{mapping.nome}}">{{mapping.nome}}</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" for="registerOnTest">OnTest reg.</label>
+                    <input type="number" id="registerOnTest" name="registerOnTest" class="form-control"
+                    [(ngModel)]="newTag.registerOnTest" #registerOnTest="ngModel">
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <label class="form-label" for="tolerancy">Tolerancy</label>
+                    <input type="number" id="tolerancy" name="tolerancy" class="form-control"
+                    [(ngModel)]="newTag.tolerancy" #tolerancy="ngModel">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="calculateBy">Calculate by</label>
+                    <!--
+                    <input type="text" id="calculateBy" name="calculateBy" class="form-control"
+                    [(ngModel)]="newTag.calculateBy" #calculateBy="ngModel">
+                    -->
+                    <select [(ngModel)]='newTag.calculateBy' class='form-control' name="calculateBy" id="calculateBy">
+                        <option value=""></option>  
+                        <option *ngFor="let compareBy of listOfCompare" value="{{compareBy}}">{{compareBy}}</option>
+                    </select>
+                </div>
             </div>
 
             <div id="info" class="collapse shown-user" [attr.id]="'hidden-fields'">
                 <hr>
+                
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label" for="waitBefore">Wait before</label>
+                        <input type="text" id="waitBefore" name="waitBefore" class="form-control"
+                        [(ngModel)]="newTag.waitBefore" #waitBefore="ngModel">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label" for="waitAfter">Wait after</label>
+                        <input type="number" id="waitAfter" name="waitAfter" class="form-control"
+                        [(ngModel)]="newTag.waitAfter" #waitAfter="ngModel">
+                    </div>
+                </div>
+
                 <div class="form-outline mb-4">
                     <label class="form-label" for="timeout">Timeout</label>
                     <input type="number" id="timeout" name="timeout" class="form-control"
@@ -112,7 +170,7 @@
         <form #formTag="ngForm">
             <div class="row mb-4">
                 <div class="col-md-9">
-                    <label class="form-label" for="tagName">Tag name</label>
+                    <label class="form-label" for="tagName">tagName</label>
                     <input type="text" id="tagName" name="tagName" class="form-control"
                     [(ngModel)]="tagToUpdate.tagName" #tagName="ngModel" readonly>
                 </div>
@@ -135,13 +193,65 @@
             <hr>
             
             <div class="form-outline mb-4">
-                <label class="form-label" for="messageToDisplay">Message to display</label>
-                <input type="text" id="messageToDisplay" name="messageToDisplay" class="form-control"
-                  [(ngModel)]="tagToUpdate.messageToDisplay" #messageToDisplay="ngModel">
+                <label class="form-label" for="communicationNameOnTest">OnTest communication name</label>
+                <!--
+                <input type="text" id="communicationNameOnTest" name="communicationNameOnTest" class="form-control"
+                  [(ngModel)]="tagToUpdate.communicationNameOnTest" #communicationNameOnTest="ngModel">
+                -->
+                <select [(ngModel)]='tagToUpdate.communicationNameOnTest' class='form-control' name="communicationNameOnTest" id="communicationNameOnTest">
+                    <option value=""></option>  
+                    <option *ngFor="let commName of listOfCommunicationName" value="{{commName}}">{{commName}}</option>
+                </select>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-9">
+                    <label class="form-label" for="registerNameOnTest">OnTest register name</label>
+                    <select [(ngModel)]='tagToUpdate.registerNameOnTest' class='form-control' name="registerNameOnTest" id="registerNameOnTest" (change)="setRegisterOnTest()">
+                        <option value=""></option>  
+                        <option *ngFor="let mapping of project.mappings" value="{{mapping.nome}}">{{mapping.nome}}</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" for="registerOnTest">OnTest reg.</label>
+                    <input type="number" id="registerOnTest" name="registerOnTest" class="form-control"
+                    [(ngModel)]="tagToUpdate.registerOnTest" #registerOnTest="ngModel">
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <label class="form-label" for="tolerancy">Tolerancy</label>
+                    <input type="number" id="tolerancy" name="tolerancy" class="form-control"
+                    [(ngModel)]="tagToUpdate.tolerancy" #tolerancy="ngModel">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="calculateBy">Calculate by</label>
+                    <!--
+                    <input type="text" id="calculateBy" name="calculateBy" class="form-control"
+                    [(ngModel)]="tagToUpdate.calculateBy" #calculateBy="ngModel">
+                    -->
+                    <select [(ngModel)]='tagToUpdate.calculateBy' class='form-control' name="calculateBy" id="calculateBy">
+                        <option value=""></option>  
+                        <option *ngFor="let compareBy of listOfCompare" value="{{compareBy}}">{{compareBy}}</option>
+                    </select>
+                </div>
             </div>
 
             <div id="info" class="collapse shown-user" [attr.id]="'hidden-fields'">
                 <hr>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label" for="waitBefore">Wait before</label>
+                        <input type="text" id="waitBefore" name="waitBefore" class="form-control"
+                        [(ngModel)]="tagToUpdate.waitBefore" #waitBefore="ngModel">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label" for="waitAfter">Wait after</label>
+                        <input type="number" id="waitAfter" name="waitAfter" class="form-control"
+                        [(ngModel)]="tagToUpdate.waitAfter" #waitAfter="ngModel">
+                    </div>
+                </div>
+
                 <div class="form-outline mb-4">
                     <label class="form-label" for="timeout">Timeout</label>
                     <input type="number" id="timeout" name="timeout" class="form-control"

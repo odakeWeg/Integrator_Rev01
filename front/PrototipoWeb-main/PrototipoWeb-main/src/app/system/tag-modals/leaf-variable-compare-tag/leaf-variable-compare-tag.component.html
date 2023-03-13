@@ -32,13 +32,21 @@
             
             <div class="form-outline mb-4">
                 <label class="form-label" for="variableName">Variable name</label>
-                <input type="text" id="variableName" name="variableName" class="form-control"
-                  [(ngModel)]="newTag.variableName" #variableName="ngModel">
+                <select [(ngModel)]='newTag.variableName' class='form-control' name="variableName" id="variableName">
+                    <option value=""></option>  
+                    <option *ngFor="let sapName of listOfSapName" value="{{sapName}}">{{sapName}}</option>
+                </select>
             </div>
             <div class="form-outline mb-4">
                 <label class="form-label" for="communicationNameRef">Communication name</label>
+                <!--
                 <input type="text" id="communicationNameRef" name="communicationNameRef" class="form-control"
                   [(ngModel)]="newTag.communicationNameRef" #communicationNameRef="ngModel">
+                -->
+                <select [(ngModel)]='newTag.communicationNameRef' class='form-control' name="communicationNameRef" id="communicationNameRef">
+                    <option value=""></option>  
+                    <option *ngFor="let commName of listOfCommunicationName" value="{{commName}}">{{commName}}</option>
+                </select>
             </div>
             <div class="row mb-4">
                 <div class="col-md-9">
@@ -62,8 +70,14 @@
                 </div>
                 <div class="col-md-6">
                     <label class="form-label" for="calculateBy">Calculate by</label>
+                    <!--
                     <input type="text" id="calculateBy" name="calculateBy" class="form-control"
                     [(ngModel)]="newTag.calculateBy" #calculateBy="ngModel">
+                    -->
+                    <select [(ngModel)]='newTag.calculateBy' class='form-control' name="calculateBy" id="calculateBy">
+                        <option value=""></option>  
+                        <option *ngFor="let compareBy of listOfCompare" value="{{compareBy}}">{{compareBy}}</option>
+                    </select>
                 </div>
             </div>
 
@@ -133,9 +147,7 @@
                             <label class="form-label blankspace" for="variableToReadFromAux">blankspace</label>
                             <select disabled class='form-control' name="variableToReadFromAux" id="variableToReadFromAux" (change)="addVariableToReadFrom()">
                                 <option value=""></option>  
-                                <option>Opicao 1</option>
-                                <option>Opicao 2</option>
-                                <option>Opicao 3</option>
+                                <option *ngFor="let variableToReadFrom of listOfVariableToRead" value="{{variableToReadFrom}}">{{variableToReadFrom}}</option>
                             </select>
                         </div>
                     </div>
@@ -183,13 +195,21 @@
             
             <div class="form-outline mb-4">
                 <label class="form-label" for="variableName">Variable name</label>
-                <input type="text" id="variableName" name="variableName" class="form-control"
-                  [(ngModel)]="tagToUpdate.variableName" #variableName="ngModel">
+                <select [(ngModel)]='tagToUpdate.variableName' class='form-control' name="variableName" id="variableName">
+                    <option value=""></option>  
+                    <option *ngFor="let sapName of listOfSapName" value="{{sapName}}">{{sapName}}</option>
+                </select>
             </div>
             <div class="form-outline mb-4">
                 <label class="form-label" for="communicationNameRef">Communication name</label>
+                <!--
                 <input type="text" id="communicationNameRef" name="communicationNameRef" class="form-control"
                   [(ngModel)]="tagToUpdate.communicationNameRef" #communicationNameRef="ngModel">
+                -->
+                <select [(ngModel)]='tagToUpdate.communicationNameRef' class='form-control' name="communicationNameRef" id="communicationNameRef">
+                    <option value=""></option>  
+                    <option *ngFor="let commName of listOfCommunicationName" value="{{commName}}">{{commName}}</option>
+                </select>
             </div>
             <div class="row mb-4">
                 <div class="col-md-9">
@@ -213,8 +233,14 @@
                 </div>
                 <div class="col-md-6">
                     <label class="form-label" for="calculateBy">Calculate by</label>
+                    <!--
                     <input type="text" id="calculateBy" name="calculateBy" class="form-control"
                     [(ngModel)]="tagToUpdate.calculateBy" #calculateBy="ngModel">
+                    -->
+                    <select [(ngModel)]='tagToUpdate.calculateBy' class='form-control' name="calculateBy" id="calculateBy">
+                        <option value=""></option>  
+                        <option *ngFor="let compareBy of listOfCompare" value="{{compareBy}}">{{compareBy}}</option>
+                    </select>
                 </div>
             </div>
 
@@ -283,9 +309,7 @@
                                 <label class="form-label blankspace" for="variableToReadFromAux">blankspace</label>
                                 <select class='form-control' name="variableToReadFromAux" id="variableToReadFromAux" (change)="addUpdateVariableToReadFrom()">
                                     <option value=""></option>  
-                                    <option>Opicao 1</option>
-                                    <option>Opicao 2</option>
-                                    <option>Opicao 3</option>
+                                <option *ngFor="let variableToReadFrom of listOfVariableToRead" value="{{variableToReadFrom}}">{{variableToReadFrom}}</option>
                                 </select>
                             </div>
                         </div>
@@ -329,9 +353,7 @@
                                 <label class="form-label blankspace" for="variableToReadFromAux">blankspace</label>
                                 <select disabled class='form-control' name="variableToReadFromAux" id="variableToReadFromAux" (change)="addUpdateVariableToReadFrom()">
                                     <option value=""></option>  
-                                    <option>Opicao 1</option>
-                                    <option>Opicao 2</option>
-                                    <option>Opicao 3</option>
+                                <option *ngFor="let variableToReadFrom of listOfVariableToRead" value="{{variableToReadFrom}}">{{variableToReadFrom}}</option>
                                 </select>
                             </div>
                         </div>

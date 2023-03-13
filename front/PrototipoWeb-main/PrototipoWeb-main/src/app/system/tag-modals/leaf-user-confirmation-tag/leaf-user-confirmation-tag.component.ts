@@ -27,6 +27,7 @@ export class LeafUserConfirmationTagComponent implements OnInit {
 
   listOfEnsType: string[] = []
   listOfEnsVariableName: string[] = []
+  listOfVariableToRead: string[] = ["confirmationValue"]
 
   @ViewChild('formTag') formTag!: NgForm
   @ViewChild('formNewTag') formNewTag!: NgForm

@@ -20,7 +20,7 @@ const LS_CHAVE: string = "userSession";
 export class MappingComponent implements OnInit {
   @ViewChild('formFilter') formFilter!: NgForm
   mappings: Mapping[] = []
-  project!: Project
+  project: Project = new Project()
 
   mappingsFiltered: Mapping[] = []
   mappingFilter!: Mapping

@@ -1,18 +1,17 @@
-import { LeafVariableCompareTag } from './../../../shared/models/tags/leaf-variable-compare-tag.model';
+import { LeafVerifyTag } from './../../../shared/models/tags/leaf-verify-tag.model';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { BaseTag, Routine, Project, LeafTestTag, EnsTypeEnum, EnsVariableNameEnum, EnsTagConfiguration, CompareEnum } from 'src/app/shared';
+import { LeafRegisterCompareTag, BaseTag, Routine, Project, CompareEnum, EnsTypeEnum, EnsVariableNameEnum, EnsTagConfiguration } from 'src/app/shared';
 import { ProjectService } from '../../services/project.service';
-import { UtilService } from '../../services/util.service';
 
 @Component({
-  selector: 'app-leaf-variable-compare-tag',
-  templateUrl: './leaf-variable-compare-tag.component.html',
-  styleUrls: ['./leaf-variable-compare-tag.component.css']
+  selector: 'app-leaf-verify-tag',
+  templateUrl: './leaf-verify-tag.component.html',
+  styleUrls: ['./leaf-verify-tag.component.css']
 })
-export class LeafVariableCompareTagComponent implements OnInit {
-  @Input() tag!: LeafVariableCompareTag
+export class LeafVerifyTagComponent implements OnInit {
+  @Input() tag!: LeafVerifyTag
   @Input() tags!: BaseTag[]
   @Input() routine!: Routine
   @Input() routines!: Routine[]
@@ -22,39 +21,28 @@ export class LeafVariableCompareTagComponent implements OnInit {
   @Input() filterArray!: boolean[]
   @Input() shownUsers!: number
   
-  tagToUpdate!: LeafVariableCompareTag
-  newTag!: LeafVariableCompareTag
+  tagToUpdate!: LeafVerifyTag
+  newTag!: LeafVerifyTag
   enableFields!: boolean
 
   listOfEnsType: string[] = []
   listOfEnsVariableName: string[] = []
   listOfCompare: string[] = []
   listOfCommunicationName: string[] = []
-  listOfSapName: string[] = []
-  listOfVariableToRead: string[] = ["valueRef", "variableValue"]
+  listOfVariableToRead: string[] = ["valueRef", "valueOnTest"]
 
   @ViewChild('formTag') formTag!: NgForm
   @ViewChild('formNewTag') formNewTag!: NgForm
 
-  constructor(public activeModal: NgbActiveModal, private projectService: ProjectService, private utilService: UtilService) { }
+  constructor(public activeModal: NgbActiveModal, private projectService: ProjectService) { }
 
   ngOnInit(): void {
     this.fillListOfEnsType()
     this.fillListOfEnsVariableName()
     this.fillListOfCompare()
     this.fillListOfCommunicationName()
-    this.fillListOfSapName()
     this.initiateNewTag()
     this.initiateTagToUpdate()
-  }
-
-  fillListOfSapName(): void {
-    this.utilService.getAllSAP().subscribe({
-      next: (data) => {
-        this.listOfSapName = data
-      },
-      error: (err) => console.log(err)
-    });
   }
 
   fillListOfCommunicationName(): void {
@@ -373,31 +361,31 @@ export class LeafVariableCompareTagComponent implements OnInit {
     }
   }
 
-  setRegister():void {
-    if(this.tagToUpdate.registerName!="") {
+  setNewRegisterOnTest(): void {
+    if(this.newTag.registerNameOnTest!="") {
       for(let mapping of this.project.mappings!) {
-        if(this.tagToUpdate.registerName==mapping.nome) {
-          this.tagToUpdate.registerRef = Number(mapping.mapping)
+        if(this.newTag.registerNameOnTest==mapping.nome) {
+          this.newTag.registerOnTest = Number(mapping.mapping)
         }
       }
-      document.getElementById('registerRef')?.setAttribute("disabled", "disabled")
+      document.getElementById('registerOnTest')?.setAttribute("disabled", "disabled")
     } else {
-      this.tagToUpdate.registerRef = 0
-      document.getElementById('registerRef')?.removeAttribute("disabled");
+      this.newTag.registerOnTest = 0
+      document.getElementById('registerOnTest')?.removeAttribute("disabled");
     }
   }
 
-  setNewRegister():void {
-    if(this.newTag.registerName!="") {
+  setRegisterOnTest(): void {
+    if(this.tagToUpdate.registerNameOnTest!="") {
       for(let mapping of this.project.mappings!) {
-        if(this.newTag.registerName==mapping.nome) {
-          this.newTag.registerRef = Number(mapping.mapping)
+        if(this.tagToUpdate.registerNameOnTest==mapping.nome) {
+          this.tagToUpdate.registerOnTest = Number(mapping.mapping)
         }
       }
-      document.getElementById('registerRef')?.setAttribute("disabled", "disabled")
+      document.getElementById('registerOnTest')?.setAttribute("disabled", "disabled")
     } else {
-      this.newTag.registerRef = 0
-      document.getElementById('registerRef')?.removeAttribute("disabled");
+      this.tagToUpdate.registerOnTest = 0
+      document.getElementById('registerOnTest')?.removeAttribute("disabled");
     }
   }
 }

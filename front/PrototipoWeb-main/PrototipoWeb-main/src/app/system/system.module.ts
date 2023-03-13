@@ -28,6 +28,8 @@ import { LeafVariableStringWriteTagComponent } from './tag-modals/leaf-variable-
 import { LeafVariableWriteTagComponent } from './tag-modals/leaf-variable-write-tag/leaf-variable-write-tag.component';
 import { LeafWriteTagComponent } from './tag-modals/leaf-write-tag/leaf-write-tag.component';
 import { ModalTagNotFoundComponent } from './tag-modals/modal-tag-not-found/modal-tag-not-found.component';
+import { LeafVerifyTagComponent } from './tag-modals/leaf-verify-tag/leaf-verify-tag.component';
+import { LeafInlineSetupTagComponent } from './tag-modals/leaf-inline-setup-tag/leaf-inline-setup-tag.component';
 
 
 
@@ -58,7 +60,9 @@ import { ModalTagNotFoundComponent } from './tag-modals/modal-tag-not-found/moda
     LeafVariableStringWriteTagComponent,
     LeafVariableWriteTagComponent,
     LeafWriteTagComponent,
-    ModalTagNotFoundComponent
+    ModalTagNotFoundComponent,
+    LeafVerifyTagComponent,
+    LeafInlineSetupTagComponent
   ],
   imports: [
     CommonModule,

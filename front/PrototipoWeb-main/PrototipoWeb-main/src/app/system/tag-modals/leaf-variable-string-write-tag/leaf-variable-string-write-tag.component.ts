@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { BaseTag, Routine, Project, EnsTypeEnum, EnsVariableNameEnum, EnsTagConfiguration } from 'src/app/shared';
 import { ProjectService } from '../../services/project.service';
+import { UtilService } from '../../services/util.service';
 
 @Component({
   selector: 'app-leaf-variable-string-write-tag',
@@ -27,17 +28,39 @@ export class LeafVariableStringWriteTagComponent implements OnInit {
 
   listOfEnsType: string[] = []
   listOfEnsVariableName: string[] = []
+  listOfCommunicationName: string[] = []
+  listOfSapName: string[] = []
 
   @ViewChild('formTag') formTag!: NgForm
   @ViewChild('formNewTag') formNewTag!: NgForm
 
-  constructor(public activeModal: NgbActiveModal, private projectService: ProjectService) { }
+  constructor(public activeModal: NgbActiveModal, private projectService: ProjectService, private utilService: UtilService) { }
 
   ngOnInit(): void {
     this.fillListOfEnsType()
     this.fillListOfEnsVariableName()
+    this.fillListOfCommunicationName()
+    this.fillListOfSapName()
     this.initiateNewTag()
     this.initiateTagToUpdate()
+  }
+
+  fillListOfSapName(): void {
+    this.utilService.getAllSAP().subscribe({
+      next: (data) => {
+        this.listOfSapName = data
+      },
+      error: (err) => console.log(err)
+    });
+  }
+
+  fillListOfCommunicationName(): void {
+    for (let tag of this.tags) {
+      if (tag.tagName?.includes("Communication")) {
+        this.listOfCommunicationName.push((<any>tag).communicationName)
+      }
+    }
+    console.log(this.listOfCommunicationName)
   }
 
   fillListOfEnsType(): void {

@@ -28,6 +28,7 @@ export class LeafMultipleWriteTagComponent implements OnInit {
 
   listOfEnsType: string[] = []
   listOfEnsVariableName: string[] = []
+  listOfCommunicationName: string[] = []
 
   @ViewChild('formTag') formTag!: NgForm
   @ViewChild('formNewTag') formNewTag!: NgForm
@@ -37,8 +38,18 @@ export class LeafMultipleWriteTagComponent implements OnInit {
   ngOnInit(): void {
     this.fillListOfEnsType()
     this.fillListOfEnsVariableName()
+    this.fillListOfCommunicationName()
     this.initiateNewTag()
     this.initiateTagToUpdate()
+  }
+
+  fillListOfCommunicationName(): void {
+    for (let tag of this.tags) {
+      if (tag.tagName?.includes("Communication")) {
+        this.listOfCommunicationName.push((<any>tag).communicationName)
+      }
+    }
+    console.log(this.listOfCommunicationName)
   }
 
   fillListOfEnsType(): void {

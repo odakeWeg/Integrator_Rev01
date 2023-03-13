@@ -1,6 +1,5 @@
 package weg.net.tester.controllers;
 
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -9,11 +8,8 @@ import org.springframework.stereotype.Controller;
 import weg.net.tester.helper.SessionHelper;
 import weg.net.tester.models.database.LoginModel;
 import weg.net.tester.models.database.StackTraceLogModel;
-import weg.net.tester.models.web.SessionLog;
 import weg.net.tester.services.TestExecutor;
-import weg.net.tester.utils.ActionCommandUtil;
 import weg.net.tester.utils.EndPointPathUtil;
-import weg.net.tester.utils.FrontEndFeedbackUtil;
 
 @Controller
 public class TestRoutineHandlerController {

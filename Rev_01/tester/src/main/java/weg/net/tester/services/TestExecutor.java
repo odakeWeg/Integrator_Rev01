@@ -21,14 +21,13 @@ import weg.net.tester.exception.TestUnmarshalingException;
 import weg.net.tester.facade.DataCenter;
 import weg.net.tester.helper.SessionHelper;
 import weg.net.tester.models.web.CommandLog;
-import weg.net.tester.models.web.PopUpLog;
 import weg.net.tester.models.web.ProductLog;
 import weg.net.tester.models.web.ResultLog;
 import weg.net.tester.tag.TagList;
 import weg.net.tester.tag.TestMetaDataModel;
-import weg.net.tester.utils.ActionCommandUtil;
 import weg.net.tester.utils.EndPointPathUtil;
 import weg.net.tester.utils.FrontEndFeedbackUtil;
+import weg.net.tester.utils.InlineFeddbackUtil;
 import weg.net.tester.utils.SapCaracUtil;
 import weg.net.tester.utils.TestStatusUtil;
 
@@ -136,6 +135,27 @@ public class TestExecutor {
             //this.baseTagList = this.dataCenter.initiate(barCode);
             //this.setTestMetaDataModel();
             //sendProductDescriptionFeedback();
+            switch(this.dataCenter.getInlineConnector().isTestAllowed()) {
+                case InlineFeddbackUtil.ALLOWED:
+                  this.baseTagList = this.dataCenter.initiate(barCode, true);
+                  this.setTestMetaDataModel();
+                  sendProductDescriptionFeedback();
+                  return FrontEndFeedbackUtil.OK;
+                case InlineFeddbackUtil.NOT_ALLOWED:
+                  this.baseTagList = this.dataCenter.initiate(barCode, false);
+                  this.setTestMetaDataModel();
+                  sendProductDescriptionFeedback();
+                  return FrontEndFeedbackUtil.TESTE_NAO_AUTORIZADO;
+                case InlineFeddbackUtil.NOT_ENABLED:
+                  this.baseTagList = this.dataCenter.initiate(barCode, false);
+                  this.setTestMetaDataModel();
+                  sendProductDescriptionFeedback();
+                  return FrontEndFeedbackUtil.OK;
+                default:
+                  // code block
+                  return null;
+            }
+            /* 
             if (this.dataCenter.getInlineConnector().isTestAllowed()) {
                 this.baseTagList = this.dataCenter.initiate(barCode, true);
                 this.setTestMetaDataModel();
@@ -147,6 +167,7 @@ public class TestExecutor {
                 sendProductDescriptionFeedback();
                 return FrontEndFeedbackUtil.TESTE_NAO_AUTORIZADO;
             }
+            */
         } catch (SapException e) {
             return FrontEndFeedbackUtil.SAP_ERROR;
         } catch (InlineException e) {

@@ -2,7 +2,7 @@ import { LeafUserInputTag } from './../../../shared/models/tags/leaf-user-input-
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { BaseTag, Routine, Project, EnsTypeEnum, EnsVariableNameEnum, EnsTagConfiguration } from 'src/app/shared';
+import { BaseTag, Routine, Project, EnsTypeEnum, EnsVariableNameEnum, EnsTagConfiguration, CompareEnum } from 'src/app/shared';
 import { ProjectService } from '../../services/project.service';
 
 @Component({
@@ -27,6 +27,9 @@ export class LeafUserInputTagComponent implements OnInit {
 
   listOfEnsType: string[] = []
   listOfEnsVariableName: string[] = []
+  listOfCompare: string[] = []
+  listOfCommunicationName: string[] = []
+  listOfVariableToRead: string[] = ["valueRef", "inputValue"]
 
   @ViewChild('formTag') formTag!: NgForm
   @ViewChild('formNewTag') formNewTag!: NgForm
@@ -36,8 +39,26 @@ export class LeafUserInputTagComponent implements OnInit {
   ngOnInit(): void {
     this.fillListOfEnsType()
     this.fillListOfEnsVariableName()
+    this.fillListOfCompare()
+    this.fillListOfCommunicationName()
     this.initiateNewTag()
     this.initiateTagToUpdate()
+  }
+
+  fillListOfCommunicationName(): void {
+    for (let tag of this.tags) {
+      if (tag.tagName?.includes("Communication")) {
+        this.listOfCommunicationName.push((<any>tag).communicationName)
+      }
+    }
+    console.log(this.listOfCommunicationName)
+  }
+
+  fillListOfCompare(): void {
+    for (const value in CompareEnum) {
+      //console.log(value)
+      this.listOfCompare.push(value)
+    }
   }
 
   fillListOfEnsType(): void {

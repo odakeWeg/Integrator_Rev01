@@ -33,10 +33,16 @@ export class ProjectFolderComponent implements OnInit {
   fillProjects(): void {
     this.projectService.getAllProjects().subscribe({
       next: (data) => {
-        this.projects = data,//; this.ProjectsOriginal = JSON.parse(JSON.stringify(data))},
-        this.mappingNumber = this.projects[this.projectId].mappings!.length
-        this.routineNumber = this.projects[this.projectId].routines!.length
-        this.configNumber = this.projects[this.projectId].configurations!.length
+        this.projects = data//; this.ProjectsOriginal = JSON.parse(JSON.stringify(data))},
+        if(this.projects[this.projectId].mappings!=null) {
+          this.mappingNumber = this.projects[this.projectId].mappings!.length
+        }
+        if(this.projects[this.projectId].routines!=null) {
+          this.routineNumber = this.projects[this.projectId].routines!.length
+        }
+        if(this.projects[this.projectId].configurations!=null) {
+          this.configNumber = this.projects[this.projectId].configurations!.length
+        }
       },
       error: (err) => console.log(err)
     });

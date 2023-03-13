@@ -1,3 +1,5 @@
+import { LeafInlineSetupTagComponent } from './../tag-modals/leaf-inline-setup-tag/leaf-inline-setup-tag.component';
+import { LeafVerifyTagComponent } from './../tag-modals/leaf-verify-tag/leaf-verify-tag.component';
 import { LeafEthernetCommunicationTagComponent } from './../tag-modals/leaf-ethernet-communication-tag/leaf-ethernet-communication-tag.component';
 import { LeafEnsSetupTagComponent } from './../tag-modals/leaf-ens-setup-tag/leaf-ens-setup-tag.component';
 import { Component, OnInit } from '@angular/core';
@@ -36,8 +38,8 @@ export class TagComponent implements OnInit {
   listOfTagName: string[] = []
   tags: BaseTag[] = []
   routines: Routine[] = []
-  routine!: Routine
-  project!: Project
+  routine: Routine = new Routine()
+  project: Project = new Project()
 
   idMin!: Number
   idMax!: Number
@@ -283,6 +285,7 @@ export class TagComponent implements OnInit {
 
 
   getTagName(tagName: string): any{ //@Todo: Make it better or at least group some functions to override
+    console.log(tagName)
     switch (tagName) {
       case TagEnum.LeafEnsSetupTag:
         return LeafEnsSetupTagComponent
@@ -314,6 +317,10 @@ export class TagComponent implements OnInit {
         return LeafVariableWriteTagComponent
       case TagEnum.LeafWriteTag:
         return LeafWriteTagComponent
+      case TagEnum.LeafVerifyTag:
+        return LeafVerifyTagComponent
+      case TagEnum.LeafInlineSetupTag:
+        return LeafInlineSetupTagComponent
     }
     return ModalTagNotFoundComponent
   }

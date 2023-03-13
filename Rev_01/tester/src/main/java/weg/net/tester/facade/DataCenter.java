@@ -49,6 +49,8 @@ public class DataCenter {
 
         TagList baseTagList = getList(barCode.length);
         mongoConnector.initialSetup(serial, descricaoProduto);
+
+        this.inlineConnector.setInlineEnabled(isTestAllowed);
         if(isTestAllowed) {
             this.inlineConnector.saveInitialEvent();
         }
