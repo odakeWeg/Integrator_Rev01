@@ -5,7 +5,7 @@ export class LeafMultipleWriteTag extends BaseTag {
         public communicationName?: string,
         public registerName?: string,
         public register?: number,
-        //public value?: number[],
+        public values?: number[],
         public quantityOfRegisters?: number,
         public waitBefore?: number,
         public waitAfter?: number

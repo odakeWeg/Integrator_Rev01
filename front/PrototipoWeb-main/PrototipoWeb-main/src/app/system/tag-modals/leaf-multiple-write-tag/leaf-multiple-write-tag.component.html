@@ -31,6 +31,11 @@
             <hr>
             
             <div class="form-outline mb-4">
+                <label class="form-label" for="values">Writing values</label>
+                <input type="text" id="values" name="values" class="form-control"
+                  [(ngModel)]="newTag.values" #value="ngModel">
+            </div>
+            <div class="form-outline mb-4">
                 <label class="form-label" for="communicationName">Communication name</label>
                 <!--
                 <input type="text" id="communicationName" name="communicationName" class="form-control"
@@ -123,6 +128,11 @@
             </div>
             <hr>
             
+            <div class="form-outline mb-4">
+                <label class="form-label" for="values">Writing values</label>
+                <input type="text" id="values" name="values" class="form-control"
+                  [(ngModel)]="tagToUpdate.values" #values="ngModel">
+            </div>
             <div class="form-outline mb-4">
                 <label class="form-label" for="communicationName">Communication name</label>
                 <!--

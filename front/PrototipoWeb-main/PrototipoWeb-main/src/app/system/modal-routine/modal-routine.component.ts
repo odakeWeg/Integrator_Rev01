@@ -56,7 +56,9 @@ export class ModalRoutineComponent implements OnInit {
 
   update():void {
     let line = this.routine.line
+    let tagList = this.routine.tag
     this.routine = this.formRoutine.value
+    this.routine.tag = tagList
     this.routine.enabled = true
     this.routine.line = line
     this.updateRoutineLocally(this.routine)

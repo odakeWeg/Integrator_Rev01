@@ -51,9 +51,9 @@ public class DataCenter {
         mongoConnector.initialSetup(serial, descricaoProduto);
 
         this.inlineConnector.setInlineEnabled(isTestAllowed);
-        if(isTestAllowed) {
-            this.inlineConnector.saveInitialEvent();
-        }
+        //if(isTestAllowed) {   //@Todo: remove, this statement is in the inlineClass
+        this.inlineConnector.saveInitialEvent();
+        //}
         //Make it a loop or something
 
         //@Todo: take the inline initialization that is in the Test Executor and bring here

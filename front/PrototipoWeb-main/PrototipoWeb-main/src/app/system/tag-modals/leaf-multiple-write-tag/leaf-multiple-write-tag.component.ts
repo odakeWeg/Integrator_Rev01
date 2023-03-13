@@ -106,6 +106,11 @@ export class LeafMultipleWriteTagComponent implements OnInit {
     this.tag.ensTagConfiguration = ensBuffer
     this.tag.enabled = true
     this.tag.id = id
+    try {
+      this.tag.values = this.formTag.value.values!.split(",").map((el: string) => {return Number(el)})
+    } catch (error) {
+      //@Todo: refactor this: try catch only used to check if the statement is a array or string
+    }
     this.updateTagLocally(this.tag)
     this.updateProjectLocally()
 
@@ -122,6 +127,7 @@ export class LeafMultipleWriteTagComponent implements OnInit {
     this.newTag.ensTagConfiguration = ensBuffer
     this.newTag.enabled = true
     this.newTag.id = this.tags.length
+    this.newTag.values = this.formNewTag.value.values!.split(",").map((el: string) => {return Number(el)})
     this.tags.push(this.newTag)
     this.routine.tag = this.tags
     this.updateProjectLocally()
