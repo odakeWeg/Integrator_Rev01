@@ -30,6 +30,8 @@ import { LeafWriteTagComponent } from './tag-modals/leaf-write-tag/leaf-write-ta
 import { ModalTagNotFoundComponent } from './tag-modals/modal-tag-not-found/modal-tag-not-found.component';
 import { LeafVerifyTagComponent } from './tag-modals/leaf-verify-tag/leaf-verify-tag.component';
 import { LeafInlineSetupTagComponent } from './tag-modals/leaf-inline-setup-tag/leaf-inline-setup-tag.component';
+import { LeafVerifyMultipleTagComponent } from './tag-modals/leaf-verify-multiple-tag/leaf-verify-multiple-tag.component';
+import { LeafVariableMultipleCompareTagComponent } from './tag-modals/leaf-variable-multiple-compare-tag/leaf-variable-multiple-compare-tag.component';
 
 
 
@@ -62,7 +64,9 @@ import { LeafInlineSetupTagComponent } from './tag-modals/leaf-inline-setup-tag/
     LeafWriteTagComponent,
     ModalTagNotFoundComponent,
     LeafVerifyTagComponent,
-    LeafInlineSetupTagComponent
+    LeafInlineSetupTagComponent,
+    LeafVerifyMultipleTagComponent,
+    LeafVariableMultipleCompareTagComponent
   ],
   imports: [
     CommonModule,

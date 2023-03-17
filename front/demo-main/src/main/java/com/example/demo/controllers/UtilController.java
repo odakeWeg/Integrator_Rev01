@@ -12,7 +12,7 @@ import net.weg.searchsap.Caract;
 
 import com.example.demo.utils.SapCaracUtil;
 
-@CrossOrigin(origins = "http://localhost:4200/")
+@CrossOrigin(origins = "http://localhost:4202/")
 @RestController
 @RequestMapping("/util/")
 public class UtilController {

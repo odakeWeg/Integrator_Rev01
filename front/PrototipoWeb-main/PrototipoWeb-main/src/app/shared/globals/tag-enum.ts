@@ -15,5 +15,7 @@ export enum TagEnum {
   LeafVariableWriteTag = "LeafVariableWriteTag",
   LeafWriteTag = "LeafWriteTag",
   LeafVerifyTag = "LeafVerifyTag",
-  LeafInlineSetupTag = "LeafInlineSetupTag"
+  LeafInlineSetupTag = "LeafInlineSetupTag",
+  LeafVariableMultipleCompareTag = "LeafVariableMultipleCompareTag",
+  LeafVerifyMultipleTag = "LeafVerifyMultipleTag"
 }

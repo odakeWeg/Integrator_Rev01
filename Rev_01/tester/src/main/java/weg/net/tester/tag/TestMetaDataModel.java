@@ -34,7 +34,11 @@ public class TestMetaDataModel {
     }
 
     public static boolean isTestEnabled(int position, int id) {
+        //if (position==0) {
+        //    return true;
+        //} else {
         return (isPositionEnabled[position-1].get() || tagList.getList().get(id).trivialTag());
+        //}
     }
 
     public void initiateProductList(int qnt) {

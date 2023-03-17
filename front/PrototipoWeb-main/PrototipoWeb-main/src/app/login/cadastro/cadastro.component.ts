@@ -5,7 +5,7 @@ import { User } from 'src/app/shared';
 import { CadastroService } from '../services/cadastro.service';
 import * as PerfilUtil from 'src/app/shared/globals/perfil-util';
 
-const LS_CHAVE: string = "userSession";
+//const LS_CHAVE: string = "userSession";
 
 @Component({
   selector: 'app-cadastro',
@@ -28,15 +28,31 @@ export class CadastroComponent implements OnInit {
   filterArray: boolean[] = []
   shownUsers: number = 0
 
-  loggedUser: User = JSON.parse(localStorage[LS_CHAVE])
+  loggedUser: User = new User()//JSON.parse(localStorage[LS_CHAVE])
+  LS_CHAVE: string = "userSession";
 
   constructor(private cadastroService: CadastroService, public router: Router) { }
 
   ngOnInit(): void {
     console.log(this.loggedUser)
     this.fillUsers();
+    this.verifyIfLogged()
     this.newUser = new User()
     this.userFilter = new User()
+  }
+
+  verifyIfLogged(): void {
+    //@Todo: LoginPage for this software
+    if(localStorage[this.LS_CHAVE]!=null) {
+      this.loggedUser = JSON.parse(localStorage[this.LS_CHAVE])
+    } else {
+      this.loggedUser.id = 0
+      this.loggedUser.line = 0
+      this.loggedUser.nome = "Edson"
+      this.loggedUser.cadastro = 7881
+      this.loggedUser.perfil = "Adm"
+      //this.router.navigateByUrl('/login')
+    }
   }
 
   fillUsers(): void {

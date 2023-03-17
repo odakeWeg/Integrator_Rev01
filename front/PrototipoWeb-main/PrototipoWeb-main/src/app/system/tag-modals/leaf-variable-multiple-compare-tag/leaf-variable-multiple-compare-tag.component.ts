@@ -1,17 +1,17 @@
-import { LeafMultipleRegisterCompareTag } from './../../../shared/models/tags/leaf-multiple-register-compare-tag.model';
+import { LeafVariableMultipleCompareTag } from './../../../shared/models/tags/leaf-variable-multiple-compare-tag.model';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { BaseTag, Routine, Project, EnsTypeEnum, EnsVariableNameEnum, EnsTagConfiguration, CompareEnum } from 'src/app/shared';
+import { BaseTag, Routine, Project, CompareEnum, EnsTypeEnum, EnsVariableNameEnum, EnsTagConfiguration } from 'src/app/shared';
 import { ProjectService } from '../../services/project.service';
 
 @Component({
-  selector: 'app-leaf-multiple-register-compare-tag',
-  templateUrl: './leaf-multiple-register-compare-tag.component.html',
-  styleUrls: ['./leaf-multiple-register-compare-tag.component.css']
+  selector: 'app-leaf-variable-multiple-compare-tag',
+  templateUrl: './leaf-variable-multiple-compare-tag.component.html',
+  styleUrls: ['./leaf-variable-multiple-compare-tag.component.css']
 })
-export class LeafMultipleRegisterCompareTagComponent implements OnInit {
-  @Input() tag!: LeafMultipleRegisterCompareTag
+export class LeafVariableMultipleCompareTagComponent implements OnInit {
+  @Input() tag!: LeafVariableMultipleCompareTag
   @Input() tags!: BaseTag[]
   @Input() routine!: Routine
   @Input() routines!: Routine[]
@@ -21,8 +21,8 @@ export class LeafMultipleRegisterCompareTagComponent implements OnInit {
   @Input() filterArray!: boolean[]
   @Input() shownUsers!: number
   
-  tagToUpdate!: LeafMultipleRegisterCompareTag
-  newTag!: LeafMultipleRegisterCompareTag
+  tagToUpdate!: LeafVariableMultipleCompareTag
+  newTag!: LeafVariableMultipleCompareTag
   enableFields!: boolean
 
   listOfEnsType: string[] = []
@@ -113,7 +113,16 @@ export class LeafMultipleRegisterCompareTagComponent implements OnInit {
     let id = this.tag.id
     this.tag = this.formTag.value
     console.log(this.formTag.value.tolerancy!)
-    this.tag.tolerancy = String(this.formTag.value.tolerancy!).split(",").map((el: string) => {return Number(el)})
+    try {
+      this.tag.variableName = this.formTag.value.variableName!.split(",")
+    } catch (error) {
+      //@Todo: refactor this: try catch only used to check if the statement is a array or string
+    }
+    try {
+      this.tag.tolerancy = String(this.formTag.value.tolerancy!).split(",").map((el: string) => {return Number(el)})
+    } catch (error) {
+      //@Todo: refactor this: try catch only used to check if the statement is a array or string
+    }
     this.tag.ensTagConfiguration = ensBuffer
     this.tag.enabled = true
     this.tag.id = id
@@ -130,7 +139,16 @@ export class LeafMultipleRegisterCompareTagComponent implements OnInit {
   add():void {
     let ensBuffer = this.newTag.ensTagConfiguration
     this.newTag = this.formNewTag.value
-    this.newTag.tolerancy = this.formNewTag.value.tolerancy!.split(",").map((el: string) => {return Number(el)})
+    try {
+      this.newTag.variableName = this.formNewTag.value.variableName!.split(",")
+    } catch (error) {
+      //@Todo: refactor this: try catch only used to check if the statement is a array or string
+    }
+    try {
+      this.newTag.tolerancy = this.formNewTag.value.tolerancy!.split(",").map((el: string) => {return Number(el)})
+    } catch (error) {
+      //@Todo: refactor this: try catch only used to check if the statement is a array or string
+    }
     this.newTag.ensTagConfiguration = ensBuffer
     this.newTag.enabled = true
     this.newTag.id = this.tags.length
@@ -361,34 +379,6 @@ export class LeafMultipleRegisterCompareTagComponent implements OnInit {
       //document.getElementById('ensType')?.setAttribute("disabled", "disabled")
       //document.getElementById('ensVariableName')?.setAttribute("disabled", "disabled")
       //document.getElementById('variableToReadFrom')?.setAttribute("disabled", "disabled")
-    }
-  }
-
-  setNewRegisterRef(): void {
-    if(this.newTag.registerNameRef!="") {
-      for(let mapping of this.project.mappings!) {
-        if(this.newTag.registerNameRef==mapping.nome) {
-          this.newTag.registerRef = Number(mapping.mapping)
-        }
-      }
-      document.getElementById('registerRef')?.setAttribute("disabled", "disabled")
-    } else {
-      this.newTag.registerRef = 0
-      document.getElementById('registerRef')?.removeAttribute("disabled");
-    }
-  }
-
-  setRegisterRef(): void {
-    if(this.tagToUpdate.registerNameRef!="") {
-      for(let mapping of this.project.mappings!) {
-        if(this.tagToUpdate.registerNameRef==mapping.nome) {
-          this.tagToUpdate.registerRef = Number(mapping.mapping)
-        }
-      }
-      document.getElementById('registerRef')?.setAttribute("disabled", "disabled")
-    } else {
-      this.tagToUpdate.registerRef = 0
-      document.getElementById('registerRef')?.removeAttribute("disabled");
     }
   }
 

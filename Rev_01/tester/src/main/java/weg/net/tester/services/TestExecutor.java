@@ -135,7 +135,7 @@ public class TestExecutor {
             //this.baseTagList = this.dataCenter.initiate(barCode);
             //this.setTestMetaDataModel();
             //sendProductDescriptionFeedback();
-            switch(this.dataCenter.getInlineConnector().isTestAllowed()) {
+            switch(this.dataCenter.isTestAllowed(barCode)) {
                 case InlineFeddbackUtil.ALLOWED:
                   this.baseTagList = this.dataCenter.initiate(barCode, true);
                   this.setTestMetaDataModel();

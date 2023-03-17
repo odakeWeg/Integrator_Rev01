@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/shared';
 
-const BASE_URL: string = 'http://localhost:8080/config/user/';
+const BASE_URL: string = 'http://localhost:8082/config/user/';
 
 @Injectable({
   providedIn: 'root'

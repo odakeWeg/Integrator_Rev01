@@ -21,4 +21,6 @@ public class TagNameUtil {
     public static final String WAIT_TEST = "LeafWaitTestTag";
     public static final String VERIFY = "LeafVerifyTag";
     public static final String INLINE = "LeafInlineSetupTag";
+    public static final String VARIABLE_MULTIPLE_COMPARE = "LeafVariableMultipleCompareTag";
+    public static final String VERIFY_MULTIPLE = "LeafVerifyMultipleTag";
 }

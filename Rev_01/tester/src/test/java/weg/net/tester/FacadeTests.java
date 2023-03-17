@@ -12,6 +12,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import net.weg.searchsap.Caract;
 import net.weg.searchsap.ProdutoBrutoSAP;
+import net.weg.wdc.sic.service.SicLibraryServices;
 import weg.net.tester.exception.DataBaseException;
 import weg.net.tester.exception.InlineException;
 import weg.net.tester.exception.SapException;
@@ -26,8 +27,10 @@ import weg.net.tester.repositories.SessionRepository;
 import weg.net.tester.repositories.TestingResultRepository;
 import weg.net.tester.tag.BaseTag;
 import weg.net.tester.tag.LeafForTestTag;
+import weg.net.tester.tag.LeafInlineSetupTag;
 import weg.net.tester.tag.LeafTestTag;
 import weg.net.tester.tag.TagList;
+import weg.net.tester.utils.InlineFeddbackUtil;
 
 @SpringBootTest
 public class FacadeTests {
@@ -93,10 +96,19 @@ public class FacadeTests {
     @Test
 	void inlineConnection() throws Exception {
         inlineConnector.setSerial("1080107977");
-        inlineConnector.isTestAllowed();
-        System.out.println("This is the response: " + inlineConnector.isTestAllowed());
+        TagList tagList = new TagList();
+        tagList.setList(new ArrayList<>());
+        LeafInlineSetupTag leafInlineSetupTag = new LeafInlineSetupTag();
+        leafInlineSetupTag.setId(0);
+        leafInlineSetupTag.setEnableInline(true);;
+        leafInlineSetupTag.setTimeout(1000);
+        leafInlineSetupTag.setPosition(1);
+        tagList.getList().add(leafInlineSetupTag);
 
-        Assert.assertEquals(true, inlineConnector.isTestAllowed());
+        inlineConnector.isTestAllowed(tagList);
+        System.out.println("This is the response: " + inlineConnector.isTestAllowed(tagList));
+
+        Assert.assertEquals(InlineFeddbackUtil.NOT_ALLOWED, inlineConnector.isTestAllowed(tagList));
 	}
 
     @Test

@@ -30,6 +30,7 @@ import weg.net.tester.models.ens.EnsTagConfiguration;
 import weg.net.tester.tag.TagList;
 import weg.net.tester.tag.TestMetaDataModel;
 import weg.net.tester.utils.EnsParametersUtil;
+import weg.net.tester.utils.TagNameUtil;
 
 @Configuration
 public class EnsConnector {
@@ -52,11 +53,16 @@ public class EnsConnector {
         this.json = base.objToJsonArrayConverter(tagList); //transform in a array obj
         this.tagList = tagList;
 
-        //@Todo: put ens data
-        instantiatePositionObj();
-        setEnsObjMesures();
-        //setEnsObj();
-        saveEveryEnabledPosition(); //@Todo: create enabler value on ens
+        for(int i = 0; i < this.tagList.getList().size(); i++) {
+            if(TagNameUtil.ENS_SETUP.equals(this.tagList.getList().get(i).getTagName())) {
+                //@Todo: put ens data
+                instantiatePositionObj();
+                setEnsObjMesures();
+                //setEnsObj();
+                saveEveryEnabledPosition(); //@Todo: create enabler value on ens
+                return;
+            }
+        }
     }
 
     //private void setEnsObj() {

@@ -6,7 +6,7 @@ import { ProjectService } from '../services/project.service';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-const LS_CHAVE: string = "userSession";
+//const LS_CHAVE: string = "userSession";
 
 @Component({
   selector: 'app-project-folder',
@@ -21,13 +21,29 @@ export class ProjectFolderComponent implements OnInit {
   routineNumber: number = 0
   configNumber: number = 0
 
-  loggedUser: User = JSON.parse(localStorage[LS_CHAVE])
+  loggedUser: User = new User()//JSON.parse(localStorage[LS_CHAVE])
+  LS_CHAVE: string = "userSession";
 
   constructor(private projectService: ProjectService, public router: Router, private activatedRoute: ActivatedRoute, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.fillProjects();
+    this.verifyIfLogged()
     this.projectId = parseInt(this.activatedRoute.snapshot.paramMap.get('line')!)
+  }
+
+  verifyIfLogged(): void {
+    //@Todo: LoginPage for this software
+    if(localStorage[this.LS_CHAVE]!=null) {
+      this.loggedUser = JSON.parse(localStorage[this.LS_CHAVE])
+    } else {
+      this.loggedUser.id = 0
+      this.loggedUser.line = 0
+      this.loggedUser.nome = "Edson"
+      this.loggedUser.cadastro = 7881
+      this.loggedUser.perfil = "Adm"
+      //this.router.navigateByUrl('/login')
+    }
   }
 
   fillProjects(): void {

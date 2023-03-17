@@ -76,7 +76,19 @@ public class IOLinkCommunication implements BaseCommunication {
             toggleCommandIdentifier();
             ethernetIOLinkCommunication.writeMultipleRegisters((short) 500, readingStructureRequest);
             TimeUnit.MILLISECONDS.sleep(timeBetweenCommand);
-            leituraRegister = ethernetIOLinkCommunication.readHoldingRegisters((short) 6, (short) quantityOfRegisters);
+            //@TODO: origin
+            //leituraRegister = ethernetIOLinkCommunication.readHoldingRegisters((short) 6, (short) quantityOfRegisters);
+
+            //@TODO: Gamb
+            if(address>0) {
+                leituraRegister = ethernetIOLinkCommunication.readHoldingRegisters((short) 6, (short) 2);
+            } else {
+                leituraRegister = ethernetIOLinkCommunication.readHoldingRegisters((short) 6, (short) quantityOfRegisters);
+            }
+
+
+
+
             leitura = new int[leituraRegister.length];
             for (int i = 0; i < leituraRegister.length; i++) {
                 leitura[i] = invertByte(String.valueOf(leituraRegister[i].intValue()));

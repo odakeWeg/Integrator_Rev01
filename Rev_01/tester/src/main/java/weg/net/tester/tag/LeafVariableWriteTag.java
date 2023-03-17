@@ -29,7 +29,7 @@ public class LeafVariableWriteTag extends NodeWriteTag {
 
     private boolean getVariableValue() {
         try {
-            variableValue = Integer.parseInt(TestMetaDataModel.sapConnector.get(position).get(this.variableName));
+            variableValue = Integer.parseInt(TestMetaDataModel.sapConnector.get(position-1).get(this.variableName));
             return true;
         } catch (Exception e) {
             log = "Falha ao ler a variável: " + this.variableName;

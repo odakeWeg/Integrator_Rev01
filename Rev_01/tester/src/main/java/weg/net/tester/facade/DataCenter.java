@@ -19,6 +19,7 @@ import weg.net.tester.tag.TagList;
 import weg.net.tester.tag.TestMetaDataModel;
 import weg.net.tester.utils.FilePathUtil;
 import weg.net.tester.utils.FrontEndFeedbackUtil;
+import weg.net.tester.utils.InlineFeddbackUtil;
 import weg.net.tester.utils.SapCaracUtil;
 
 @Configuration
@@ -37,6 +38,8 @@ public class DataCenter {
     //@Todo: or make it multi-threaded or make an array
     //@Todo: Save test end HTML file (easy way for the people who fix the product)
     public TagList initiate(String[] barCode, boolean isTestAllowed) throws SapException, InlineException, SessionException, TestUnmarshalingException, TestSetupException {
+        //@Todo: If works remove
+        /* 
         this.sapConnector.setBarCode(barCode);
         this.sapConnector.getDataBy2DBarcodeString();
 
@@ -46,13 +49,19 @@ public class DataCenter {
             serial[position] = this.sapConnector.getSapDataMap().get(position).get(SapCaracUtil.SERIAL);
             descricaoProduto[position] = this.sapConnector.getSapDataMap().get(position).get(SapCaracUtil.SHORT_TEXT);
         }
+        */
+        String[] serial = new String[barCode.length];
+        String[] descricaoProduto = new String[barCode.length];
 
         TagList baseTagList = getList(barCode.length);
         mongoConnector.initialSetup(serial, descricaoProduto);
 
         this.inlineConnector.setInlineEnabled(isTestAllowed);
         //if(isTestAllowed) {   //@Todo: remove, this statement is in the inlineClass
-        this.inlineConnector.saveInitialEvent();
+        for(int position = 0; position < barCode.length; position++) {
+            this.inlineConnector.setSerial(serial[position]);
+            this.inlineConnector.saveInitialEvent();
+        }
         //}
         //Make it a loop or something
 
@@ -63,6 +72,27 @@ public class DataCenter {
         //this.mongoConnector.setDescricaoProduto(descricaoProduto);
         //this.mongoConnector.setSerial(serial);
         return baseTagList;
+    }
+
+    public String isTestAllowed(String[] barCode) throws SapException, TestSetupException, TestUnmarshalingException, InlineException {
+        this.sapConnector.setBarCode(barCode);
+        this.sapConnector.getDataBy2DBarcodeString();
+
+        TagList baseTagList = getList(barCode.length);
+
+        String[] serial = new String[barCode.length];
+        String[] descricaoProduto = new String[barCode.length];
+        for (int position = 0; position < barCode.length; position++) {
+            serial[position] = this.sapConnector.getSapDataMap().get(position).get(SapCaracUtil.SERIAL);
+            descricaoProduto[position] = this.sapConnector.getSapDataMap().get(position).get(SapCaracUtil.SHORT_TEXT);
+        }
+        for (int position = 0; position < barCode.length; position++) {
+            this.inlineConnector.setSerial(serial[position]);
+            if(!this.inlineConnector.isTestAllowed(baseTagList).equals(InlineFeddbackUtil.ALLOWED)) {
+                return this.inlineConnector.isTestAllowed(baseTagList);
+            }
+        }
+        return InlineFeddbackUtil.ALLOWED;
     }
 
     public void saveMongo(String[] result) throws DataBaseException {
@@ -77,6 +107,7 @@ public class DataCenter {
 
     private void saveInlineEnd(String[] result) throws InlineException {
         for (int position = 0; position < result.length; position++) {
+            this.inlineConnector.setSerial(this.sapConnector.getSapDataMap().get(position).get(SapCaracUtil.SERIAL));
             if (result[0].equals(FrontEndFeedbackUtil.OK)) {
                 this.inlineConnector.saveApprovalEvent();
             } else {

@@ -16,6 +16,7 @@ public class LeafIOLinkCommunicationTag extends NodeCommunicationTag {
     protected int port;
     protected int address;
     protected int timeBetweenCommand;
+    protected int trials;
 
     @Override
     public void executeCommand() {

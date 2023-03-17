@@ -12,15 +12,13 @@ import weg.net.tester.utils.TagNameUtil;
 
 @Getter
 @Setter
-public class LeafMultipleRegisterCompareTag extends NodeCompareTag {
+public class LeafVariableMultipleCompareTag extends NodeCompareTag {
 
-    protected String communicationNameRef;
-    protected int registerRef;
-    protected String registerNameRef;
-    protected int[] valueRef;
+    protected String[] variableName;
+    protected int[] variableValue;
     protected String communicationNameOnTest;
-    protected int registerOnTest;
     protected String registerNameOnTest;
+    protected int registerOnTest;
     protected int[] valueOnTest;
     protected String calculateBy;
     protected int[] tolerancy;
@@ -30,7 +28,34 @@ public class LeafMultipleRegisterCompareTag extends NodeCompareTag {
 
     @Override
     protected void executeCommand() {
-        if (readRef() && readOnTest()) {
+        if (getVariableValue()) {
+            checkInputValue();
+        }
+    }
+
+    private boolean getVariableValue() {
+        variableValue = new int[variableName.length];
+        valueOnTest = new int[variableName.length]; 
+        try {
+            for(int i = 0; i < variableValue.length; i++) {
+                variableValue[i] = Integer.parseInt(TestMetaDataModel.sapConnector.get(position-1).get(this.variableName[i]));
+            }
+            return true;
+        } catch (Exception e) {
+
+            log = "Falha ao ler as variáveis: [ " + this.variableName;
+            for(int i = 0; i < variableValue.length; i++) {
+                log += this.variableName[i] + " ";
+            }
+            log += "]";
+
+            setFailureCommandLog(FailureCodeUtil.VARIABLE_READING_FAILURE, log);
+            return false;
+        }
+    } 
+
+    private void checkInputValue() {
+        if (readRef()) {
             switch(calculateBy) {
                 case CompareUtil.ABSOLUTE:
                     absoluteCompare();
@@ -40,11 +65,6 @@ public class LeafMultipleRegisterCompareTag extends NodeCompareTag {
                 break;
             }
         }
-    }
-
-    @Override
-    public void setTagName() {
-        this.tagName = TagNameUtil.REGISTER_MULTIPLE_COMPARE;
     }
 
     private void percentualCompare() {
@@ -57,8 +77,8 @@ public class LeafMultipleRegisterCompareTag extends NodeCompareTag {
         int tolerancyPercentage;
 
         for(int i = 0; i < quantityOfRegisters; i++) {
-            targetValue = valueOnTest[i];
-            referenceValue = valueRef[i];
+            targetValue = variableValue[i];
+            referenceValue = valueOnTest[i];
             tolerancyPercentage = tolerancy[i];
 
             upperLimit = targetValue*100 <= referenceValue*100 + referenceValue*tolerancyPercentage;
@@ -67,7 +87,7 @@ public class LeafMultipleRegisterCompareTag extends NodeCompareTag {
                 testResult = "OK";
                 log = "Valor lido dentro da tolerancia: " +  (referenceValue - referenceValue*tolerancyPercentage/100) + " < Valor medido: " + targetValue + " < " + (referenceValue + referenceValue*tolerancyPercentage/100);
             } else {
-                testResult = "Falha: Comparação dos registradores " + registerRef+i + " (" + communicationNameRef +")" + " e " + registerOnTest+i + " (" + communicationNameOnTest + ") fora da tolerância";
+                testResult = "Falha: Comparação dos registradores " + (registerOnTest+i) + " (" + communicationNameOnTest +")" + " e " + variableName[i] + " fora da tolerância";
                 log = "Valor lido fora da tolerancia: " +  (referenceValue - referenceValue*tolerancyPercentage/100) + " < Valor medido: " + targetValue + " < " + (referenceValue + referenceValue*tolerancyPercentage/100);
                 return;
             }
@@ -84,8 +104,8 @@ public class LeafMultipleRegisterCompareTag extends NodeCompareTag {
         int tolerancyAbsolute;
 
         for(int i = 0; i < quantityOfRegisters; i++) {
-            targetValue = valueOnTest[i];
-            referenceValue = valueRef[i];
+            targetValue = variableValue[i];
+            referenceValue = valueOnTest[i];
             tolerancyAbsolute = tolerancy[i];
         
             upperLimit = (targetValue <= referenceValue + tolerancyAbsolute);
@@ -94,56 +114,39 @@ public class LeafMultipleRegisterCompareTag extends NodeCompareTag {
                 testResult = "OK";
                 log = "Valor lido dentro da tolerancia: " +  (referenceValue - tolerancyAbsolute) + " < Valor medido: " + targetValue + " < " + (referenceValue + tolerancyAbsolute);
             } else {
-                testResult = "Falha: Comparação dos registradores " + (registerRef+i) + " (" + communicationNameRef +")" + " e " + (registerOnTest+i) + " (" + communicationNameOnTest + ") fora da tolerância";
+                testResult = "Falha: Comparação dos registradores " + (registerOnTest+i) + " (" + communicationNameOnTest +")" + " e " + variableName[i] + " fora da tolerância";
                 log = "Valor lido fora da tolerancia: " +  (referenceValue - referenceValue*tolerancyAbsolute/100) + " < Valor medido: " + targetValue + " < " + (referenceValue + referenceValue*tolerancyAbsolute/100);
                 return;
             }
         }
     }
 
-    public boolean readRef() {
+    private boolean readRef() {
         try {
-            BaseCommunication communicationRef = getCommunicationByName(communicationNameRef);
+            BaseCommunication communicationRef = getCommunicationByName(communicationNameOnTest);
 
             delayMilliseconds(waitBefore);
             try {
-                valueRef = communicationRef.readMultipleRegisters(registerRef, quantityOfRegisters);
+                valueOnTest = communicationRef.readMultipleRegisters(registerOnTest, quantityOfRegisters);
                 testResult = FailureCodeUtil.OK;
-                log = "Valor de leitura de ref. igual a " + valueRef + " no registrador " + registerRef + " até " + (registerRef+quantityOfRegisters);
+                log = "Valor de leitura igual a " + valueOnTest + " no registrador " + registerOnTest + " até " + (registerOnTest+quantityOfRegisters);
             } catch (CommunicationException e) {
-                log = "Falha na comunicação com " + communicationNameRef;
+                log = "Falha na comunicação com " + communicationNameOnTest;
                 setFailureCommandLog(FailureCodeUtil.FALHA_COMUNICACAO, log);
                 return false;
             }
             delayMilliseconds(waitAfter);
             return true;
         } catch (ObjectNotFoundException e) {
-            testResult = FailureCodeUtil.OBJECT_NOT_FOUND;
-            log = "Comunicação com nome " + communicationNameRef + " não foi encontrado, verificar se a rotina de teste está correta";
+            log = "Comunicação com nome " + communicationNameOnTest + " não foi encontrado, verificar se a rotina de teste está correta";
+            setFailureCommandLog(FailureCodeUtil.OBJECT_NOT_FOUND, log);
             return false;
         }
     }
 
-    public boolean readOnTest() {
-        try {
-            BaseCommunication communicationOnTest = getCommunicationByName(communicationNameOnTest);
-
-            delayMilliseconds(waitBefore);
-            try {
-                valueOnTest = communicationOnTest.readMultipleRegisters(registerOnTest, quantityOfRegisters);
-                testResult = FailureCodeUtil.OK;
-                log += " | Valor de leitura de teste igual a " + valueOnTest.toString() + " no registrador " + registerOnTest + " até: " + (registerRef+quantityOfRegisters);
-            } catch (CommunicationException e) {
-                log += " | Falha na comunicação com " + communicationNameOnTest;
-                setFailureCommandLog(FailureCodeUtil.FALHA_COMUNICACAO, log);
-                return false;
-            }
-            delayMilliseconds(waitAfter);
-            return true;
-        } catch (ObjectNotFoundException e) {
-            testResult = FailureCodeUtil.OBJECT_NOT_FOUND;
-            log += " | Comunicação com nome " + communicationNameOnTest + " não foi encontrado, verificar se a rotina de teste está correta";
-            return false;
-        }
+    @Override
+    public void setTagName() {
+        this.tagName = TagNameUtil.VARIABLE_MULTIPLE_COMPARE;
     }
+    
 }

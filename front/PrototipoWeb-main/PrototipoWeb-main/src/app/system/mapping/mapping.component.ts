@@ -27,13 +27,29 @@ export class MappingComponent implements OnInit {
   idMin!: Number
   idMax!: Number
 
-  loggedUser: User = JSON.parse(localStorage[LS_CHAVE])
+  loggedUser: User = new User()//JSON.parse(localStorage[LS_CHAVE])
+  LS_CHAVE: string = "userSession";
 
   constructor(private projectService: ProjectService, public router: Router, private activatedRoute: ActivatedRoute, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.fillMappings();
+    this.verifyIfLogged()
     this.mappingFilter = new Mapping()
+  }
+
+  verifyIfLogged(): void {
+    //@Todo: LoginPage for this software
+    if(localStorage[this.LS_CHAVE]!=null) {
+      this.loggedUser = JSON.parse(localStorage[this.LS_CHAVE])
+    } else {
+      this.loggedUser.id = 0
+      this.loggedUser.line = 0
+      this.loggedUser.nome = "Edson"
+      this.loggedUser.cadastro = 7881
+      this.loggedUser.perfil = "Adm"
+      //this.router.navigateByUrl('/login')
+    }
   }
 
   /*

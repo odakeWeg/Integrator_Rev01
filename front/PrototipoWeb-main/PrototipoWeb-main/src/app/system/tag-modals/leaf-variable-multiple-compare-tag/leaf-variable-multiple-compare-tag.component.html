@@ -29,12 +29,16 @@
             </div>
             
             <hr>
-
-
+            
             <div class="form-outline mb-4">
-                <label class="form-label" for="valueRef">Valores de referência</label>
-                <input type="number" id="valueRef" name="valueRef" class="form-control"
-                  [(ngModel)]="newTag.valueRef" #valueRef="ngModel">
+                <label class="form-label" for="variableName">Variable name</label>
+                <input type="text" id="variableName" name="variableName" class="form-control"
+                  [(ngModel)]="newTag.variableName" #variableName="ngModel">
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="quantityOfRegisters">Quantity of registers</label>
+                <input type="number" id="quantityOfRegisters" name="quantityOfRegisters" class="form-control"
+                  [(ngModel)]="newTag.quantityOfRegisters" #quantityOfRegisters="ngModel">
             </div>
             <div class="form-outline mb-4">
                 <label class="form-label" for="communicationNameOnTest">OnTest communication name</label>
@@ -64,7 +68,7 @@
             <div class="row mb-4">
                 <div class="col-md-6">
                     <label class="form-label" for="tolerancy">Tolerancy</label>
-                    <input type="number" id="tolerancy" name="tolerancy" class="form-control"
+                    <input type="text" id="tolerancy" name="tolerancy" class="form-control"
                     [(ngModel)]="newTag.tolerancy" #tolerancy="ngModel">
                 </div>
                 <div class="col-md-6">
@@ -82,7 +86,7 @@
 
             <div id="info" class="collapse shown-user" [attr.id]="'hidden-fields'">
                 <hr>
-                
+
                 <div class="row mb-4">
                     <div class="col-md-6">
                         <label class="form-label" for="waitBefore">Wait before</label>
@@ -170,7 +174,7 @@
         <form #formTag="ngForm">
             <div class="row mb-4">
                 <div class="col-md-9">
-                    <label class="form-label" for="tagName">tagName</label>
+                    <label class="form-label" for="tagName">Tag name</label>
                     <input type="text" id="tagName" name="tagName" class="form-control"
                     [(ngModel)]="tagToUpdate.tagName" #tagName="ngModel" readonly>
                 </div>
@@ -193,9 +197,14 @@
             <hr>
             
             <div class="form-outline mb-4">
-                <label class="form-label" for="valueRef">Valores de referência</label>
-                <input type="number" id="valueRef" name="valueRef" class="form-control"
-                  [(ngModel)]="tagToUpdate.valueRef" #valueRef="ngModel">
+                <label class="form-label" for="variableName">Variables name</label>
+                <input type="text" id="variableName" name="variableName" class="form-control"
+                  [(ngModel)]="tagToUpdate.variableName" #variableName="ngModel">
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="quantityOfRegisters">Quantity of registers</label>
+                <input type="number" id="quantityOfRegisters" name="quantityOfRegisters" class="form-control"
+                  [(ngModel)]="tagToUpdate.quantityOfRegisters" #quantityOfRegisters="ngModel">
             </div>
             <div class="form-outline mb-4">
                 <label class="form-label" for="communicationNameOnTest">OnTest communication name</label>
@@ -225,7 +234,7 @@
             <div class="row mb-4">
                 <div class="col-md-6">
                     <label class="form-label" for="tolerancy">Tolerancy</label>
-                    <input type="number" id="tolerancy" name="tolerancy" class="form-control"
+                    <input type="text" id="tolerancy" name="tolerancy" class="form-control"
                     [(ngModel)]="tagToUpdate.tolerancy" #tolerancy="ngModel">
                 </div>
                 <div class="col-md-6">

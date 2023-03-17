@@ -1,3 +1,4 @@
+import { LeafVariableMultipleCompareTagComponent } from './../tag-modals/leaf-variable-multiple-compare-tag/leaf-variable-multiple-compare-tag.component';
 import { LeafInlineSetupTagComponent } from './../tag-modals/leaf-inline-setup-tag/leaf-inline-setup-tag.component';
 import { LeafVerifyTagComponent } from './../tag-modals/leaf-verify-tag/leaf-verify-tag.component';
 import { LeafEthernetCommunicationTagComponent } from './../tag-modals/leaf-ethernet-communication-tag/leaf-ethernet-communication-tag.component';
@@ -25,8 +26,9 @@ import { LeafVariableCompareTagComponent } from '../tag-modals/leaf-variable-com
 import { LeafVariableStringWriteTagComponent } from '../tag-modals/leaf-variable-string-write-tag/leaf-variable-string-write-tag.component';
 import { LeafVariableWriteTagComponent } from '../tag-modals/leaf-variable-write-tag/leaf-variable-write-tag.component';
 import { LeafWriteTagComponent } from '../tag-modals/leaf-write-tag/leaf-write-tag.component';
+import { LeafVerifyMultipleTagComponent } from '../tag-modals/leaf-verify-multiple-tag/leaf-verify-multiple-tag.component';
 
-const LS_CHAVE: string = "userSession";
+//const LS_CHAVE: string = "userSession";
 
 @Component({
   selector: 'app-tag',
@@ -48,17 +50,33 @@ export class TagComponent implements OnInit {
   filterArray: boolean[] = []
   shownUsers: number = 0
 
-  loggedUser: User = JSON.parse(localStorage[LS_CHAVE])
+  loggedUser: User = new User()//JSON.parse(localStorage[LS_CHAVE])
+  LS_CHAVE: string = "userSession";
 
   constructor(private projectService: ProjectService, public router: Router, private activatedRoute: ActivatedRoute, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.fillTags();
     this.fillListOfTagName();
+    this.verifyIfLogged()
     console.log(this.project)
     console.log(this.routines)
     console.log(this.routine)
     console.log(this.tags)
+  }
+
+  verifyIfLogged(): void {
+    //@Todo: LoginPage for this software
+    if(localStorage[this.LS_CHAVE]!=null) {
+      this.loggedUser = JSON.parse(localStorage[this.LS_CHAVE])
+    } else {
+      this.loggedUser.id = 0
+      this.loggedUser.line = 0
+      this.loggedUser.nome = "Edson"
+      this.loggedUser.cadastro = 7881
+      this.loggedUser.perfil = "Adm"
+      //this.router.navigateByUrl('/login')
+    }
   }
 
   filter() {
@@ -321,6 +339,10 @@ export class TagComponent implements OnInit {
         return LeafVerifyTagComponent
       case TagEnum.LeafInlineSetupTag:
         return LeafInlineSetupTagComponent
+      case TagEnum.LeafVerifyMultipleTag:
+        return LeafVerifyMultipleTagComponent
+      case TagEnum.LeafVariableMultipleCompareTag:
+        return LeafVariableMultipleCompareTagComponent
     }
     return ModalTagNotFoundComponent
   }

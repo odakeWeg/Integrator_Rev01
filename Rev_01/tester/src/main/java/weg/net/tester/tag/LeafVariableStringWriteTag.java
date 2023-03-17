@@ -1,11 +1,15 @@
 package weg.net.tester.tag;
 
+import lombok.Getter;
+import lombok.Setter;
 import weg.net.tester.communication.BaseCommunication;
 import weg.net.tester.exception.CommunicationException;
 import weg.net.tester.exception.ObjectNotFoundException;
 import weg.net.tester.utils.FailureCodeUtil;
 import weg.net.tester.utils.TagNameUtil;
 
+@Getter
+@Setter
 public class LeafVariableStringWriteTag extends NodeWriteTag {
     
     protected String variableName;
@@ -25,7 +29,7 @@ public class LeafVariableStringWriteTag extends NodeWriteTag {
 
     private boolean getVariableValue() {
         try {
-            variableValue = TestMetaDataModel.sapConnector.get(position).get(this.variableName);
+            variableValue = TestMetaDataModel.sapConnector.get(position-1).get(this.variableName);
             return true;
         } catch (Exception e) {
             log = "Falha ao ler a variável: " + this.variableName;

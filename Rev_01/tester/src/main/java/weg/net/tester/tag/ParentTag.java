@@ -42,6 +42,9 @@ public abstract class ParentTag extends BaseTag {
 
     protected EnsTagConfiguration ensTagConfiguration = new EnsTagConfiguration();
 
+    //@Todo variable only here because of stuff coming from front end. Get ride of it
+    protected boolean enabled;
+
     @JsonIgnore
     protected long startTime;
 

@@ -91,8 +91,8 @@ public class InlineConnector {
         }
     }
 
-    public String isTestAllowed() throws InlineException {
-        if(isInlineEnabled())  {
+    public String isTestAllowed(TagList tagList) throws InlineException {
+        if(isInlineEnabled(tagList))  {
             try {
                 if(SicLibraryServices.getInstance().isWorkcenterOperationAllowed(this.serial)) {
                     return InlineFeddbackUtil.ALLOWED;
@@ -120,8 +120,8 @@ public class InlineConnector {
         this.inlineEnabled = inlineEnabled;
     }
 
-    private boolean isInlineEnabled() {
-        TagList tagList = TestMetaDataModel.tagList;
+    private boolean isInlineEnabled(TagList tagList) {
+        //TagList tagList = TestMetaDataModel.tagList;
         LeafInlineSetupTag inlineSetup;
         for(int i = 0; i < tagList.getList().size(); i++) {
             if(tagList.getList().get(i).getTagName().equals(TagNameUtil.INLINE)) {

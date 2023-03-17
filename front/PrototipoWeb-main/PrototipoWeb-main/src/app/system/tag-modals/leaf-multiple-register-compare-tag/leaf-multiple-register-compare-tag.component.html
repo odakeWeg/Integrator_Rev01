@@ -56,6 +56,11 @@
                 </div>
             </div>
             <div class="form-outline mb-4">
+                <label class="form-label" for="quantityOfRegisters">Quantity of registers</label>
+                <input type="number" id="quantityOfRegisters" name="quantityOfRegisters" class="form-control"
+                  [(ngModel)]="newTag.quantityOfRegisters" #quantityOfRegisters="ngModel">
+            </div>
+            <div class="form-outline mb-4">
                 <label class="form-label" for="communicationNameOnTest">OnTest communication name</label>
                 <!--
                 <input type="text" id="communicationNameOnTest" name="communicationNameOnTest" class="form-control"
@@ -235,6 +240,11 @@
                     <input type="number" id="registerRef" name="registerRef" class="form-control"
                     [(ngModel)]="tagToUpdate.registerRef" #registerRef="ngModel">
                 </div>
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="quantityOfRegisters">Quantity of registers</label>
+                <input type="number" id="quantityOfRegisters" name="quantityOfRegisters" class="form-control"
+                  [(ngModel)]="tagToUpdate.quantityOfRegisters" #quantityOfRegisters="ngModel">
             </div>
             <div class="form-outline mb-4">
                 <label class="form-label" for="communicationNameOnTest">OnTest communication name</label>

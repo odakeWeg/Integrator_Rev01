@@ -20,7 +20,7 @@ import com.example.demo.models.UserModel;
 import com.example.demo.repositories.UserRepository;
 
 
-@CrossOrigin(origins = "http://localhost:4200/")
+@CrossOrigin(origins = "http://localhost:4202/")
 @RestController
 @RequestMapping("/config/user/")
 public class UserController {

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { User } from 'src/app/shared';
 
 const LS_CHAVE: string = "userSession";
-const BASE_URL: string = 'http://localhost:8080/config/user'; //@TODO: global
+const BASE_URL: string = 'http://localhost:8082/config/user'; //@TODO: global
 
 @Injectable({
   providedIn: 'root'

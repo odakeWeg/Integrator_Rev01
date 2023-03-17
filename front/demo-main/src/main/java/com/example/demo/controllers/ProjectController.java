@@ -20,7 +20,7 @@ import com.example.demo.models.ProjectModel;
 import com.example.demo.repositories.ProjectRepository;
 import com.example.demo.services.ProjectService;
 
-@CrossOrigin(origins = "http://localhost:4200/")
+@CrossOrigin(origins = "http://localhost:4202/")
 @RestController
 @RequestMapping("/system/")
 public class ProjectController {
