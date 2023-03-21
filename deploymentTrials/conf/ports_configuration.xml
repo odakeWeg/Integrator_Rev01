@@ -11,6 +11,9 @@
         <ComPortConfig timeout="1000" stop_bits="1" data_bits="8" parity="2" baud_rate="19200" port_name="COM1">
             <modbusRTUprotocol responseDelay="30" transmissionDelay="0" timeout="1000" />
         </ComPortConfig>
+	<ComPortConfig timeout="1000" stop_bits="1" data_bits="8" parity="2" baud_rate="256000" port_name="COM4">
+            <modbusRTUprotocol responseDelay="30" transmissionDelay="0" timeout="1000" />
+        </ComPortConfig>
         <UsbPortConfig timeout="1000">
             <modbusRTUprotocol responseDelay="0" transmissionDelay="0" timeout="1000" />
         </UsbPortConfig>

@@ -50,6 +50,7 @@ public class FacadeTests {
 	void sapConnection() throws SapException {
         //Código de barras SSW900
         String[] cod = {"017909492093169 211062114337 10 911121714557 24014419092"};
+        //String[] cod = {"017909492093169 211081944473  10 911121714557 24014419092"}; //16715135 
 
         SapConnector sapInstance = new SapConnector();
         sapInstance.setBarCode(cod);
@@ -105,8 +106,8 @@ public class FacadeTests {
         leafInlineSetupTag.setPosition(1);
         tagList.getList().add(leafInlineSetupTag);
 
-        inlineConnector.isTestAllowed(tagList);
-        System.out.println("This is the response: " + inlineConnector.isTestAllowed(tagList));
+        //inlineConnector.isTestAllowed(tagList);
+        //System.out.println("This is the response: " + inlineConnector.isTestAllowed(tagList));
 
         Assert.assertEquals(InlineFeddbackUtil.NOT_ALLOWED, inlineConnector.isTestAllowed(tagList));
 	}
@@ -156,10 +157,11 @@ public class FacadeTests {
 
         int[] step = {1};
         String[] result = {"result"};
+        mongoConnector.setDuration(10);
         mongoConnector.endingSetup(result, step, tagList);
 
         List<TestingResultModel> testingResultModel = testingResultRepository.findBySerial("1062114337");
 
-        Assert.assertEquals("SSW900", testingResultModel.get(0).getDescricaoProduto()[0]);
+        Assert.assertEquals("SOFT-STARTER SSW900F0950T5E4", testingResultModel.get(0).getDescricaoProduto()[0]);
 	}
 }

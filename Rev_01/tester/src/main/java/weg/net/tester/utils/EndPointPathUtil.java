@@ -11,4 +11,6 @@ public class EndPointPathUtil { //@Todo: mudar nomenclatura para saber se é um 
     public static final String STOP = "/stop";
     public static final String CONFIRMATION = "confirmation";
     public static final String INPUT = "/input";
+    public static final String DURATION_SETTER = "/duration";
+    public static final String DIRECTOR_FILES_LIST = "/fileList";
 }

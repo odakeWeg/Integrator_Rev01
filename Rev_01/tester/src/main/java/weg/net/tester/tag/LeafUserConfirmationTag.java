@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.Setter;
+import weg.net.tester.helper.DelayHelper;
 import weg.net.tester.models.web.PopUpLog;
 import weg.net.tester.utils.ActionCommandUtil;
 import weg.net.tester.utils.EndPointPathUtil;
@@ -44,6 +45,7 @@ public class LeafUserConfirmationTag extends NodeCompareTag {
         //@Todo: change feedback
         PopUpLog popUpLog = new PopUpLog(messageToDisplay, ActionCommandUtil.USER_CONFIRM, timeout);
         this.template.convertAndSend(EndPointPathUtil.CHANNEL,  popUpLog);
+        DelayHelper.delayMilliseconds(100); //Delay after sending a msg @Todo: put it in a function with the method
         waitConfirmation();
         if(confirmationValue) {
             testResult = FailureCodeUtil.OK;

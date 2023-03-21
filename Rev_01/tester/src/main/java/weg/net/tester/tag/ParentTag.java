@@ -96,7 +96,7 @@ public abstract class ParentTag extends BaseTag {
     }
     
     private boolean commandInitialSetup() {
-        startTime = System.currentTimeMillis();
+        this.startTime = System.currentTimeMillis();
         return initialFeedbackToSystem();
     }
 
@@ -127,7 +127,7 @@ public abstract class ParentTag extends BaseTag {
 
     private void commandEndingSetup() {
         long endTime = System.currentTimeMillis();
-        individualTestDurationMillis = endTime - startTime;
+        individualTestDurationMillis = endTime - this.startTime;
         //@Toodo: IMPORTANT
         if(!testResult.equals(FailureCodeUtil.OK)) {
             //@send command for PLC to stop

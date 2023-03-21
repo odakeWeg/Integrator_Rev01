@@ -33,6 +33,10 @@
     margin: 0.2rem;
 }
 
+.size {
+    width: 20em;
+}
+
 .close-btn {
     position: absolute;
     padding: 1.8rem;
@@ -100,6 +104,34 @@
 .btn-primary {
     background-color: #16697A !important;
     border-color: #16697A;
+}
+
+#changeSetup-btn {
+    float: right;
+    height: auto;
+    width: 9em;
+    margin-left: 15px;
+    margin-top: -14px;
+    background-color: #16697A !important;
+    border-color: #16697A;
+    /*
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: auto;
+    */
+    /*
+    display: flex;
+    float: right;
+    text-align: right;
+    justify-content: flex-end;
+    */
+    /*
+    margin-left: 12px;
+    margin-top: -12px;
+    width: 100rem;
+    */
 }
 
 .btn-primary:hover {

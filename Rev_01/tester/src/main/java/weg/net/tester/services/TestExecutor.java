@@ -19,6 +19,7 @@ import weg.net.tester.exception.SessionException;
 import weg.net.tester.exception.TestSetupException;
 import weg.net.tester.exception.TestUnmarshalingException;
 import weg.net.tester.facade.DataCenter;
+import weg.net.tester.helper.DelayHelper;
 import weg.net.tester.helper.SessionHelper;
 import weg.net.tester.models.web.CommandLog;
 import weg.net.tester.models.web.ProductLog;
@@ -90,6 +91,7 @@ public class TestExecutor {
     private void sendFeedbackAfter(String result, String log, boolean finished, String status, int position) {
         ResultLog resultLog = new ResultLog(result, log, finished, status, position);
         this.template.convertAndSend(EndPointPathUtil.CHANNEL,  resultLog);
+        DelayHelper.delayMilliseconds(100); //Delay after sending a msg @Todo: put it in a function with the method
     } 
 
     //@Todo: Maybe create sendFeedbackMiddle method
@@ -121,9 +123,11 @@ public class TestExecutor {
             productLog.setPosition(position+1);
 
             this.template.convertAndSend(EndPointPathUtil.CHANNEL, productLog);
+            DelayHelper.delayMilliseconds(100); //Delay after sending a msg @Todo: put it in a function with the method
 
             ResultLog resultLog = new ResultLog(FrontEndFeedbackUtil.ONGOING, "@Todo", false, TestStatusUtil.ON_TEST, position+1); //@Todo: maybe make an Util for this "Em andamento"
             this.template.convertAndSend(EndPointPathUtil.CHANNEL,  resultLog);
+            DelayHelper.delayMilliseconds(100); //Delay after sending a msg @Todo: put it in a function with the method
         }
     }
 
@@ -251,6 +255,7 @@ public class TestExecutor {
                 } else {
                     CommandLog commandLog = baseTagList.getList().get(i).command();
                     this.template.convertAndSend(EndPointPathUtil.CHANNEL,  commandLog);
+                    DelayHelper.delayMilliseconds(100); //Delay after sending a msg @Todo: put it in a function with the method
                 }
             }
             for (int c = 0; c < baseTagList.qntOfProductInTest(); c++) {

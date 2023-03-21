@@ -1,20 +1,45 @@
 <div id="overlay-background"></div>
 <div id="overlay">
     <div class="close-btn">
-        <h2><a class="clickable" (click)="hideInitiateLayer()"><i class="bi bi-arrows-angle-contract"></i></a></h2>
-    </div>
-    <div class="centralize-init">
-        <form>
-            <div class="form-group">
-              <div class="qrCodeField" *ngFor="let productQRCode of productQRCodeList">
-                <input type="text" class="form-control" id="qrCode-{{productQRCode.position}}" placeholder="QR Code {{productQRCode.position}}" (keyup)="checkQRCodeInput(productQRCode.position)" autofocus >
-              </div>
-            </div>
+        <h2><a class="clickable" (click)="hideInitiateLayer()"><i class="bi bi-arrows-angle-contract" style="float: left;"></i></a></h2>
+        <div *ngIf="serialBoolean;else serialLayout">
             <div class="btn-initiate">
-                <button type="submit" (click)="initiateTest()" class="btn btn-primary btn-submit">Iniciar</button>
+                <button type="submit" (click)="changeInitiateLayout()" class="btn btn-primary btn-submit" id="changeSetup-btn">Com serial</button>
             </div>
-        </form>
-    </div>  
+        </div>
+        <ng-template #serialLayout>
+            <div class="btn-initiate">
+                <button type="submit" (click)="changeInitiateLayout()" class="btn btn-primary btn-submit" id="changeSetup-btn">Sem serial</button>
+            </div>
+        </ng-template>
+    </div>
+    <div *ngIf="!serialBoolean;else selectRoutineManually">
+        <div class="centralize-init">
+            <form>
+                <div class="form-group">
+                <div class="qrCodeField" *ngFor="let productQRCode of productQRCodeList">
+                    <input type="text" class="form-control" id="qrCode-{{productQRCode.position}}" placeholder="QR Code {{productQRCode.position}}" (keyup)="checkQRCodeInput(productQRCode.position)" autofocus>
+                </div>
+                </div>
+                <div class="btn-initiate">
+                    <button type="submit" (click)="initiateTest()" class="btn btn-primary btn-submit">Iniciar</button>
+                </div>
+            </form>
+        </div>  
+    </div>
+    <ng-template #selectRoutineManually>
+        <div class="centralize-init">
+            <form>
+                <select [(ngModel)]='selectedRoutine' class='form-control qrCodeField size' name="selectedRoutine" id="selectedRoutine">
+                    <option value="" style="color: white;" disabled>Product description</option>  
+                    <option *ngFor="let routine of routineList" value="{{routine}}">{{routine}}</option>
+                </select>
+                <div class="btn-initiate">
+                    <button type="submit" (click)="initiateTestManually()" class="btn btn-primary btn-submit">Iniciar</button>
+                </div>
+            </form>
+        </div>
+    </ng-template>
 </div>
 
 <div *ngIf="!firstTest && positionContainers.length!=0;else noInfo">

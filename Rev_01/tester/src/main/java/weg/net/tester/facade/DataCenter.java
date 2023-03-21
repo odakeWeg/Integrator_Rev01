@@ -50,16 +50,21 @@ public class DataCenter {
             descricaoProduto[position] = this.sapConnector.getSapDataMap().get(position).get(SapCaracUtil.SHORT_TEXT);
         }
         */
-        String[] serial = new String[barCode.length];
-        String[] descricaoProduto = new String[barCode.length];
+        //String[] serial = new String[barCode.length];
+        //String[] descricaoProduto = new String[barCode.length];
 
         TagList baseTagList = getList(barCode.length);
-        mongoConnector.initialSetup(serial, descricaoProduto);
+        //Colocado na funcao isTestAllowed para não precisar fazer duas consultas ao SAP
+        /* 
+         mongoConnector.initialSetup(serial, descricaoProduto); 
+        */
+        
 
         this.inlineConnector.setInlineEnabled(isTestAllowed);
         //if(isTestAllowed) {   //@Todo: remove, this statement is in the inlineClass
         for(int position = 0; position < barCode.length; position++) {
-            this.inlineConnector.setSerial(serial[position]);
+            //this.inlineConnector.setSerial(serial[position]);
+            this.inlineConnector.setSerial(this.sapConnector.getSapDataMap().get(position).get(SapCaracUtil.SERIAL));
             this.inlineConnector.saveInitialEvent();
         }
         //}
@@ -74,7 +79,7 @@ public class DataCenter {
         return baseTagList;
     }
 
-    public String isTestAllowed(String[] barCode) throws SapException, TestSetupException, TestUnmarshalingException, InlineException {
+    public String isTestAllowed(String[] barCode) throws SapException, TestSetupException, TestUnmarshalingException, InlineException, SessionException {
         this.sapConnector.setBarCode(barCode);
         this.sapConnector.getDataBy2DBarcodeString();
 
@@ -86,6 +91,7 @@ public class DataCenter {
             serial[position] = this.sapConnector.getSapDataMap().get(position).get(SapCaracUtil.SERIAL);
             descricaoProduto[position] = this.sapConnector.getSapDataMap().get(position).get(SapCaracUtil.SHORT_TEXT);
         }
+        mongoConnector.initialSetup(serial, descricaoProduto);
         for (int position = 0; position < barCode.length; position++) {
             this.inlineConnector.setSerial(serial[position]);
             if(!this.inlineConnector.isTestAllowed(baseTagList).equals(InlineFeddbackUtil.ALLOWED)) {
@@ -100,9 +106,9 @@ public class DataCenter {
     }
 
     public void end(String[] result) throws InlineException, DataBaseException, EnsException, JsonProcessingException, ParseException {
-        mongoConnector.endingSetup(result, TestMetaDataModel.testStep, TestMetaDataModel.tagList);
         saveInlineEnd(result);
         ensConnector.saveEns(TestMetaDataModel.tagList);
+        mongoConnector.endingSetup(result, TestMetaDataModel.testStep, TestMetaDataModel.tagList);
     }
 
     private void saveInlineEnd(String[] result) throws InlineException {

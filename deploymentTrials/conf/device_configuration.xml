@@ -9,5 +9,6 @@
         <Connection name="Ethernet/Modbus-TCP/192.168.0.1:502/@255" description=""/>
         <Connection name="Ethernet/Modbus-TCP/192.168.0.10:502/@255" description=""/>
         <Connection name="Ethernet/Modbus-TCP/null:0/@0" description=""/>
+        <Connection name="Serial/COM5/Modbus-RTU/@21" description=""/>
     </ConnectionList>
 </ConnectionConfigs>

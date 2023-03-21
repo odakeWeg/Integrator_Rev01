@@ -13,6 +13,7 @@ import lombok.Setter;
 import weg.net.tester.communication.BaseCommunication;
 import weg.net.tester.exception.CommunicationException;
 import weg.net.tester.exception.ObjectNotFoundException;
+import weg.net.tester.helper.DelayHelper;
 import weg.net.tester.models.web.PopUpLog;
 import weg.net.tester.models.web.ResultLog;
 import weg.net.tester.utils.ActionCommandUtil;
@@ -62,6 +63,7 @@ public class LeafUserInputTag extends NodeCompareTag {
         //@Todo: change feedback
         PopUpLog popUpLog = new PopUpLog(messageToDisplay, ActionCommandUtil.USER_INPUT, timeout);
         this.template.convertAndSend(EndPointPathUtil.CHANNEL,  popUpLog);
+        DelayHelper.delayMilliseconds(100); //Delay after sending a msg @Todo: put it in a function with the method
         if (!waitConfirmation()) {
             checkInputValue();
         } else {

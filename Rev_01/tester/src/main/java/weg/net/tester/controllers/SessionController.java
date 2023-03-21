@@ -5,6 +5,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
+import weg.net.tester.helper.DelayHelper;
 import weg.net.tester.helper.SessionHelper;
 import weg.net.tester.models.database.LoginModel;
 import weg.net.tester.models.database.UserModel;
@@ -39,14 +40,18 @@ public class SessionController {
                 SessionHelper.initiateSession(login.getCadastro());
                 sessionLog = new SessionLog(FrontEndFeedbackUtil.OK, ActionCommandUtil.LOGIN);
                 this.template.convertAndSend(EndPointPathUtil.CHANNEL, sessionLog);
+                DelayHelper.delayMilliseconds(100); //Delay after sending a msg @Todo: put it in a function with the method
+
             } else {
                 sessionLog = new SessionLog(FrontEndFeedbackUtil.INVALID_LOGIN, ActionCommandUtil.LOGIN);
                 this.template.convertAndSend(EndPointPathUtil.CHANNEL, sessionLog);
+                DelayHelper.delayMilliseconds(100); //Delay after sending a msg @Todo: put it in a function with the method
             }
             
         } catch (Exception e) { //@Todo: tratar melhor, badaBase exception
             sessionLog = new SessionLog(FrontEndFeedbackUtil.ERRO_INESPERADO, ActionCommandUtil.LOGIN);
             this.template.convertAndSend(EndPointPathUtil.CHANNEL, sessionLog);
+            DelayHelper.delayMilliseconds(100); //Delay after sending a msg @Todo: put it in a function with the method
         }
     }
 
@@ -58,9 +63,11 @@ public class SessionController {
             SessionHelper.reset();
             sessionLog = new SessionLog(FrontEndFeedbackUtil.OK, ActionCommandUtil.LOGOUT);
             this.template.convertAndSend(EndPointPathUtil.CHANNEL, sessionLog);
+            DelayHelper.delayMilliseconds(100); //Delay after sending a msg @Todo: put it in a function with the method
         } catch (Exception e) {
             sessionLog = new SessionLog(FrontEndFeedbackUtil.ERRO_INESPERADO, ActionCommandUtil.LOGOUT);
             this.template.convertAndSend(EndPointPathUtil.CHANNEL, sessionLog);
+            DelayHelper.delayMilliseconds(100); //Delay after sending a msg @Todo: put it in a function with the method
         }
     }
 }

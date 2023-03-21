@@ -1,3 +1,4 @@
+import { RoutineFilesService } from './../services/routine-files.service';
 import { User } from './../../models/models/user.model';
 import { PositionModalComponent } from './../position-modal/position-modal.component';
 import { TestModalComponent } from './../test-modal/test-modal.component';
@@ -43,12 +44,34 @@ export class TestInitializerV3Component implements OnInit {
   LS_CHAVE: string = "userSession"
   loggedUser: User = new User()
 
-  constructor(private modalService: NgbModal, private router: Router) { }
+  layoutType: string[] = ["Com serial", "Sem serial"]
+  serialBoolean: boolean = false
+
+  selectedRoutine: string = ""
+  routineList: string[] = []
+
+  constructor(private routineFiles: RoutineFilesService, private modalService: NgbModal, private router: Router) { }
 
   ngOnInit(): void {
     this.verifyIfLogged()
     this.initiateQrCode()
     this.initializeWebSocketConnection()
+    this.retrieveRoutines()
+  }
+
+  public retrieveRoutines(): void {
+    this.routineFiles.getAllfiles().subscribe({
+      next: (data) => {
+        this.routineList = data
+      },
+      error: (err) => console.log(err)
+    })
+    /*
+    setTimeout(() => {
+      console.log("done")
+      this.stompClient.send("/tester/fileList", {}, "My variable");
+    }, 600);
+    */
   }
 
   public verifyIfLogged() {
@@ -295,6 +318,9 @@ export class TestInitializerV3Component implements OnInit {
       } else {
         this.resultContainers.push(result)
       }
+
+      let stomp = this.stompClient
+      stomp.send("/tester/duration", {}, TestInitializerV3Component.testTime);
     } else {
       this.endTest()
       if(result.status=="Fim") {
@@ -377,4 +403,16 @@ export class TestInitializerV3Component implements OnInit {
   }
   */
 
+  changeInitiateLayout(): void {
+    if(document.getElementById('changeSetup-btn')?.innerHTML.includes(this.layoutType[0])) {
+      this.serialBoolean = false
+    } else {
+      this.serialBoolean = true
+    }
+    console.log(this.serialBoolean)
+  }
+
+  initiateTestManually(): void {
+
+  }
 }

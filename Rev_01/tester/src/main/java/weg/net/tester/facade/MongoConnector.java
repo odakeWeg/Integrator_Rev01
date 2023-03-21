@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.stereotype.Controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -16,8 +18,10 @@ import weg.net.tester.models.database.TestingResultModel;
 import weg.net.tester.repositories.TestingResultRepository;
 import weg.net.tester.tag.BaseTag;
 import weg.net.tester.tag.TagList;
+import weg.net.tester.utils.EndPointPathUtil;
 
 @Configuration 
+@Controller
 public class MongoConnector {
     @Autowired
     private TestingResultRepository testingResultRepository;
@@ -27,7 +31,7 @@ public class MongoConnector {
     private int cadastro;
     private String[] serial;
     private String[] result;
-    private long duration;
+    private static long duration = 0;
     private String tagList;
     private String[] descricaoProduto;
     private int[] testStep;
@@ -41,6 +45,13 @@ public class MongoConnector {
         this.descricaoProduto = descricaoProduto;
     }
     public MongoConnector() {
+    }
+
+    @MessageMapping(EndPointPathUtil.DURATION_SETTER)
+    public void setDuration(int duration) {
+        if(duration > MongoConnector.duration) {
+            MongoConnector.duration = duration;
+        }
     }
 
     public void initialSetup(String[] serial, String[] descricaoProduto) throws SessionException {
@@ -62,13 +73,13 @@ public class MongoConnector {
 
     public void endingSetup(String[] result, int[] testStep, TagList tagList) throws DataBaseException {
         try{
-            this. endingTime = System.currentTimeMillis() / 1000;
-            this.duration = endingTime - startTime;
+            this.endingTime = System.currentTimeMillis() / 1000;
+            //this.duration = this.endingTime - this.startTime;
 
             this.result = result;
             this.testStep = testStep;
             this.tagList = this.saveTest(tagList.getList());
-            
+            while(duration==0) {}
             TestingResultModel testingResultModel = new TestingResultModel(this.descricaoProduto, this.sessionId, this.cadastro, this.serial, this.result, this.duration, this.tagList, this.timestamp, this.testStep);
             testingResultRepository.save(testingResultModel);
         } catch (Exception e) {
